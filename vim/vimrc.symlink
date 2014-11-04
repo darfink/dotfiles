@@ -1,0 +1,310 @@
+set nocompatible
+filetype off
+
+" Load our custom defined Vim functions
+source ~/.vim/functions.vim
+
+let mapleader=" "
+
+let plugPath=expand('~/.vim/autoload/plug.vim')
+
+if !filereadable(plugPath)
+  plugPath=shellescape(plugPath)
+
+  echo "Installing vim-plug"
+  system('mkdir -p $(basename ' . plugPath . ')')
+  system('curl -fLo ' . plugPath . ' https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
+endif
+
+call plug#begin('~/.vim/plugged')
+
+" Additional bundles
+Plug 'Shougo/vimproc.vim', { 'do': function('BuildVimProc') }
+Plug 'Shougo/unite.vim'
+Plug 'Shougo/neocomplete.vim'
+Plug 'tpope/vim-abolish'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-vinegar'
+Plug 'bling/vim-airline'
+Plug 'junegunn/vim-easy-align'
+Plug 'altercation/vim-colors-solarized'
+Plug 'wellle/targets.vim'
+Plug 'kristijanhusak/vim-multiple-cursors'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'valloric/MatchTagAlways'
+Plug 'Raimondi/delimitMate'
+Plug 'ap/vim-you-keep-using-that-word'
+Plug 'ntpeters/vim-better-whitespace'
+Plug 'hail2u/vim-css3-syntax', { 'for': 'css' }
+Plug 'groenewege/vim-less', { 'for': 'less' }
+Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
+Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+Plug 'kien/ctrlp.vim'
+Plug 'FelikZ/ctrlp-py-matcher'
+Plug 'kana/vim-textobj-user'
+Plug 'mattn/webapi-vim'
+Plug 'mattn/gist-vim', { 'on': 'Gist' }
+Plug 'scrooloose/syntastic'
+Plug 'darfink/starsearch.vim'
+Plug 'danro/rename.vim'
+
+call plug#end()
+
+" Enable file type specifics
+filetype plugin indent on
+
+" Custom Vim settings
+set autoindent
+set autoread
+set backspace=indent,eol,start
+set backup
+set backupskip=/tmp/*,/private/tmp/*
+set complete-=i
+set cryptmethod=blowfish
+set display+=lastline
+set encoding=utf-8 nobomb
+set expandtab
+set exrc
+set fileformats+=mac
+set guioptions+=c
+set guioptions-=T
+set hidden
+set history=1000
+set hlsearch
+set ignorecase
+set incsearch
+set laststatus=2
+set lazyredraw
+set listchars=tab:▸\ ,trail:·,eol:¬,nbsp:_
+set modeline
+set modelines=5
+set mouse=nicr
+set noerrorbells
+set nowrap
+set nrformats-=octal
+set number
+set pumheight=15
+set relativenumber
+set ruler
+set scrolloff=7
+set secure
+set sessionoptions-=options
+set shiftround
+set shiftwidth=2
+set shortmess=atI
+set showbreak=⇶
+set showcmd
+set sidescroll=1
+set sidescrolloff=30
+set smartcase
+set smarttab
+set softtabstop=2
+set synmaxcol=500
+set tags+=.tags
+set t_Co=256
+set tabpagemax=50
+set tabstop=2
+set ttimeout
+set ttimeoutlen=100
+set ttyfast
+set undofile
+set undolevels=1000
+set undoreload=10000
+set wildignore=*.o,*.obj,*.bak,*.exe,*.pyc,*~
+set wildmenu
+set writebackup
+
+" Use English for spell checking, but don't spell check by default
+if version >= 700
+  set spelllang=en spell
+  set nospell
+endif
+
+if &shell =~# 'fish$'
+  set shell=bash
+endif
+
+if !empty(&viminfo)
+  set viminfo^=!
+endif
+
+" Improve syntax performance
+syntax enable
+syntax sync minlines=256
+
+if has('gui_running')
+  set background=light
+  colorscheme solarized
+
+  if GetRunningOS() == 'osx'
+    set guifont=Inconsolata\ for\ Powerline:h15
+  else
+    set guifont=Inconsolata\ for\ Powerline\ Medium\ 12
+  endif
+else
+  set background=dark
+  colorscheme solarized
+endif
+
+" We want to use a more subtle highlight color
+highlight ColorColumn ctermbg=Black guibg=#EDE7D5
+let &colorcolumn=join(range(81,999),",")
+
+" Setup Vim directories (backup, view, swap, undo)
+call InitializeDirectories()
+
+" Return to last edit position when opening files
+autocmd BufReadPost *
+\ if line("'\"") > 0 && line("'\"") <= line("$") |
+\   exe "normal! g`\"" |
+\ endif
+
+" Resize splits when the window is resized
+autocmd VimResized * exe "normal! \<c-w>="
+
+" File type specifics
+autocmd FileType css,scss,less setlocal iskeyword+=-
+
+" We want enter to work inside quickfix windows
+autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
+
+" Enable spell checking for git commit messages
+autocmd FileType gitcommit setlocal spell
+
+" Indent all tags in HTML files
+let g:html_indent_inctags = "html,body,head,tbody"
+
+" Will allow you to use :w!! to write to a file using sudo if you forgot to sudo
+" vim file (it will prompt for sudo password when writing)
+" http://stackoverflow.com/questions/95072/what-are-your-favorite-vim-tricks/96492#96492
+cmap w!! %!sudo tee > /dev/null %
+
+" Emmet
+"let g:user_emmet_expandabbr_key = '<C-E>'
+
+" Syntastic
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_javascript_checkers = ['jshint']
+let g:syntastic_scss_checkers = ['sass']
+
+" Better Whitespace
+let g:better_whitespace_filetypes_blacklist=['unite']
+
+" Edit vimrc
+noremap <silent> <leader>ve :edit $MYVIMRC<cr>
+noremap <silent> <leader>vr :source $MYVIMRC<cr>
+
+" EasyAlign
+nmap <leader>a <plug>(EasyAlign)
+vmap <enter> <plug>(EasyAlign)
+
+" CtrlP
+let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
+let g:ctrlp_clear_cache_on_exit = 0
+let g:ctrlp_working_path_mode = 'r'
+let g:ctrlp_cmd = 'CtrlPBuffer'
+
+" Airline
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+
+" NeoComplete
+source ~/.vim/neocomplete.vim
+
+" Netrw
+let g:netrw_list_hide =  '^\.[^\.],'                                
+let g:netrw_list_hide .= '\.pyc$,'  
+let g:netrw_list_hide .= '\.o$,\.obj$,' 
+let g:netrw_list_hide .= '\.a$,\.so$,\.lib$,\.dll$,'    
+let g:netrw_list_hide .= '\.pyc\s\+,'               
+let g:netrw_list_hide .= '\.o\s\+,\.obj\s\+,'         
+let g:netrw_list_hide .= '\.a\s\+,\.so\s\+,\.lib\s\+,\.dll\s\+,'
+
+" Unite
+let g:unite_source_history_yank_enable = 1
+call unite#filters#matcher_default#use(['matcher_fuzzy'])
+
+nnoremap <leader>f :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec/async:!<cr>
+nnoremap <leader>r :<C-u>Unite -no-split -buffer-name=mru     -start-insert file_mru<cr>
+nnoremap <leader>o :<C-u>Unite -no-split -buffer-name=outline -start-insert outline<cr>
+nnoremap <leader>y :<C-u>Unite -no-split -buffer-name=yank    history/yank<cr>
+nnoremap <leader>e :<C-u>Unite -no-split -buffer-name=buffer  buffer<cr>
+
+" User text objects
+call textobj#user#plugin('php', {
+\   'code': {
+\     'pattern': ['<?(php|=)\>', '?>'],
+\     'select-a': 'aP',
+\     'select-i': 'iP',
+\   },
+\ })
+
+" Leader bindings
+map <leader>q :bufdo bdelete<cr>
+map <leader>n :NeoCompleteToggle<cr>
+map <leader>t :Explore<cr>
+map <leader>c :CtrlPTag<cr>
+
+" Code folding options
+nmap <leader>f0 :set foldlevel=0<CR>
+nmap <leader>f1 :set foldlevel=1<CR>
+nmap <leader>f2 :set foldlevel=2<CR>
+nmap <leader>f3 :set foldlevel=3<CR>
+nmap <leader>f4 :set foldlevel=4<CR>
+nmap <leader>f5 :set foldlevel=5<CR>
+nmap <leader>f6 :set foldlevel=6<CR>
+nmap <leader>f7 :set foldlevel=7<CR>
+nmap <leader>f8 :set foldlevel=8<CR>
+nmap <leader>f9 :set foldlevel=9<CR>
+
+" Mapping Q (shift-q) to last used buffer
+" This binding also feels intuitive if you've ever played a game like CS
+" Where last weapon is on Q
+nmap Q :b#<CR>
+
+" Faster save
+" I really do :w often -- this is faster.
+nnoremap <leader>w :w<CR>
+
+" The Silver Searcher
+if executable('ag')
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor
+
+  " Use ag in our file navigation plugins for faster browsing
+  let g:unite_source_rec_async_command = 'ag --nocolor --nogroup --hidden -g ""'
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+endif
+
+" Make Y consistent with C and D.  See :help Y.
+nnoremap Y y$
+
+" This unsets the 'last search pattern' register by hitting return
+nnoremap <CR> :noh<CR>
+
+" This disables empty line deletes to set the register
+nnoremap <expr> dd match(getline('.'), '^\s*$') == -1 ? 'dd' : '"_dd'
+
+" Move visual block
+vnoremap J :m '>+1<CR>gv=gv
+vnoremap K :m '<-2<CR>gv=gv
+
+" We are supposed to learn Vim
+nnoremap <up> <nop>
+nnoremap <down> <nop>
+nnoremap <left> <nop>
+nnoremap <right> <nop>
+inoremap <up> <nop>
+inoremap <down> <nop>
+inoremap <left> <nop>
+inoremap <right> <nop>
+
+" What does this actually do?
+inoremap <C-U> <C-G>u<C-U>
+
+" Enable shifting between buffers
+nnoremap ä :bnext<CR>
+nnoremap ö :bprevious<CR>
+nmap <C-S-Tab> :bprevious<CR>
+nmap <C-Tab> :bnext<CR>

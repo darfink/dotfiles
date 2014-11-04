@@ -1,0 +1,14 @@
+# Vim generated files
+vim/*/autoload/
+vim/*/plugged/
+vim/*/session/
+vim/*/backup/
+vim/*/view/
+vim/*/swap/
+vim/*/undo/
+.netrwbook
+.netrwhist
+
+# Fish shell
+generated_completions/
+fish_history

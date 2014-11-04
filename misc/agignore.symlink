@@ -1,0 +1,37 @@
+# OS generated files #
+######################
+
+.DS_Store*
+.Spotlight-V100
+.Trashes
+._*
+Icon?
+Thumbs.db
+ehthumbs.db
+
+# App generated files #
+#######################
+
+.tags
+.sass-cache/
+bower_components/
+node_modules/
+dist/
+
+# Temporary files #
+###################
+
+__pycache__/
+.tmp/
+*.out
+*.pyc
+*.sw?
+*~
+
+# VCS directories & files #
+###########################
+
+.gitkeep
+.git/
+.hg/
+.svn/
