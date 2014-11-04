@@ -226,7 +226,7 @@ echo "Speeding up wake from sleep from 24 hours to an hour"
 sudo pmset -a standbydelay 86400
 
 echo ""
-echo "Disabling hibernation (only use sleep mode)
+echo "Disabling hibernation (only use sleep mode)"
 sudo pmset -a hibernatemode 0
 
 ###############################################################################
