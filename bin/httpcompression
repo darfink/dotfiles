@@ -21,22 +21,22 @@ declare -r maxConTime=15
 declare -r maxTime=30
 
 declare availDicts="" dict="" dictClientID="" dicts="" headers="" i="" \
-        indent="" url="" encoding="" urlHeaders=""
+	indent="" url="" encoding="" urlHeaders=""
 
 headers="$( curl --connect-timeout $maxConTime \
-                 -A "$hUA"    `# Send a fake UA string for sites that sniff it
-                               # instead of using the Accept-Encoding header` \
-                 -D -         `# Get response headers` \
-                 -H "$hAE"     \
-                 -H "$hCC"    `# Prevent intermediate proxies from caching the
-                               # response` \
-                 -L           `# If the page was moved to a different location,
-                               # redo the request` \
-                 -m $maxTime   \
-                 -s           `# Don\'t show the progress meter` \
-                 -S           `# Show error messages` \
-                 -o /dev/null `# Ignore content` \
-                 "$1" )" \
+		 -A "$hUA"    `# Send a fake UA string for sites that sniff it
+			       # instead of using the Accept-Encoding header` \
+		 -D -	      `# Get response headers` \
+		 -H "$hAE"     \
+		 -H "$hCC"    `# Prevent intermediate proxies from caching the
+			       # response` \
+		 -L	      `# If the page was moved to a different location,
+			       # redo the request` \
+		 -m $maxTime   \
+		 -s	      `# Don\'t show the progress meter` \
+		 -S	      `# Show error messages` \
+		 -o /dev/null `# Ignore content` \
+		 "$1" )" \
 && ( \
 
 	url="$1"
@@ -46,13 +46,13 @@ headers="$( curl --connect-timeout $maxConTime \
 
 		# Get headers for the "current" URL
 		urlHeaders="$( printf "%s" "$headers" |
-		               sed -n '1,/^HTTP/p' )"
+			       sed -n '1,/^HTTP/p' )"
 
 		# Remove the headers for the "current" URL
 		headers="${headers/"$urlHeaders"/}"
 
 		# ----------------------------------------------------------------------
-		# | SDCH                                                               |
+		# | SDCH							       |
 		# ----------------------------------------------------------------------
 
 		# SDCH Specification:
@@ -60,9 +60,9 @@ headers="$( curl --connect-timeout $maxConTime \
 
 		# Check if the server advertised any dictionaries
 		dicts="$( printf "%s" "$urlHeaders" |
-		          grep -i 'Get-Dictionary:' |
-		          cut -d':' -f2 |
-		          sed s/,/\ /g )"
+			  grep -i 'Get-Dictionary:' |
+			  cut -d':' -f2 |
+			  sed s/,/\ /g )"
 
 		if [ -n "$dicts" ]; then
 
@@ -76,7 +76,7 @@ headers="$( curl --connect-timeout $maxConTime \
 				# referrer URL
 				[[ "$i" != http* ]] \
 				    && dict="$(printf "$url" |
-				               sed -En 's/([^/]*\/\/)?([^/]*)\/?.*/\1\2/p')"
+					       sed -En 's/([^/]*\/\/)?([^/]*)\/?.*/\1\2/p')"
 
 				dict="$dict$i"
 
@@ -89,34 +89,34 @@ headers="$( curl --connect-timeout $maxConTime \
 				#   0..47) of the dictionary's SHA-256 digest ]
 				#
 				dictClientID="$( curl --connect-timeout $maxConTime \
-				                      -A "$hUA" -LsS -m $maxTime "$dict" |
-				                 openssl dgst -sha256 -binary |
-				                 openssl base64 |
-				                 cut -c 1-8 |
-				                 sed -e 's/\+/-/' -e 's/\//_/' )"
+						      -A "$hUA" -LsS -m $maxTime "$dict" |
+						 openssl dgst -sha256 -binary |
+						 openssl base64 |
+						 cut -c 1-8 |
+						 sed -e 's/\+/-/' -e 's/\//_/' )"
 
 				[ -n $availDicts ] && availDicts="$adics,$dictClientID" \
-				                   || availDicts="$dictClientID"
+						   || availDicts="$dictClientID"
 
 			done
 
 			# Redo the request (advertising the available dictionaries)
 			# and replace the old resulted headers with the new ones
 			urlHeaders="$( curl --connect-timeout $maxConTime \
-			                    -A "$hUA" -D - -H "$hAE" \
-			                    -H "Avail-Dictionary: $availDicts" \
-			                    -m $maxTime -o /dev/null -sS "$1" )"
+					    -A "$hUA" -D - -H "$hAE" \
+					    -H "Avail-Dictionary: $availDicts" \
+					    -m $maxTime -o /dev/null -sS "$1" )"
 		fi
 
 		# ----------------------------------------------------------------------
 
 		# Get the content encoding header values
 		encoding="$( printf "%s" "$urlHeaders" |
-		             grep -i 'Content-Encoding:' |
-		             cut -d' ' -f2 |
-		             tr "\r" "," |
-		             tr -d "\n" |
-		             sed 's/,$//' )"
+			     grep -i 'Content-Encoding:' |
+			     cut -d' ' -f2 |
+			     tr "\r" "," |
+			     tr -d "\n" |
+			     sed 's/,$//' )"
 
 		[ -n "$encoding" ] && encoding="[$encoding]"
 
@@ -131,9 +131,9 @@ headers="$( curl --connect-timeout $maxConTime \
 
 		# Get the next URL value
 		url="$( printf "%s" "$urlHeaders" |
-		        grep -i 'Location' |
-		        sed -e 's/Location://' |
-		        tr -d '\r' )"
+			grep -i 'Location' |
+			sed -e 's/Location://' |
+			tr -d '\r' )"
 
 	done
 	printf "\n"

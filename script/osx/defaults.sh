@@ -12,7 +12,7 @@ alias plist="/usr/libexec/PlistBuddy -c"
 ###############################################################################
 
 echo ""
-echo "Disabling the sound effects on boot"
+echo "Disabling sound effects on boot"
 sudo nvram SystemAudioVolume=0
 
 echo ""
@@ -40,8 +40,6 @@ defaults write com.apple.systemuiserver menuExtras -array \
   "/System/Library/CoreServices/Menu Extras/AirPort.menu" \
   "/System/Library/CoreServices/Menu Extras/Battery.menu" \
   "/System/Library/CoreServices/Menu Extras/Clock.menu"
-
-sudo chmod 600 /System/Library/CoreServices/Search.bundle/Contents/MacOS/Search
 
 echo ""
 echo "Disabling OS X Gate Keeper"
@@ -90,7 +88,13 @@ echo "Showing battery life percentage"
 defaults write com.apple.menuextra.battery ShowPercent -string "YES"
 
 echo ""
-echo "Check for software updates daily, not just once per week"
+echo "Changing the default wallpaper"
+rm -rf '~/Library/Application Support/Dock/desktoppicture.db'
+sudo rm -rf /System/Library/CoreServices/DefaultDesktop.jpg
+sudo ln -s "$DOTFILES/resource/wallpaper.jpg" /System/Library/CoreServices/DefaultDesktop.jpg
+
+echo ""
+echo "Checking for software updates daily, not just once per week"
 defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1
 
 echo ""
@@ -105,7 +109,6 @@ defaults write com.apple.helpviewer DevMode -bool true
 echo ""
 echo "Restarting automatically if the computer freezes"
 sudo systemsetup -setrestartfreeze on
-
 
 ###############################################################################
 # Trackpad, mouse, keyboard, Bluetooth accessories, and input
@@ -163,10 +166,6 @@ echo "Follow the keyboard focus while zoomed in"
 defaults write com.apple.universalaccess closeViewZoomFollowsFocus -bool true
 
 echo ""
-echo "Turn off keyboard illumination when computer is not used for 5 minutes"
-defaults write com.apple.BezelServices kDimTime -int 300
-
-echo ""
 echo "Set language and text formats"
 defaults write NSGlobalDomain AppleLanguages -array "en" "sv"
 defaults write NSGlobalDomain AppleLocale -string "en_GB@currency=SEK"
@@ -191,11 +190,14 @@ defaults write com.apple.screensaver askForPassword -int 1
 defaults write com.apple.screensaver askForPasswordDelay -int 5
 
 echo ""
-echo "Save screenshots to the ~/Screenshots"
+echo "Saving screenshots to ~/Screenshots"
 defaults write com.apple.screencapture location -string "${HOME}/Screenshots"
 
+# Create the directory if it doesn't exist
+mkdir -p ~/Screenshots
+
 echo ""
-echo "Save screenshots in PNG format (other options: BMP, GIF, JPG, PDF, TIFF)"
+echo "Saving screenshots in PNG format (other options: BMP, GIF, JPG, PDF, TIFF)"
 defaults write com.apple.screencapture type -string "png"
 
 echo ""
@@ -203,7 +205,11 @@ echo "Enabling subpixel font rendering on non-Apple LCDs"
 defaults write NSGlobalDomain AppleFontSmoothing -int 2
 
 echo ""
-echo "Enable HiDPI display modes (requires restart)"
+echo "Showing displays in menu bar"
+defaults write com.apple.airplay showInMenuBarIfPresent -bool false
+
+echo ""
+echo "Enabling HiDPI display modes (requires restart)"
 sudo defaults write /Library/Preferences/com.apple.windowserver DisplayResolutionEnabled -bool true
 
 ###############################################################################
@@ -228,6 +234,144 @@ sudo pmset -a standbydelay 86400
 echo ""
 echo "Disabling hibernation (only use sleep mode)"
 sudo pmset -a hibernatemode 0
+
+echo ""
+echo "Turn off keyboard illumination when computer is not used for 5 minutes"
+defaults write com.apple.BezelServices kDimTime -int 300
+
+###############################################################################
+# Dock & Mission Control
+###############################################################################
+
+echo ""
+echo "Enabling highlight hover effect for the grid view of a stack (Dock)"
+defaults write com.apple.dock mouse-over-hilite-stack -bool true
+
+echo ""
+echo "Changing minimize/maximize window effect"
+defaults write com.apple.dock mineffect -string "scale"
+
+echo ""
+echo "Minimize windows into their application’s icon"
+defaults write com.apple.dock minimize-to-application -bool true
+
+echo ""
+echo "Setting the icon size of Dock items to 36 pixels for optimal size/screen-realestate"
+defaults write com.apple.dock tilesize -int 36
+
+echo ""
+echo "Enabling spring loading for all Dock items"
+defaults write com.apple.dock enable-spring-load-actions-on-all-items -bool true
+
+echo ""
+echo "Showing indicator lights for open applications in the Dock"
+defaults write com.apple.dock show-process-indicators -bool true
+
+echo ""
+echo "Don’t animate opening applications from the Dock"
+defaults write com.apple.dock launchanim -bool false
+
+echo ""
+echo "Speeding up Mission Control animations and grouping windows by application"
+defaults write com.apple.dock expose-animation-duration -float 0.1
+defaults write com.apple.dock "expose-group-by-app" -bool true
+
+echo ""
+echo "Setting Dock to auto-hide and removing the auto-hiding delay"
+defaults write com.apple.dock autohide -bool true
+defaults write com.apple.dock autohide-delay -float 0
+defaults write com.apple.dock autohide-time-modifier -float 0
+
+echo ""
+echo "Making Dock icons of hidden applications translucent"
+defaults write com.apple.dock showhidden -bool true
+
+echo ""
+echo "Disabling Dashboard"
+defaults write com.apple.dashboard mcx-disabled -bool true
+
+echo ""
+echo "Don’t show Dashboard as a Space"
+defaults write com.apple.dock dashboard-in-overlay -bool true
+
+echo ""
+echo "Don’t automatically rearrange Spaces based on most recent use"
+defaults write com.apple.dock mru-spaces -bool false
+
+echo ""
+echo "Reset Launchpad, but keep the desktop wallpaper intact"
+find "${HOME}/Library/Application Support/Dock" -name "*-*.db" -maxdepth 1 -delete
+
+echo ""
+echo "Setting up dock items"
+extra/dockutil --remove all
+
+dockapps=(
+	"Google Chrome"
+	"Messages"
+	"Mail"
+	"Xcode"
+	"Dash"
+	"MacVim"
+	"iTerm"
+)
+
+extra/dockutil --add "/Applications/${dockapps[@]}.app"
+
+# Add a separator between the applications and folders
+defaults write com.apple.dock persistent-apps -array-add '{"tile-type"="spacer-tile";}'
+
+extra/dockutil --add '/Applications' --view list --display folder --sort name
+extra/dockutil --add '~/Dropbox' --view grid --display folder --sort name
+extra/dockutil --add '~/Downloads' --view grid --display stack --sort dateadded
+
+# Hot corners
+# Possible values:
+#  0: no-op
+#  2: Mission Control
+#  3: Show application windows
+#  4: Desktop
+#  5: Start screen saver
+#  6: Disable screen saver
+#  7: Dashboard
+# 10: Put display to sleep
+# 11: Launchpad
+# 12: Notification Center
+
+echo ""
+echo "Top left screen corner → Mission Control"
+defaults write com.apple.dock wvous-tl-corner -int 2
+defaults write com.apple.dock wvous-tl-modifier -int 0
+
+echo ""
+echo "Top right screen corner → Desktop"
+defaults write com.apple.dock wvous-tr-corner -int 4
+defaults write com.apple.dock wvous-tr-modifier -int 0
+
+echo ""
+echo "Bottom left screen corner → Start screen saver"
+defaults write com.apple.dock wvous-bl-corner -int 5
+defaults write com.apple.dock wvous-bl-modifier -int 0
+
+###############################################################################
+# Spotlight								      #
+###############################################################################
+
+echo ""
+echo "Disabling Spotlight indexing for mounted volumes"
+sudo defaults write /.Spotlight-V100/VolumeConfiguration Exclusions -array "/Volumes"
+
+echo ""
+echo "Disabling Spotlight shortcuts in favor of Alfred"
+defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 64 "{ enabled = 0; value = { parameters = ( 32, 49, 1048576); type = standard; }; }"
+defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 65 "{ enabled = 0; value = { parameters = ( 32, 49, 1048576); type = standard; }; }"
+
+echo ""
+echo "Hiding Spotlight tray icon"
+sudo chmod 600 /System/Library/CoreServices/Search.bundle/Contents/MacOS/Search
+
+# Make sure indexing is enabled for the main volume
+sudo mdutil -i on / > /dev/null
 
 ###############################################################################
 # Finder
@@ -355,130 +499,6 @@ echo "Enabling AirDrop over Ethernet and on unsupported Macs running Lion"
 defaults write com.apple.NetworkBrowser BrowseAllInterfaces -bool true
 
 ###############################################################################
-# Dock & Mission Control
-###############################################################################
-
-echo ""
-echo "Enabling highlight hover effect for the grid view of a stack (Dock)"
-defaults write com.apple.dock mouse-over-hilite-stack -bool true
-
-echo ""
-echo "Changing minimize/maximize window effect"
-defaults write com.apple.dock mineffect -string "scale"
-
-echo ""
-echo "Minimize windows into their application’s icon"
-defaults write com.apple.dock minimize-to-application -bool true
-
-echo ""
-echo "Setting the icon size of Dock items to 36 pixels for optimal size/screen-realestate"
-defaults write com.apple.dock tilesize -int 36
-
-echo ""
-echo "Enabling spring loading for all Dock items"
-defaults write com.apple.dock enable-spring-load-actions-on-all-items -bool true
-
-echo ""
-echo "Showing indicator lights for open applications in the Dock"
-defaults write com.apple.dock show-process-indicators -bool true
-
-echo ""
-echo "Don’t animate opening applications from the Dock"
-defaults write com.apple.dock launchanim -bool false
-
-echo ""
-echo "Speeding up Mission Control animations and grouping windows by application"
-defaults write com.apple.dock expose-animation-duration -float 0.1
-defaults write com.apple.dock "expose-group-by-app" -bool true
-
-echo ""
-echo "Setting Dock to auto-hide and removing the auto-hiding delay"
-defaults write com.apple.dock autohide -bool true
-defaults write com.apple.dock autohide-delay -float 0
-defaults write com.apple.dock autohide-time-modifier -float 0
-
-echo ""
-echo "Making Dock icons of hidden applications translucent"
-defaults write com.apple.dock showhidden -bool true
-
-echo ""
-echo "Disabling Dashboard"
-defaults write com.apple.dashboard mcx-disabled -bool true
-
-echo ""
-echo "Don’t show Dashboard as a Space"
-defaults write com.apple.dock dashboard-in-overlay -bool true
-
-echo ""
-echo "Don’t automatically rearrange Spaces based on most recent use"
-defaults write com.apple.dock mru-spaces -bool false
-
-echo ""
-echo "Reset Launchpad, but keep the desktop wallpaper intact"
-find "${HOME}/Library/Application Support/Dock" -name "*-*.db" -maxdepth 1 -delete
-
-echo ""
-echo "Setting up dock items"
-plist 'Delete :persistent-apps' ~/Library/Preferences/com.apple.dock.plist
-plist 'Delete :persistent-others' ~/Library/Preferences/com.apple.dock.plist
-
-dockapps=(
-	"Google Chrome"
-	"Messages"
-	"Mail"
-	"Xcode"
-	"Dash"
-	"MacVim"
-	"iTerm"
-)
-
-dockfolders=(
-	"/Applications"
-	"$HOME/Dropbox"
-	"$HOME/Downloads"
-)
-
-for app in "${dockapps[@]}"; do
-	defaults write com.apple.dock 'persistent-apps' -array-add "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/$app.app/</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>"
-done
-
-# Add a separator between the apps and the folders
-defaults write com.apple.dock 'persistent-apps' -array-add '{ tile-data = {}; tile-type = "spacer-tile"; }'
-
-for folder in "${dockfolders[@]}"; do
-	defaults write com.apple.dock 'persistent-others' -array-add "<dict><key>tile-data</key><dict><key>arrangement</key><integer>0</integer><key>displayas</key><integer>1</integer><key>file-data</key><dict><key>_CFURLString</key><string>$folder</string><key>_CFURLStringType</key><integer>0</integer></dict><key>preferreditemsize</key><integer>-1</integer><key>showas</key><integer>3</integer></dict><key>tile-type</key><string>directory-tile</string></dict>"
-done
-
-# Hot corners
-# Possible values:
-#  0: no-op
-#  2: Mission Control
-#  3: Show application windows
-#  4: Desktop
-#  5: Start screen saver
-#  6: Disable screen saver
-#  7: Dashboard
-# 10: Put display to sleep
-# 11: Launchpad
-# 12: Notification Center
-
-echo ""
-echo "Top left screen corner → Mission Control"
-defaults write com.apple.dock wvous-tl-corner -int 2
-defaults write com.apple.dock wvous-tl-modifier -int 0
-
-echo ""
-echo "Top right screen corner → Desktop"
-defaults write com.apple.dock wvous-tr-corner -int 4
-defaults write com.apple.dock wvous-tr-modifier -int 0
-
-echo ""
-echo "Bottom left screen corner → Start screen saver"
-defaults write com.apple.dock wvous-bl-corner -int 5
-defaults write com.apple.dock wvous-bl-modifier -int 0
-
-
-###############################################################################
 # Safari & WebKit
 ###############################################################################
 
@@ -523,44 +543,6 @@ defaults write com.apple.Safari "com.apple.Safari.ContentPageGroupIdentifier.Web
 echo ""
 echo "Adding a context menu item for showing the Web Inspector in web views"
 defaults write NSGlobalDomain WebKitDeveloperExtras -bool true
-
-
-###############################################################################
-# Spotlight								      #
-###############################################################################
-
-echo ""
-echo "Disabling spotlight indexing for mounted volumes"
-sudo defaults write /.Spotlight-V100/VolumeConfiguration Exclusions -array "/Volumes"
-
-echo ""
-echo "Changing spotlight indexing order and disabling some file types"
-defaults write com.apple.spotlight orderedItems -array \
-	'{"enabled" = 1;"name" = "APPLICATIONS";}' \
-	'{"enabled" = 1;"name" = "SYSTEM_PREFS";}' \
-	'{"enabled" = 1;"name" = "DIRECTORIES";}' \
-	'{"enabled" = 1;"name" = "PDF";}' \
-	'{"enabled" = 1;"name" = "FONTS";}' \
-	'{"enabled" = 0;"name" = "DOCUMENTS";}' \
-	'{"enabled" = 0;"name" = "MESSAGES";}' \
-	'{"enabled" = 0;"name" = "CONTACT";}' \
-	'{"enabled" = 0;"name" = "EVENT_TODO";}' \
-	'{"enabled" = 0;"name" = "IMAGES";}' \
-	'{"enabled" = 0;"name" = "BOOKMARKS";}' \
-	'{"enabled" = 0;"name" = "MUSIC";}' \
-	'{"enabled" = 0;"name" = "MOVIES";}' \
-	'{"enabled" = 0;"name" = "PRESENTATIONS";}' \
-	'{"enabled" = 0;"name" = "SPREADSHEETS";}' \
-	'{"enabled" = 0;"name" = "SOURCE";}'
-
-# Load new settings before rebuilding the index
-killall mds > /dev/null 2>&1
-
-# Make sure indexing is enabled for the main volume
-sudo mdutil -i on / > /dev/null
-
-# Rebuild the index from scratch
-sudo mdutil -E / > /dev/null
 
 ###############################################################################
 # Mail
@@ -665,6 +647,26 @@ echo "Disabling continuous spell checking"
 defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "continuousSpellCheckingEnabled" -bool false
 
 ###############################################################################
+# Alfred								      #
+###############################################################################
+
+echo ""
+echo "Binding (⌘ + space) for Alfred"
+defaults write com.runningwithcrayons.Alfred-Preferences hotkey.default -dict key -int 49 mod -int 1048576 string Space
+
+echo ""
+echo "Setting Alfred synchronization folder to ~/Dropbox"
+defaults write com.runningwithcrayons.Alfred-Preferences syncfolder -string "~/Dropbox/"
+
+echo ""
+echo "Changing default Alfred theme to light-large"
+defaults write com.runningwithcrayons.Alfred-Preferences appearance.theme -string "alfred.theme.lightlarge"
+
+echo ""
+echo "Enabling blur with Alfred's background"
+defaults write com.runningwithcrayons.Alfred-2 experimentalBlur -int 5
+
+###############################################################################
 # SizeUp								      #
 ###############################################################################
 
@@ -699,15 +701,15 @@ echo "Using the system-native print preview dialog"
 defaults write com.google.Chrome DisablePrintPreview -bool true
 
 echo ""
-echo "Setting Chrome as the default web browser"
+echo "Setting Chrome to the default web browser"
 open -a "Google Chrome" --args --make-default-browser
 
 ###############################################################################
 # Personal Additions							      #
 ###############################################################################
 
-if [ -n $(brew ls --versions fish) ]; then
-	fish="/usr/local/bin/fish"
+if [ installed fish ]; then
+	fish="$(brew --prefix)/bin/fish"
 
 	# Append fish to the shell list if not already there
 	[ sudo grep -Fq "fish" /etc/shells ] || echo "$fish" | sudo tee -a /etc/shells > /dev/null

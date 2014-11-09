@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+# A naive implementation of checking for packages
+# installed in the identified package management
+# system.
+
+if [ $# -eq 1 ]; then
+  echo 'Usage: `installed <package>`'
+  exit 1
+fi
+
+if [ hash brew 2>/dev/null ]; then
+  test -n $(brew ls --versions "$1")
+elif [ hash dpkg-query 2>/dev/null ]; then
+  dpkg-query -Wf'${db:Status-abbrev}' "$1" 2>/dev/null | grep -q '^i'
+else
+  echo 'Cannot identify a package querying system' >&2
+  exit 0
+fi
+
+exit $?

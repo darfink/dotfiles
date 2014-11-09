@@ -21,6 +21,7 @@ apps=(
 	"virtualbox"
 	"dropbox"
 	"utorrent"
+	"caffeine"
 	"skype"
 	"flux"
 	"vlc"

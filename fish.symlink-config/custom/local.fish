@@ -1,1 +1,1 @@
-../../../Dropbox/fish/extra.fish
+../../../Dropbox/fish/local.fish

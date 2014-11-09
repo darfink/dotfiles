@@ -16,6 +16,7 @@ ehthumbs.db
 .sass-cache/
 bower_components/
 node_modules/
+vendor/
 dist/
 
 # Temporary files #

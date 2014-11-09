@@ -52,6 +52,7 @@ binaries=(
 	"dex2jar"
 	"fcrackzip"
 	"foremost"
+	"dnsmasq"
 	"nmap"
 	"pngcheck"
 	"sqlmap"
@@ -72,7 +73,6 @@ binaries=(
 	"zopfli"
 
 	# OS X fuse systems
-	"osxfuse"
 	"ext4fuse"
 	"sshfs"
 )
@@ -81,8 +81,25 @@ main() {
 	# Install binaries
 	brew install ${binaries[@]}
 
+	# Overwrite previous python
+	brew link --overwrite python
+
 	# Install the CLI lorem ipsum generator
-	cpan install Text::Lorem
+	sudo cpan install Text::Lorem
+
+	if [ installed dnsmasq ]; then
+		# Make *.dev requests reply with 127.0.0.1
+		echo 'address=/.dev/127.0.0.1' > $(brew --prefix)/etc/dnsmasq.conf
+		echo 'listen-address=127.0.0.1' >> $(brew --prefix)/etc/dnsmasq.conf
+
+		# Load dnsmasq automatically at startup
+		sudo cp $(brew --prefix dnsmasq)/homebrew.mxcl.dnsmasq.plist /Library/LaunchDaemons
+		sudo launchctl load -w /Library/LaunchDaemons/homebrew.mxcl.dnsmasq.plist
+
+		# Use our local host for *.dev DNS queries
+		sudo mkdir -p /etc/resolver 
+		echo 'nameserver 127.0.0.1' | sudo tee /etc/resolver/dev > /dev/null
+	fi
 }
 
 main "$@"

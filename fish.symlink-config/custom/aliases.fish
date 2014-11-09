@@ -36,6 +36,9 @@ if [ $OS = 'Darwin' ]
 	# PlistBuddy alias, because sometimes `defaults` just doesn’t cut it
 	alias plistbuddy="/usr/libexec/PlistBuddy"
 
+	# Remove duplicates in "Open With"
+	alias fixopenwith="/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user"
+
 	# Disable Spotlight
 	alias spotoff="sudo mdutil -a -i off"
 

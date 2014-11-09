@@ -9,6 +9,11 @@ Desktop.ini
 ._*
 Thumbs.db
 
+# Apple files
+.AppleDouble
+.LSOverride
+.Trashes
+
 # Files that might appear on external disks
 .Spotlight-V100
 .Trashes

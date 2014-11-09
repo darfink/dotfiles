@@ -1,5 +1,5 @@
-function prompt_git
-	set branchName ''
+function prompt_git -d "Print the git status of a project"
+  set branchName ''
   set s ''
 
   # Check if the current directory is in a Git repository.
@@ -11,24 +11,24 @@ function prompt_git
 
       # Check for uncommitted changes in the index
 			if not git diff --quiet --ignore-submodules --cached
-        set s "$s+"
+	set s "$s+"
 			end
 
 			# Check for unstaged changes
 			if not git diff-files --quiet --ignore-submodules --
-        set s "$s!"
+	set s "$s!"
 			end
 
 			set files (git ls-files --others --exclude-standard)
 
 			# Check for untracked files.
 			if [ (count $files) != 0 ]
-        set s "$s?"
+	set s "$s?"
 			end
 
 			# Check for stashed files.
 			if git rev-parse --verify refs/stash > /dev/null ^&1
-        set s "$s\$"
+	set s "$s\$"
 			end
     end
 

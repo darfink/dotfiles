@@ -23,10 +23,12 @@ binaries=(
 	# Tools used for our development
 	"silversearcher-ag"
 	"vim-gnome"
+	"dnsmasq"
 	"recode"
 	"sshfs"
 	"tree"
 	"curl"
+	"make"
 	"git"
 	"pv"
 
@@ -48,10 +50,24 @@ binaries=(
 	"zopfli"
 )
 
-# Install the binaries
-sudo apt-get install -y ${binaries[@]}
+main() {
+	# Install binaries
+	sudo apt-get install -y ${binaries[@]}
 
-# Make nodejs accessible as 'node'
-sudo ln -sf /usr/bin/nodejs /usr/bin/node
+	# Make nodejs accessible as 'node'
+	sudo ln -sf /usr/bin/nodejs /usr/bin/node
 
+	if [ installed dnsmasq ]; then
+		# Make all *.dev requests go to local host
+		sudo mkdir -p /etc/NetworkManager/dnsmasq.d
+		echo 'address=/dev/127.0.0.1' | sudo tee /etc/NetworkManager/dnsmasq.d/dev-tld > /dev/null
+	fi
+
+	if [ ! -d "$HOME/.fzf" ]; then
+		git clone https://github.com/junegunn/fzf.git ~/.fzf
+		~/.fzf/install
+	fi
+}
+
+main "$@"
 exit 0

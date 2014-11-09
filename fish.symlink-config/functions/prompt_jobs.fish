@@ -1,4 +1,4 @@
-function prompt_jobs
+function prompt_jobs -d "Print the current number of jobs"
 	set result (jobs)
 
 	# Check if there are any jobs running

@@ -10,12 +10,19 @@ echo ""
 echo "Saving screenshots to ~/Screenshots"
 gsettings set org.gnome.gnome-screenshot auto-save-directory "file:///home/$USER/Screenshots/"
 
+# Create the directory if it doesn't exist
+mkdir -p ~/Screenshots
+
+echo ""
+echo "Changing the default wallpaper"
+gsettings set org.gnome.desktop.background picture-uri file://$DOTFILES/resource/wallpaper.jpg
+
 echo ""
 echo "Changing the terminal theme to Solarized Dark"
 bash "$dir/extra/install.sh" -s dark -p "Default"
 
-if dpkg-query -Wf'${db:Status-abbrev}' 'fish' 2>/dev/null | grep -q '^i'; then
-        fish="/usr/bin/fish"
+if [ installed fish ]; then
+        fish="$(which fish)"
 
         # Append fish to the shell list if not already there
         [ sudo grep -Fq "fish" /etc/shells ] || echo "$fish" | sudo tee -a /etc/shells > /dev/null

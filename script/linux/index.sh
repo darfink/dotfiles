@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Disable any interrupting user prompts
+export DEBIAN_FRONTEND=noninteractive
+
 # Enable the partners repository
 sudo sed -i "/^# deb .*partner/ s/^# //" /etc/apt/sources.list
 

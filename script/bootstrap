@@ -6,6 +6,13 @@ set -e
 # Execute from dotfiles directory
 cd "$(dirname "$0")/.."
 
+# Make it accessible everywhere
+export DOTFILES "$(pwd)"
+
+if [ -d "$DOTFILES/bin" ] && [[ ":$PATH:" != *":$DOTFILES/bin:"* ]]; then
+  PATH="${PATH:+"$PATH:"}$DOTFILES/bin"
+fi
+
 info() {
   printf "  [ \033[00;34m..\033[0m ] $1"
 }
@@ -125,8 +132,18 @@ install_osfiles() {
 }
 
 execute() {
-	info "ensuring the repository is up to date"
-	git pull origin master;
+	if [ hash git 2>/dev/null ]; then
+		if [ ! git rev-parse --is-inside-work-tree > /dev/null ^&1 ]; then
+			info 'setting up git repository'
+			git init
+			git remote add origin https://github.com/darfink/dotfiles.git
+			git fetch
+			git reset --hard origin/master
+		else
+			info 'ensuring the repository is up to date'
+			git pull origin master
+		fi
+	fi
 
 	local force=$1
 	local osdir="os/linux"
