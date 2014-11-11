@@ -1,3 +1,6 @@
 [submodule "ext/osx/dockutil"]
 	path = ext/osx/dockutil
 	url = git://github.com/kcrawford/dockutil.git
+[submodule "ext/linux/gnome-terminal-colors-solarized"]
+	path = ext/linux/gnome-terminal-colors-solarized
+	url = git://github.com/Anthony25/gnome-terminal-colors-solarized.git
