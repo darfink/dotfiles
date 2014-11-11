@@ -1,0 +1,3 @@
+[submodule "ext/osx/dockutil"]
+	path = ext/osx/dockutil
+	url = git://github.com/kcrawford/dockutil.git
