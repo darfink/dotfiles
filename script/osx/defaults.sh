@@ -5,7 +5,7 @@
 cd "$(dirname "$0")"
 
 # We use PlistBuddy a lot
-alias plist="/usr/libexec/PlistBuddy -c"
+alias plistc="/usr/libexec/PlistBuddy -c"
 
 ###############################################################################
 # General UI/UX
@@ -89,9 +89,7 @@ defaults write com.apple.menuextra.battery ShowPercent -string "YES"
 
 echo ""
 echo "Changing the default wallpaper"
-rm -rf '~/Library/Application Support/Dock/desktoppicture.db'
-sudo rm -rf /System/Library/CoreServices/DefaultDesktop.jpg
-sudo ln -s "$DOTFILES/resource/wallpaper.jpg" /System/Library/CoreServices/DefaultDesktop.jpg
+sqlite3 '~/Library/Application Support/Dock/desktoppicture.db' "UPDATE data SET value = '$DOTFILES/resource/wallpaper.jpg'"
 
 echo ""
 echo "Checking for software updates daily, not just once per week"
@@ -311,7 +309,7 @@ dockapps=(
 	"Messages"
 	"Mail"
 	"Xcode"
-	"Dash"
+	"Popcorn Time"
 	"MacVim"
 	"iTerm"
 )
@@ -447,25 +445,25 @@ defaults write com.apple.frameworks.diskimages skip-verify-remote -bool true
 
 echo ""
 echo "Showing item info near icons on the desktop and in other icon views"
-plist "Set :DesktopViewSettings:IconViewSettings:showItemInfo true" ~/Library/Preferences/com.apple.finder.plist
-plist "Set :FK_StandardViewSettings:IconViewSettings:showItemInfo true" ~/Library/Preferences/com.apple.finder.plist
-plist "Set :StandardViewSettings:IconViewSettings:showItemInfo true" ~/Library/Preferences/com.apple.finder.plist
+plistc "Set :DesktopViewSettings:IconViewSettings:showItemInfo true" ~/Library/Preferences/com.apple.finder.plist
+plistc "Set :FK_StandardViewSettings:IconViewSettings:showItemInfo true" ~/Library/Preferences/com.apple.finder.plist
+plistc "Set :StandardViewSettings:IconViewSettings:showItemInfo true" ~/Library/Preferences/com.apple.finder.plist
 
 echo ""
 echo "Enabling snap-to-grid for icons on the desktop and in other icon views"
-plist "Set :DesktopViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
-plist "Set :FK_StandardViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
-plist "Set :StandardViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
+plistc "Set :DesktopViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
+plistc "Set :FK_StandardViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
+plistc "Set :StandardViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
 
 echo ""
 echo "Setting icon size and grid spacing to 64 pixels"
-plist "Set :DesktopViewSettings:IconViewSettings:gridSpacing 64" ~/Library/Preferences/com.apple.finder.plist
-plist "Set :DesktopViewSettings:IconViewSettings:iconSize 64" ~/Library/Preferences/com.apple.finder.plist
+plistc "Set :DesktopViewSettings:IconViewSettings:gridSpacing 64" ~/Library/Preferences/com.apple.finder.plist
+plistc "Set :DesktopViewSettings:IconViewSettings:iconSize 64" ~/Library/Preferences/com.apple.finder.plist
 
 echo ""
 echo "Configuring Finder toolbar"
-plist 'Delete "NSToolbar Configuration Browser:TB Item Identifiers"' ~/Library/Preferences/com.apple.finder.plist
-plist 'Add "NSToolbar Configuration Browser:TB Item Identifiers" array' ~/Library/Preferences/com.apple.finder.plist
+plistc 'Delete "NSToolbar Configuration Browser:TB Item Identifiers"' ~/Library/Preferences/com.apple.finder.plist
+plistc 'Add "NSToolbar Configuration Browser:TB Item Identifiers" array' ~/Library/Preferences/com.apple.finder.plist
 
 finderbuttons=(
 	"com.apple.finder.BACK"
@@ -482,7 +480,7 @@ finderbuttons=(
 )
 
 for i in "${!finderbuttons[@]}"; do
-	plist "Add 'NSToolbar Configuration Browser:TB Item Identifiers:$i' string '${finderbuttons[$i]}'" ~/Library/Preferences/com.apple.finder.plist
+	plistc "Add 'NSToolbar Configuration Browser:TB Item Identifiers:$i' string '${finderbuttons[$i]}'" ~/Library/Preferences/com.apple.finder.plist
 done
 
 echo ""
@@ -651,7 +649,7 @@ defaults write com.apple.messageshelper.MessageController SOInputLineSettings -d
 ###############################################################################
 
 echo ""
-echo "Binding (⌘ + space) for Alfred"
+echo "Binding ⌘ + Space for Alfred"
 defaults write com.runningwithcrayons.Alfred-Preferences hotkey.default -dict key -int 49 mod -int 1048576 string Space
 
 echo ""
@@ -677,6 +675,10 @@ defaults write com.irradiatedsoftware.SizeUp StartAtLogin -bool true
 echo ""
 echo "Don’t show the preferences window on next start"
 defaults write com.irradiatedsoftware.SizeUp ShowPrefsOnNextStart -bool false
+
+echo ""
+echo "Allow X11 windows to be modified"
+defaults write com.irradiatedsoftware.SizeUp X11SupportEnabled -bool true
 
 ###############################################################################
 # Seil									      #
@@ -708,7 +710,7 @@ open -a "Google Chrome" --args --make-default-browser
 # Personal Additions							      #
 ###############################################################################
 
-if [ installed fish ]; then
+if [ is-installed fish ]; then
 	fish="$(brew --prefix)/bin/fish"
 
 	# Append fish to the shell list if not already there

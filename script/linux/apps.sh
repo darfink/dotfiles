@@ -9,6 +9,7 @@ echo "Installing apps..."
 apps=(
 	# Things that you cannot live without
 	"google-chrome-stable"
+	"popcorn-time"
 	"dropbox"
 	"deluge"
 	"skype"
@@ -32,5 +33,4 @@ apps=(
 
 # Install apps
 sudo apt-get install -y ${binaries[@]}
-
 exit 0

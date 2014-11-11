@@ -15,13 +15,12 @@ apps=(
 	"alfred"
 	"sizeup"
 	"seil"
-	"dash"
 
 	# Things you cannot live without
 	"virtualbox"
+	"popcorn-time"
 	"dropbox"
-	"utorrent"
-	"caffeine"
+	"deluge"
 	"skype"
 	"flux"
 	"vlc"
@@ -56,6 +55,9 @@ fonts=(
 # Specify the location of the apps
 appdir="/Applications"
 
+# Wait for brew cask support
+wget "https://github.com/newmarcel/KeepingYouAwake/releases/download/1.1/KeepingYouAwake-1.1.zip"
+
 main() {
 	echo "Installing cask..."
 
@@ -64,8 +66,7 @@ main() {
 
 	# Tap alternative versions
 	brew tap caskroom/versions
-
-	# Tap the fonts
+	brew tap casidiablo/custom
 	brew tap caskroom/fonts
 
 	echo "Installing apps..."

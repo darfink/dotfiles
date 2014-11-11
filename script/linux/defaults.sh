@@ -7,6 +7,10 @@ sudo sed -i 's/GRUB_TIMEOUT=10/GRUB_TIMEOUT=1/g' /etc/default/grub
 sudo update-grub
 
 echo ""
+echo "Swapping caps lock and escape button functionality"
+dconf write /org/gnome/desktop/input-sources/xkb-options "['caps:swapescape']"
+
+echo ""
 echo "Saving screenshots to ~/Screenshots"
 gsettings set org.gnome.gnome-screenshot auto-save-directory "file:///home/$USER/Screenshots/"
 
@@ -19,9 +23,9 @@ gsettings set org.gnome.desktop.background picture-uri file://$DOTFILES/resource
 
 echo ""
 echo "Changing the terminal theme to Solarized Dark"
-bash "$dir/extra/install.sh" -s dark -p "Default"
+source "extra/install.sh" -s dark -p "Default"
 
-if [ installed fish ]; then
+if [ is-installed fish ]; then
         fish="$(which fish)"
 
         # Append fish to the shell list if not already there

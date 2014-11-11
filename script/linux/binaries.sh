@@ -26,10 +26,12 @@ binaries=(
 	"dnsmasq"
 	"recode"
 	"sshfs"
+	"xclip"
 	"tree"
 	"curl"
 	"make"
 	"git"
+	"par"
 	"pv"
 
 	# Image optimization software
@@ -42,6 +44,7 @@ binaries=(
 
 	# Bash is old-school
 	"autojump"
+	"dconf-cli"
 	"fish"
 
 	# Handle different compression algorithms
@@ -57,7 +60,7 @@ main() {
 	# Make nodejs accessible as 'node'
 	sudo ln -sf /usr/bin/nodejs /usr/bin/node
 
-	if [ installed dnsmasq ]; then
+	if [ is-installed dnsmasq ]; then
 		# Make all *.dev requests go to local host
 		sudo mkdir -p /etc/NetworkManager/dnsmasq.d
 		echo 'address=/dev/127.0.0.1' | sudo tee /etc/NetworkManager/dnsmasq.d/dev-tld > /dev/null

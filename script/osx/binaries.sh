@@ -6,10 +6,9 @@ echo "Installing binaries..."
 
 binaries=(
 	# Install GNU core utilities (those that come with OS X are outdated)
-	# Don’t forget to add `$(brew --prefix coreutils)/libexec/gnubin` to `$PATH`.
 	"coreutils"
 
-	# Install some other useful utilities like `sponge`
+	# Install some other useful utilities
 	"moreutils"
 	"binutils"
 	"diffutils"
@@ -20,7 +19,7 @@ binaries=(
 	"fish"
 	"gzip"
 
-	# Install GNU `find`, `locate`, `updatedb`, and `xargs`
+	# Install GNU `find`, `locate`, `updatedb`, `xargs` etc
 	"findutils --default-names"
 	"gnu-indent --default-names"
 	"gnu-which --default-names"
@@ -71,6 +70,7 @@ binaries=(
 	"tree"
 	"webkit2png"
 	"zopfli"
+	"par"
 
 	# OS X fuse systems
 	"ext4fuse"
@@ -81,13 +81,13 @@ main() {
 	# Install binaries
 	brew install ${binaries[@]}
 
-	# Overwrite previous python
+	# Overwrite system python
 	brew link --overwrite python
 
 	# Install the CLI lorem ipsum generator
 	sudo cpan install Text::Lorem
 
-	if [ installed dnsmasq ]; then
+	if [ is-installed dnsmasq ]; then
 		# Make *.dev requests reply with 127.0.0.1
 		echo 'address=/.dev/127.0.0.1' > $(brew --prefix)/etc/dnsmasq.conf
 		echo 'listen-address=127.0.0.1' >> $(brew --prefix)/etc/dnsmasq.conf

@@ -22,9 +22,9 @@ if [ -e "$custom/local.fish" ]
 	source "$custom/local.fish"
 end
 
-if [ -e "$HOME/.dircolors" ]
+if [ -e "$HOME/.dir_colors" ]
 	# Make the 'ls' command pretty (solarized dark theme by default)
-	eval (dircolors -c "$HOME/.dircolors" | sed 's/>&\/dev\/null$//')
+	eval (dircolors -c "$HOME/.dir_colors" | sed 's/>&\/dev\/null$//')
 end
 
 if [ -e "$HOME/.autojump/etc/profile.d/autojump.fish" ]

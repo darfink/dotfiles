@@ -15,6 +15,7 @@ sudo apt-key adv --keyserver pgp.mit.edu --recv-keys 5044912E
 repositories=(
 	"deb http://linux.dropbox.com/ubuntu precise main"
 	"deb http://dl.google.com/linux/chrome/deb/ stable main"
+	"ppa:webupd8team/popcorntime"
 	"ppa:deluge-team/ppa"
 	"ppa:fish-shell/release-2"
 	"ppa:mitya57/ppa"

@@ -129,6 +129,13 @@ if !empty(&viminfo)
   set viminfo^=!
 endif
 
+" Use par to reflow text
+" see: http://vimcasts.org/episodes/formatting-text-with-par/
+" Using `gw` will reflow with Vim's built-in algorithm.
+if executable('par')
+  set formatprg="par -h -w78 -B=.,\?_A_a "
+endif
+
 " Improve syntax performance
 syntax enable
 syntax sync minlines=256
@@ -155,10 +162,12 @@ let &colorcolumn=join(range(81,999),",")
 call InitializeDirectories()
 
 " Return to last edit position when opening files
+" Remember last location in file, but not for commit messages.
 autocmd BufReadPost *
-\ if line("'\"") > 0 && line("'\"") <= line("$") |
+\ if &filetype !~ '^git\c' && line("'\"") > 0 && line("'\"") <= line("$") |
 \   exe "normal! g`\"" |
 \ endif
+
 
 " Resize splits when the window is resized
 autocmd VimResized * exe "normal! \<c-w>="
@@ -184,6 +193,9 @@ cmap w!! %!sudo tee > /dev/null %
 "let g:user_emmet_expandabbr_key = '<C-E>'
 
 " Syntastic
+let g:syntastic_error_symbol = '✗'
+let g:syntastic_warning_symbol = '⚠'
+let g:syntastic_full_redraws = 1
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_javascript_checkers = ['jshint']
 let g:syntastic_scss_checkers = ['sass']

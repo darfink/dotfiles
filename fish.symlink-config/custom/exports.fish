@@ -7,8 +7,8 @@ set --export GIT_EDITOR "$EDITOR -f"
 set --export VISUAL "$EDITOR"
 
 # Default to Unicode locale
-set --export LC_ALL en_US.UTF-8
-set --export LANG en_US.UTF-8
+set --export LC_ALL en_GB.UTF-8
+set --export LANG en_GB.UTF-8
 set --export TZ 'Europe/Stockholm'
 
 # Less colors for Man-pages

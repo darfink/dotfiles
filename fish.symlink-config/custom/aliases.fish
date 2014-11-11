@@ -50,7 +50,7 @@ if [ $OS = 'Darwin' ]
 		cd (osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)')
 	end
 else
-	# Ubuntu does not have easy C/V functions
+	# Ubuntu does not have easy C/P functions
 	alias pbpaste='xclip -selection clipboard -o'
 	alias pbcopy='xclip -selection clipboard'
 end
