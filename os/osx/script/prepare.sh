@@ -1,10 +1,3 @@
-#!/usr/bin/env bash
-
-set -e
-
-# Ask for password up-front
-sudo -v
-
 # Check for command line tools
 xcode-select -p
 if [[ $? -ne 0 ]]; then
@@ -49,9 +42,9 @@ brew update
 brew upgrade
 
 # Run each program
-bash "$dir/binaries.sh"
-bash "$dir/apps.sh"
-bash "$dir/defaults.sh"
+source "$dir/binaries.sh"
+source "$dir/apps.sh"
+source "$dir/defaults.sh"
 
 # Remove outdated versions from the cellar
 brew cleanup

@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+if [ $# -ne 1 ]; then
+  echo 'Usage: `is-command <command>`'
+  exit 1
+fi
+
+hash "$1" 2>/dev/null

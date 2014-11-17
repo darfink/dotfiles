@@ -1,9 +1,6 @@
 # Some things taken from here
 # https://github.com/mathiasbynens/dotfiles/blob/master/.osx
 
-# Execute from bash directory
-cd "$(dirname "$0")"
-
 # We use PlistBuddy a lot
 alias plistc="/usr/libexec/PlistBuddy -c"
 
@@ -89,11 +86,11 @@ defaults write com.apple.menuextra.battery ShowPercent -string "YES"
 
 echo ""
 echo "Changing the default wallpaper"
-sqlite3 '~/Library/Application Support/Dock/desktoppicture.db' "UPDATE data SET value = '$DOTFILES/resource/wallpaper.jpg'"
+sqlite3 '~/Library/Application Support/Dock/desktoppicture.db' "UPDATE data SET value = '$DOTFILES/ext/wallpaper.jpg'"
 
 echo ""
-echo "Checking for software updates daily, not just once per week"
-defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1
+echo "Disabling scheduled updates (do it manually instead)"
+defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 0
 
 echo ""
 echo "Disabling smart quotes and dashes as they're annoying when typing code"
@@ -272,7 +269,7 @@ defaults write com.apple.dock launchanim -bool false
 echo ""
 echo "Speeding up Mission Control animations and grouping windows by application"
 defaults write com.apple.dock expose-animation-duration -float 0.1
-defaults write com.apple.dock "expose-group-by-app" -bool true
+defaults write com.apple.dock expose-group-by-app -bool true
 
 echo ""
 echo "Setting Dock to auto-hide and removing the auto-hiding delay"
@@ -302,26 +299,28 @@ find "${HOME}/Library/Application Support/Dock" -name "*-*.db" -maxdepth 1 -dele
 
 echo ""
 echo "Setting up dock items"
-extra/dockutil --remove all
+dockutil --remove all
 
 dockapps=(
 	"Google Chrome"
 	"Messages"
+	"Skype"
 	"Mail"
+	"Spotify"
 	"Xcode"
 	"Popcorn Time"
 	"MacVim"
 	"iTerm"
 )
 
-extra/dockutil --add "/Applications/${dockapps[@]}.app"
+dockutil --add "/Applications/${dockapps[@]}.app"
 
 # Add a separator between the applications and folders
 defaults write com.apple.dock persistent-apps -array-add '{"tile-type"="spacer-tile";}'
 
-extra/dockutil --add '/Applications' --view list --display folder --sort name
-extra/dockutil --add '~/Dropbox' --view grid --display folder --sort name
-extra/dockutil --add '~/Downloads' --view grid --display stack --sort dateadded
+dockutil --add '/Applications' --view list --display folder --sort name
+dockutil --add '~/Dropbox' --view grid --display folder --sort name
+dockutil --add '~/Downloads' --view grid --display stack --sort dateadded
 
 # Hot corners
 # Possible values:
@@ -352,12 +351,17 @@ defaults write com.apple.dock wvous-bl-corner -int 5
 defaults write com.apple.dock wvous-bl-modifier -int 0
 
 ###############################################################################
-# Spotlight								      #
+# Spotlight
 ###############################################################################
 
 echo ""
 echo "Disabling Spotlight indexing for mounted volumes"
 sudo defaults write /.Spotlight-V100/VolumeConfiguration Exclusions -array "/Volumes"
+
+echo ""
+echo "Disabling display of disclaimer text"
+defaults write com.apple.Spotlight useCount -int 3
+defaults write com.apple.Spotlight showedFTE -bool YES
 
 echo ""
 echo "Disabling Spotlight shortcuts in favor of Alfred"
@@ -542,6 +546,11 @@ echo ""
 echo "Adding a context menu item for showing the Web Inspector in web views"
 defaults write NSGlobalDomain WebKitDeveloperExtras -bool true
 
+echo ""
+echo "Disabling search queries being sent to Apple"
+defaults write com.apple.Safari UniversalSearchEnabled -bool false
+defaults write com.apple.Safari SuppressSearchSuggestions -bool true
+
 ###############################################################################
 # Mail
 ###############################################################################
@@ -584,7 +593,7 @@ defaults write com.googlecode.iterm2 PromptOnQuit -bool false
 
 echo ""
 echo "Installing the Solarized Dark theme for iTerm"
-open "extra/Solarized Dark.itermcolors"
+open "os/$OS/ext/Solarized Dark.itermcolors"
 
 ###############################################################################
 # Time Machine
@@ -599,7 +608,7 @@ echo "Disabling local Time Machine backups"
 hash tmutil &> /dev/null && sudo tmutil disablelocal
 
 ###############################################################################
-# Activity Monitor							      #
+# Activity Monitor
 ###############################################################################
 
 echo ""
@@ -620,7 +629,7 @@ defaults write com.apple.ActivityMonitor SortColumn -string "CPUUsage"
 defaults write com.apple.ActivityMonitor SortDirection -int 0
 
 ###############################################################################
-# Disk Utility								      #
+# Disk Utility
 ###############################################################################
 
 echo ""
@@ -629,7 +638,7 @@ defaults write com.apple.DiskUtility DUDebugMenuEnabled -bool true
 defaults write com.apple.DiskUtility advanced-image-options -bool true
 
 ###############################################################################
-# Messages								      #
+# Messages
 ###############################################################################
 
 echo ""
@@ -645,7 +654,7 @@ echo "Disabling continuous spell checking"
 defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "continuousSpellCheckingEnabled" -bool false
 
 ###############################################################################
-# Alfred								      #
+# Alfred
 ###############################################################################
 
 echo ""
@@ -665,7 +674,7 @@ echo "Enabling blur with Alfred's background"
 defaults write com.runningwithcrayons.Alfred-2 experimentalBlur -int 5
 
 ###############################################################################
-# SizeUp								      #
+# SizeUp
 ###############################################################################
 
 echo ""
@@ -681,7 +690,7 @@ echo "Allow X11 windows to be modified"
 defaults write com.irradiatedsoftware.SizeUp X11SupportEnabled -bool true
 
 ###############################################################################
-# Seil									      #
+# Seil
 ###############################################################################
 
 echo ""
@@ -691,7 +700,7 @@ defaults write org.pqrs.Seil sysctl -dict \
   keycode_capslock -int 53
 
 ###############################################################################
-# Google Chrome 							      #
+# Google Chrome
 ###############################################################################
 
 echo ""
@@ -707,7 +716,7 @@ echo "Setting Chrome to the default web browser"
 open -a "Google Chrome" --args --make-default-browser
 
 ###############################################################################
-# Personal Additions							      #
+# Personal Additions
 ###############################################################################
 
 if [ is-installed fish ]; then
@@ -720,9 +729,3 @@ if [ is-installed fish ]; then
 	echo "Changing the default shell to fish"
 	chsh -s "$fish"
 fi
-
-###############################################################################
-# Wasabi								      #
-###############################################################################
-
-echo "Updated OS X defaults; remember to restart the computer"

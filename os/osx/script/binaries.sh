@@ -12,7 +12,7 @@ binaries=(
 	"moreutils"
 	"binutils"
 	"diffutils"
-	"wget --enable-iri"
+	"wget --with-iri"
 	"wdiff --with-gettext"
 	"autojump"
 	"screen"
@@ -20,21 +20,21 @@ binaries=(
 	"gzip"
 
 	# Install GNU `find`, `locate`, `updatedb`, `xargs` etc
-	"findutils --default-names"
-	"gnu-indent --default-names"
-	"gnu-which --default-names"
-	"gnu-tar --default-names"
-	"gnu-sed --default-names"
-	"gnutls --default-names"
-	"grep --default-names"
-	"ed --default-names"
+	"findutils --with-default-names"
+	"gnu-indent --with-default-names"
+	"gnu-which --with-default-names"
+	"gnu-tar --with-default-names"
+	"gnu-sed --with-default-names"
+	"gnutls --with-default-names"
+	"grep --with-default-names"
+	"ed --with-default-names"
 
 	# Image optimization software
 	"jpegoptim"
 	"optipng"
 
 	# Enable some useful scripting
-	"lua --completion"
+	"lua --with-completion"
 	"python"
 	"ruby"
 	"node"

@@ -19,6 +19,11 @@ alias la="ls -laF"
 alias lsd="ls -lF | grep --color=never '^d'"
 alias l="ls -lF"
 
+# Safer GNU utilities
+alias chown="chown --preserve-root"
+alias chmod="chmod --preserve-root"
+alias chgrp="chgrp --preserve-root"
+
 if type grunt > /dev/null
 	alias grunt="grunt --stack"
 end
@@ -32,7 +37,7 @@ for method in GET HEAD POST PUT DELETE TRACE OPTIONS
 	alias "$method"="lwp-request -m '$method'"
 end
 
-if [ $OS = 'Darwin' ]
+if [ $OS = 'osx' ]
 	# PlistBuddy alias, because sometimes `defaults` just doesn’t cut it
 	alias plistbuddy="/usr/libexec/PlistBuddy"
 

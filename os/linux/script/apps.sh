@@ -2,13 +2,12 @@
 # Application installer (via apt-get)
 #
 
-set -e
-
 echo "Installing apps..."
 
 apps=(
 	# Things that you cannot live without
 	"google-chrome-stable"
+	"spotify-client"
 	"popcorn-time"
 	"dropbox"
 	"deluge"
@@ -28,7 +27,7 @@ apps=(
 
 	# Make it sexy and swell!
 	"numix-icon-theme-utouch"
-	"numix-wallpaper-notd"
+	"numix-gtk-theme"
 )
 
 # Install apps

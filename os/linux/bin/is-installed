@@ -3,13 +3,13 @@
 # A naive implementation of checking for packages
 # installed.
 
-if [ $# -eq 1 ]; then
+if [ $# -ne 1 ]; then
   echo 'Usage: `is-installed <package>`'
   exit 1
 fi
 
-if [ hash brew 2>/dev/null ]; then
-  test -n $(brew ls --versions "$1")
+if [ hash dpkg-query 2>/dev/null ]; then
+  dpkg-query -Wf'${db:Status-abbrev}' "$1" 2>/dev/null | grep -q '^i'
 else
   echo 'Cannot identify a package querying system' >&2
   exit 0

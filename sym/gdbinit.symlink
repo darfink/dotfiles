@@ -1,0 +1,6 @@
+# Prefer intel syntax over AT&T
+set disassembly-flavor intel
+
+# Enable command history
+set history filename ~/.gdb_history
+set history save

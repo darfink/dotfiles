@@ -28,7 +28,10 @@ set --export PAGER 'less'
 # Color grep output
 set --export GREP_OPTIONS '--color=auto --exclude-dir=.svn --exclude-dir=.git --binary-files=without-match'
 
-if [ $OS = 'Darwin' ]
+# Use human friendly size format (e.g 1024MB)
+set --export BLOCK_SIZE human-readable
+
+if [ $OS = 'osx' ]
 	# Path to the GNU utilities
 	set corePath (brew --prefix coreutils)
 
@@ -45,6 +48,7 @@ end
 
 # Add binary folders to path
 set --export PATH $DOTFILES/bin $PATH
+set --export PATH $DOTFILES/os/$OS/bin $PATH
 set --export PATH $HOME/bin $PATH
 
 # Use 'ag' instead of 'find'

@@ -2,8 +2,6 @@
 # Binary installer
 #
 
-set -e
-
 echo "Installing binaries..."
 
 binaries=(
@@ -22,6 +20,7 @@ binaries=(
 
 	# Tools used for our development
 	"silversearcher-ag"
+	"exuberant-ctags"
 	"vim-gnome"
 	"dnsmasq"
 	"recode"
@@ -34,6 +33,9 @@ binaries=(
 	"par"
 	"pv"
 
+	"gnome-shell-extensions-gpaste"
+	"ubuntu-restricted-extras"
+
 	# Image optimization software
 	"jpegoptim"
 	"optipng"
@@ -44,18 +46,18 @@ binaries=(
 
 	# Bash is old-school
 	"autojump"
-	"dconf-cli"
 	"fish"
 
 	# Handle different compression algorithms
 	"p7zip-full"
+	"unrar"
 	"xz-utils"
 	"zopfli"
 )
 
 main() {
 	# Install binaries
-	sudo apt-get install -y ${binaries[@]}
+	sudo apt-get install -qy ${binaries[@]}
 
 	# Make nodejs accessible as 'node'
 	sudo ln -sf /usr/bin/nodejs /usr/bin/node

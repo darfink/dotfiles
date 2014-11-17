@@ -1,2 +1,0 @@
-# Prefer intel syntax over AT&T
-set disassembly-flavor intel

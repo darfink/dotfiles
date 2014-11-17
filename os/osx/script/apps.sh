@@ -2,8 +2,6 @@
 # Application installer (via brew-cask)
 #
 
-set -e
-
 apps=(
 	# We want X11 support
 	"xquartz"
@@ -13,13 +11,14 @@ apps=(
 	"asepsis"
 	"iterm2"
 	"alfred"
-	"sizeup"
+	"sizeup-x11"
 	"seil"
 
 	# Things you cannot live without
 	"virtualbox"
 	"popcorn-time"
 	"dropbox"
+	"spotify"
 	"deluge"
 	"skype"
 	"flux"
@@ -60,7 +59,6 @@ wget "https://github.com/newmarcel/KeepingYouAwake/releases/download/1.1/Keeping
 
 main() {
 	echo "Installing cask..."
-
 	brew tap caskroom/cask
 	brew install brew-cask
 

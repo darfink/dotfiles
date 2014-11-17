@@ -20,5 +20,5 @@ function update -d "Update the entire system"
 
 	# Update ruby gems
 	sudo gem update --system
-	sudo gem update
+	gem update
 end

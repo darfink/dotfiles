@@ -1,0 +1,109 @@
+#!/usr/bin/env bash
+
+# Execute from dotfiles directory
+cd "$(dirname "$0")"
+
+# Make dotfiles accessible everywhere
+export DOTFILES="$(pwd)"
+export OS="$(bin/os)"
+
+# Setup error handling and functions
+source "script/lib.trap.sh"
+source "script/functions.sh"
+
+install_dotfiles() {
+	local overwrite_all=$1 backup_all=false skip_all=false
+
+	for source in $(find "$DOTFILES" -maxdepth 2 -name '*.symlink*'); do
+		split=(${source//-/ })
+		destination="$HOME/."
+
+		if [ ${#split[@]} -eq 2 ]; then
+			# Target is a specific folder (eg .config, .ssh)
+			destination+="${split[1]}/"
+
+			if [ ! -e "$destination" ]; then
+				info "creating '.${split[1]}' in home"
+				mkdir "$destination"
+			fi
+		fi
+
+		destination+="$(basename "${source%.*}")"
+		link_file "$source" "$destination"
+	done
+}
+
+install_osfiles() {
+	local osdir="$DOTFILES/os/$OS"
+
+	# Ask for the administrator password upfront
+	sudo -v
+
+	# Keep-alive: update existing `sudo` time stamp until `bootstrap` has finished
+	while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+
+	# Perform OS-specific preparations
+	source "$osdir/prepare.sh";
+
+	for type in (binaries apps defaults); do
+		user " - do you want to setup $type? (y/n) "
+		read -n 1
+		echo ""
+
+		if [[ $REPLY =~ ^[Yy]$ ]]; then
+			source "$osdir/$type.sh"
+		fi
+	done
+
+	# Perform OS-specific cleanup
+	source "$osdir/cleanup.sh"
+}
+
+install_vimplugins() {
+	info "installing Vim plugins"
+	vim +PlugInstall +qall 2&> /dev/null
+}
+
+execute() {
+	# Add our “bin” directory if not available
+	add_path "$DOTFILES/bin"
+	add_path "$DOTFILES/os/$OS/bin"
+
+	if [ is-command git ]; then
+		if [ ! git rev-parse --is-inside-work-tree > /dev/null ^&1 ]; then
+			info 'setting up git repository'
+			git init
+			git remote add origin https://github.com/darfink/dotfiles.git
+			git fetch
+			git reset --hard origin/master
+		else
+			info 'ensuring the repository is up to date'
+			git pull origin master
+		fi
+	fi
+
+	if [ ! -e ~/.ssh/id_rsa.pub ]; then
+		user " - generating SSH key; please input email: "
+		read email
+
+		ssh-keygen -t rsa -C "$email"
+	fi
+
+	local force=$1
+
+	install_dotfiles $force
+	install_osfiles $force
+	install_vimplugins
+
+	echo "=========================================="
+	echo ""
+	echo "Installation complete!"
+	echo ""
+	echo "=========================================="
+}
+
+if [ "$1" == "--force" -o "$1" == "-f" ]; then
+	execute true
+else
+	execute false
+fi

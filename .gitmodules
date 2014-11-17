@@ -1,6 +1,9 @@
-[submodule "ext/osx/dockutil"]
-	path = ext/osx/dockutil
+[submodule "os/osx/ext/dockutil"]
+	path = os/osx/ext/dockutil
 	url = git://github.com/kcrawford/dockutil.git
-[submodule "ext/linux/gnome-terminal-colors-solarized"]
-	path = ext/linux/gnome-terminal-colors-solarized
+[submodule "os/linux/ext/gnome-terminal-colors-solarized"]
+	path = os/linux/ext/gnome-terminal-colors-solarized
 	url = git://github.com/Anthony25/gnome-terminal-colors-solarized.git
+[submodule "oh-my-zsh.symlink"]
+	path = oh-my-zsh.symlink
+	url = git://github.com/robbyrussell/oh-my-zsh.git
