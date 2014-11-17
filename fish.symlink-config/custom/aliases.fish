@@ -7,7 +7,7 @@ alias -- -="cd -"
 alias www="cd /var/www"
 
 # Shortcuts
-alias d="cd ~/Dropbox"
+alias db="cd ~/Dropbox"
 alias dl="cd ~/Downloads"
 alias dt="cd ~/Desktop"
 alias p="cd ~/Projects"

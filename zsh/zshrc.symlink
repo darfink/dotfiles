@@ -1,0 +1,11 @@
+# We need some basic setup first
+export DOTFILES="$HOME/.dotfiles"
+export PATH="$DOTFILES/bin:$PATH"
+export OS="$(os)"
+
+for file in $DOTFILES/zsh/{paths exports config aliases local}.zsh; do
+  [ -r "$file" ] && source "$file"
+done
+
+# Load oh-my-zsh configuration
+source "$ZSH/oh-my-zsh.sh"
