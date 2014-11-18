@@ -18,11 +18,15 @@ alias la='ls -laF'
 alias lsd='ls -lF | grep --color=never "^d"'
 alias l='ls -lF'
 
-# Safer GNU utilities
+# Safer GNU tools
 alias chown='chown --preserve-root'
 alias chmod='chmod --preserve-root'
 alias chgrp='chgrp --preserve-root'
 alias mv='mv -i'
+
+# Utility aliases
+alias stats='sort | uniq -c | sort -r'
+alias map='xargs -n1'
 
 # Lists the ten most used commands
 alias history-stat="history 0 | awk '{print \$2}' | sort | uniq -c | sort -n -r | head"

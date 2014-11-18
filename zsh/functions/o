@@ -1,0 +1,8 @@
+# Opens a directory or file using the default application
+o() {
+  if [ $# -eq 0 ]; then
+    open .
+  else
+    open $@
+  fi
+}

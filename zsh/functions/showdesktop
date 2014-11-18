@@ -1,0 +1,8 @@
+# Show desktop icons
+showdesktop() {
+  if [ $OS = 'osx' ]; then
+    defaults write com.apple.finder CreateDesktop -bool true && killall Finder
+  elif [ $OS = 'linux' ]; then
+    gsettings set org.gnome.desktop.background show-desktop-icons true
+  fi
+}

@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+# Send files directly using Sprend
+
+if [ $# -lt 2 ]; then
+  echo 'Usage: `sprend <file> <email> [<from>]`'
+  exit 1
+fi
+
+file="$1"
+email="$2"
+from="${3:-service@sprend.com}"
+
+uploadKey="$(curl 'https://www.sprend.com/generate-uploadkey.htm' 2> /dev/null)"
+
+if [ $? -ne 0 ]; then
+  echo 'Failed to generate upload key'
+  exit 1
+fi
+
+result="$(curl -s -D - -F "UploadFile=@$file" -F "fromAddress=$from" -F "EmailAddress=$email" -F "EmailAddressMulti=$email" -F "UserMessage=" -F "UseMultiView=false" "https://www.sprend.com/u?UploadKey=$uploadKey" -o /dev/null)"
+
+if [[ $? && $(echo "$result" | grep 'uploadfinished') ]]; then
+  echo "File sent to: $email"
+else
+  echo 'File could not be sent'
+  exit 1
+fi

@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+# Print the size of a file or directory
+
+if [ $# -gt 0 ]; then
+  du -sbh -- $@
+else
+  du -sbh .[^.]* *;
+fi

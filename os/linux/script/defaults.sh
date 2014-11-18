@@ -262,6 +262,9 @@ gsettings set org.gnome.GPaste max-displayed-history-size 19
 # Personal Additions
 ###############################################################################
 
+# Setup the default file type associations
+sh "os/$OS/ext/extensions.sh"
+
 if [ is-installed zsh ]; then
         shell="$(which zsh)"
 

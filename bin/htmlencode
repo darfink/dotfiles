@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+# Encode HTML entities
+
+if [ $# -ne 0 ]
+  echo "$@" | recode utf8..html
+else
+  cat | recode utf8..html
+fi

@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# Shorten a GitHub URL using git.io
+
+if [ $# -ne 2 ]; then
+  echo 'Usage: `gitio <slug> <url>`'
+  exit 1
+fi
+
+curl -i http://git.io/ -F "url=$2" -F "code=$1"

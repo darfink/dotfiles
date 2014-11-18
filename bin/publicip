@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# Print the public IP
+
+echo -n $(curl ipecho.net/plain 2> /dev/null)
+
+if [ -t 1 ]; then
+  # Print a new line unless piping
+  echo ''
+fi

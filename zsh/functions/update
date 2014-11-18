@@ -1,0 +1,25 @@
+# Update the entire system
+update() {
+  if [ $OS = 'osx' ]; then
+    # Install OS X updates
+    sudo softwareupdate -i -a
+
+    # Update the Homebrew installation
+    brew update
+    brew upgrade
+    brew cleanup
+  elif [ $OS = 'linux' ]; then
+    # Install Ubuntu updates
+    sudo apt-get update
+    sudo apt-get upgrade
+    sudo apt-get dist-upgrade
+  fi
+
+  # Update node packages
+  npm install npm -g
+  npm update -g
+
+  # Update ruby gems
+  sudo gem update --system
+  gem update
+}

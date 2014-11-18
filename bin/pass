@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# Generate a random password
+length="${1:-20}"
+
+if ! $(echo $length | grep -q -E '^[0-9]+$'); then
+  echo 'Usage: `pass <length>`'
+  exit 1
+fi
+
+tr -cd '[:alnum:]' < /dev/urandom | fold -w$length | head -n1 | tr -d '\n'
+
+if [ -t 1 ]; then
+  # Print a new line unless piping
+  echo ''
+fi

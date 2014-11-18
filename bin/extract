@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+# Create a data URI from a file
+
+if [ $# -ne 1 ]; then
+  echo 'Usage: `extract <file>`'
+  exit 1
+fi
+
+file="$1"
+
+if [ ! -f "$file" ]; then
+  echo "'$file' is not a valid file"
+  exit 1
+fi
+
+case "$file" in
+'*.tar*'|'*.tbz2'|'*.tgz')
+  tar -xvf $file;;
+'*.bz2')
+  bunzip2 $file;;
+'*.dmg')
+  hdiutil mount $file;;
+'*.gz')
+  gunzip $file;;
+'*.zip')
+  unzip $file;;
+'*.7z'|'*.msi'|'*.deb'|'*.arj'|'*.cab'|'*.iso')
+  7z x $file;;
+'*.pax')
+  cat $file | pax -r;;
+'*.pax.Z')
+  uncompress $file --stdout | pax -r;;
+'*.Z')
+  uncompress $file;;
+'*')
+  echo "'$file' cannot be extracted via extract()"
+  exit 1;;
+esac

@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+# Decode URL entities
+
+if [ $# -ne 0 ]; then
+  python -c "import sys, urllib as ul; print ul.unquote(sys.argv[1]).decode('utf8');" $@
+else
+  cat | python -c "import sys, urllib as ul; print(ul.unquote(sys.stdin.read()).decode('utf8')),;"
+fi

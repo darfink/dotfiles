@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+# Start a timer
+
+echo 'Timer started. Stop with Ctrl-D'
+date && time -p cat && date

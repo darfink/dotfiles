@@ -1,0 +1,8 @@
+# Disable the system sound
+mute() {
+  if [ $OS = 'osx' ]; then
+    osascript -e 'set volume output muted true'
+  elif [ $OS = 'linux' ]; then
+    amixer -q -D pulse set Master mute
+  fi
+}

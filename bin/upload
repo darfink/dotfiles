@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# Upload a local file
+
+if [ $# -ne 1 ]; then
+  echo 'Usage: `upload <file>`'
+  exit 1
+fi
+
+curl --upload-file "$1" https://transfer.sh/(basename "$1")

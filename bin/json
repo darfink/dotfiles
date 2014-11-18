@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+# Pretty-print JSON data
+
+if [ $# -ne 0 ]; then
+  echo "$@" | python -mjson.tool | pygmentize -l javascript
+else
+  cat | python -mjson.tool | pygmentize -l javascript
+fi
