@@ -107,6 +107,11 @@
 	# Detect copies as well as renames
 	renames = copies
 
+[github]
+
+	# Used by (among others) Gist-Vim
+	user = darfink
+
 [help]
 
 	# Automatically correct and execute mistyped commands
@@ -115,10 +120,16 @@
 [imap]
 
 	# Setup IMAP settings for Gmail
+	user = elliott.darfink@gmail.com
 	host = imaps://imap.gmail.com
 	port = 993
 	sslverify = false
 	folder = [Gmail]/Drafts
+
+[init]
+
+	# Used for example custom hooks
+	templatedir = ~/.config/git/templates
 
 [log]
 
@@ -139,6 +150,12 @@
 
 	# Only push the currently active branch
 	default = simple
+
+[user]
+
+	# Our user credentials
+	name = Elliott Linder
+	email = elliott.darfink@gmail.com
 
 # URL shorthands
 

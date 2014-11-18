@@ -262,13 +262,14 @@ gsettings set org.gnome.GPaste max-displayed-history-size 19
 # Personal Additions
 ###############################################################################
 
-if [ is-installed fish ]; then
-        fish="$(which fish)"
+if [ is-installed zsh ]; then
+        shell="$(which zsh)"
 
-        # Append fish to the shell list if not already there
-        [ sudo grep -Fq "fish" /etc/shells ] || echo "$fish" | sudo tee -a /etc/shells > /dev/null
+        # Append zsh to the shell list if not already there
+        [ sudo grep -Fxq "$shell" /etc/shells ] || echo "$shell" | sudo tee -a /etc/shells > /dev/null
 
         echo ""
-        echo "Changing default shell to fish"
-        chsh -s "$fish"
+        echo "Changing the default shell to zsh"
+        chsh -s "$shell"
 fi
+

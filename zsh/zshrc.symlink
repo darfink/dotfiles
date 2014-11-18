@@ -1,11 +1,14 @@
-# We need some basic setup first
-export DOTFILES="$HOME/.dotfiles"
-export PATH="$DOTFILES/bin:$PATH"
-export OS="$(os)"
+# Setup oh-my-zsh directories
+export ZSH="$DOTFILES/zsh/oh-my-zsh"
+export ZSH_CUSTOM="$DOTFILES/zsh/custom"
 
-for file in $DOTFILES/zsh/{paths exports config aliases local}.zsh; do
-  [ -r "$file" ] && source "$file"
+# Give all the me colors!
+export CLICOLOR=1
+
+for function in "$ZSHDIR/functions/*"; do
+  source $function
 done
 
-# Load oh-my-zsh configuration
-source "$ZSH/oh-my-zsh.sh"
+for file in $ZSHDIR/{config bindings aliases local}.zsh; do
+  [ -r "$file" ] && source "$file"
+done

@@ -16,7 +16,8 @@ binaries=(
 	"wdiff --with-gettext"
 	"autojump"
 	"screen"
-	"fish"
+	"duti"
+	"zsh"
 	"gzip"
 
 	# Install GNU `find`, `locate`, `updatedb`, `xargs` etc

@@ -1,0 +1,95 @@
+# My file associations defaults
+
+# source files open in mac vim
+org.vim.MacVim public.plain-text all
+org.vim.MacVim public.shell-script all
+org.vim.MacVim public.unix-executable all
+org.vim.MacVim com.apple.property-list all
+org.vim.MacVim .S all
+org.vim.MacVim .asp all
+org.vim.MacVim .bat all
+org.vim.MacVim .c all
+org.vim.MacVim .cc all
+org.vim.MacVim .cfg all
+org.vim.MacVim .cgi all
+org.vim.MacVim .coffee all
+org.vim.MacVim .config all
+org.vim.MacVim .cpp all
+org.vim.MacVim .cs all
+org.vim.MacVim .css all
+org.vim.MacVim .csv all
+org.vim.MacVim .dat all
+org.vim.MacVim .dtd all
+org.vim.MacVim .duti all
+org.vim.MacVim .erl all
+org.vim.MacVim .h all
+org.vim.MacVim .hpp all
+org.vim.MacVim .hrl all
+org.vim.MacVim .htm editor
+org.vim.MacVim .html editor
+org.vim.MacVim .ini all
+org.vim.MacVim .java all
+org.vim.MacVim .js all
+org.vim.MacVim .json all
+org.vim.MacVim .jsp editor
+org.vim.MacVim .less all
+org.vim.MacVim .lisp all
+org.vim.MacVim .log all
+org.vim.MacVim .m all
+org.vim.MacVim .markdown all
+org.vim.MacVim .md all
+org.vim.MacVim .pch all
+org.vim.MacVim .php all
+org.vim.MacVim .pl all
+org.vim.MacVim .py all
+org.vim.MacVim .rb all
+org.vim.MacVim .scss all
+org.vim.MacVim .sh all
+org.vim.MacVim .txt all
+org.vim.MacVim .tex all
+org.vim.MacVim .xhtml editor
+org.vim.MacVim .xml all
+org.vim.MacVim Makefile all
+org.vim.MacVim README all
+
+# image files open up in preview
+com.apple.Preview .ai all
+com.apple.Preview .bmp all
+com.apple.Preview .jpeg all
+com.apple.Preview .jpg all
+com.apple.Preview .pdf all
+com.apple.Preview .png all
+com.apple.Preview .ps all
+com.apple.Preview .psd all
+com.apple.Preview .tif all
+com.apple.Preview .tiff all
+
+# video with VLC
+org.videolan.vlc .3gp all
+org.videolan.vlc .asf all
+org.videolan.vlc .asx all
+org.videolan.vlc .avi all
+org.videolan.vlc .flv all
+org.videolan.vlc .mkv all
+org.videolan.vlc .mov all
+org.videolan.vlc .mp4 all
+org.videolan.vlc .mpg all
+org.videolan.vlc .ogm all
+org.videolan.vlc .rm all
+org.videolan.vlc .swf all
+org.videolan.vlc .vob all
+org.videolan.vlc .webm all
+org.videolan.vlc .wmv all
+
+# audio with VLC
+org.videolan.vlc .aac all
+org.videolan.vlc .aif all
+org.videolan.vlc .iff all
+org.videolan.vlc .m3u all
+org.videolan.vlc .mid all
+org.videolan.vlc .mp3 all
+org.videolan.vlc .mpa all
+org.videolan.vlc .ogg all
+org.videolan.vlc .ra all
+org.videolan.vlc .wav all
+

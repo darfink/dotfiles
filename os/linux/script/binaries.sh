@@ -17,6 +17,7 @@ binaries=(
 
 	# Generate lorem ipsum right from the prompt
 	"libtext-lorem-perl"
+	"libgnome-keyring-dev"
 
 	# Tools used for our development
 	"silversearcher-ag"
@@ -46,7 +47,7 @@ binaries=(
 
 	# Bash is old-school
 	"autojump"
-	"fish"
+	"zsh"
 
 	# Handle different compression algorithms
 	"p7zip-full"
@@ -59,13 +60,23 @@ main() {
 	# Install binaries
 	sudo apt-get install -qy ${binaries[@]}
 
-	# Make nodejs accessible as 'node'
-	sudo ln -sf /usr/bin/nodejs /usr/bin/node
+	if [ is-installed nodejs ]; then
+		# Make nodejs accessible as 'node'
+		sudo ln -sf /usr/bin/nodejs /usr/bin/node
+	fi
 
 	if [ is-installed dnsmasq ]; then
 		# Make all *.dev requests go to local host
 		sudo mkdir -p /etc/NetworkManager/dnsmasq.d
 		echo 'address=/dev/127.0.0.1' | sudo tee /etc/NetworkManager/dnsmasq.d/dev-tld > /dev/null
+	fi
+
+	if [ is-installed libgnome-keyring-dev ]; then
+		local keydir='/usr/share/doc/git/contrib/credential/gnome-keyring'
+
+		# Install the Gnome keyring and make it easily accessible
+		sudo make --directory=$keydir
+		sudo ln -sf $keydir/git-credential-gnome-keyring /usr/bin/gnome-keyring
 	fi
 
 	if [ ! -d "$HOME/.fzf" ]; then

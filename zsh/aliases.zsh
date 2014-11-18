@@ -11,7 +11,6 @@ alias db='cd ~/Dropbox'
 alias dl='cd ~/Downloads'
 alias dt='cd ~/Desktop'
 alias p='cd ~/Projects'
-alias g='git'
 alias h='history'
 
 # Different “ls” aliases
@@ -23,35 +22,52 @@ alias l='ls -lF'
 alias chown='chown --preserve-root'
 alias chmod='chmod --preserve-root'
 alias chgrp='chgrp --preserve-root'
+alias mv='mv -i'
+
+# Lists the ten most used commands
+alias history-stat="history 0 | awk '{print \$2}' | sort | uniq -c | sort -n -r | head"
 
 if [ is-command grunt ]; then
-        alias grunt='grunt --stack'
+  alias grunt='grunt --stack'
 fi
 
 # One of @janmoesen’s ProTip™s
 for method in (GET HEAD POST PUT DELETE TRACE OPTIONS); do
-        alias "$method"="lwp-request -m '$method'"
+  alias "$method"="lwp-request -m '$method'"
 done
 
-if [ $OS = 'osx' ]
-        # PlistBuddy alias, because sometimes `defaults` just doesn’t cut it
-        alias plistbuddy='/usr/libexec/PlistBuddy'
+###############################################################################
+# OS specific
+###############################################################################
 
-        # Remove duplicates in "Open With" menu
-        alias fixopenwith='/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user'
+case "$OS" in
+'osx')
+  # PlistBuddy alias, because sometimes `defaults` just doesn’t cut it
+  alias plistbuddy='/usr/libexec/PlistBuddy'
 
-        # Disable Spotlight
-        alias spotoff='sudo mdutil -a -i off'
+  # Remove duplicates in "Open With" menu
+  alias fixow='/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user'
 
-        # Enable Spotlight
-        alias spoton='sudo mdutil -a -i on'
+  # Disable Spotlight
+  alias spotoff='sudo mdutil -a -i off'
 
-        # Change working directory to the top-most Finder window location
-        cdf() {
-                cd "$(osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)')"
-        }
-else
-        # Ubuntu does not have easy C/P functions
-        alias pbpaste='xclip -selection clipboard -o'
-        alias pbcopy='xclip -selection clipboard'
-end
+  # Enable Spotlight
+  alias spoton='sudo mdutil -a -i on'
+  ;;
+'linux')
+  # Make the same functions available as OS X
+  alias pbpaste='xclip -selection clipboard -o'
+  alias pbcopy='xclip -selection clipboard'
+  alias open='xdg-open'
+  ;;
+'cygwin')
+  # Make all platforms uniformed
+  alias pbpaste='putclip'
+  alias pbcopy='getclip'
+  alias open='cygstart'
+  ;;
+esac
+
+# Easier copy-paste methods
+alias c='tr -d "\n" | pbcopy'
+alias p='pbpaste'

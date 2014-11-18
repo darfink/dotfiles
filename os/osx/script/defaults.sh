@@ -719,13 +719,13 @@ open -a "Google Chrome" --args --make-default-browser
 # Personal Additions
 ###############################################################################
 
-if [ is-installed fish ]; then
-	fish="$(brew --prefix)/bin/fish"
+if [ is-installed zsh ]; then
+	shell="$(brew --prefix)/bin/zsh"
 
-	# Append fish to the shell list if not already there
-	[ sudo grep -Fq "fish" /etc/shells ] || echo "$fish" | sudo tee -a /etc/shells > /dev/null
+	# Append zsh to the shell list if not already there
+	[ sudo grep -Fxq "$shell" /etc/shells ] || echo "$shell" | sudo tee -a /etc/shells > /dev/null
 
 	echo ""
-	echo "Changing the default shell to fish"
-	chsh -s "$fish"
+	echo "Changing the default shell to zsh"
+	chsh -s "$shell"
 fi
