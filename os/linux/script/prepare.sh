@@ -21,6 +21,7 @@ repositories=(
 	"ppa:fish-shell/release-2"
 	"ppa:mitya57/ppa"
 	"ppa:numix/ppa"
+	"ppa:pi-rho/dev"
 )
 
 # Add application repositories

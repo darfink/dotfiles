@@ -1,0 +1,11 @@
+# Flush the DNS cache
+flush() {
+  if [ $OS = 'osx' ]; then
+    dscacheutil -flushcache; and killall -HUP mDNSResponder
+  elif [ $OS = 'linux' ]; then
+    sudo service dns-clean restart
+    sudo service networking force-reload
+    sudo service nscd restart
+    sudo service dnsmasq restart
+  fi
+}

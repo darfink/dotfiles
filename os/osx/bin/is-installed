@@ -12,7 +12,7 @@ if [ hash brew 2>/dev/null ]; then
   test -n $(brew ls --versions "$1")
 else
   echo 'Cannot identify a package querying system' >&2
-  exit 0
+  exit 1
 fi
 
 exit $?

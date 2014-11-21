@@ -5,10 +5,13 @@ export ZSH_CUSTOM="$DOTFILES/zsh/custom"
 # Give all the me colors!
 export CLICOLOR=1
 
-for function in "$ZSHDIR/functions/*"; do
+for function in $ZSHDIR/functions/*; do
   source $function
 done
 
-for file in $ZSHDIR/{config bindings aliases local}.zsh; do
+for file in $ZSHDIR/{config,bindings,aliases,local}.zsh; do
   [ -r "$file" ] && source "$file"
 done
+
+# Load the NodeJS version manager (NVM)
+[ -r '~/.nvm/nvm.sh' ] && source ~/.nvm/nvm.sh

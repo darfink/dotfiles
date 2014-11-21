@@ -578,7 +578,7 @@ echo "Disabling automatic spell checking"
 defaults write com.apple.mail SpellCheckingBehavior -string "NoSpellCheckingEnabled"
 
 ###############################################################################
-# Terminal & iTerm 2
+# Terminal
 ###############################################################################
 
 echo ""
@@ -586,14 +586,6 @@ echo "Enabling UTF-8 ONLY in Terminal.app and setting the Pro theme by default"
 defaults write com.apple.terminal StringEncodings -array 4
 defaults write com.apple.Terminal "Default Window Settings" -string "Pro"
 defaults write com.apple.Terminal "Startup Window Settings" -string "Pro"
-
-echo ""
-echo "Don’t display the annoying prompt when quitting iTerm"
-defaults write com.googlecode.iterm2 PromptOnQuit -bool false
-
-echo ""
-echo "Installing the Solarized Dark theme for iTerm"
-open "os/$OS/ext/Solarized Dark.itermcolors"
 
 ###############################################################################
 # Time Machine
@@ -654,6 +646,64 @@ echo "Disabling continuous spell checking"
 defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "continuousSpellCheckingEnabled" -bool false
 
 ###############################################################################
+# XQuartz (X11)
+###############################################################################
+
+echo ""
+echo "Enabling X11 clipboard synchronization
+defaults write org.macosforge.xquartz.X11 sync_clipboard_to_pasteboard -bool true
+defaults write org.macosforge.xquartz.X11 sync_pasteboard -bool true
+defaults write org.macosforge.xquartz.X11 sync_pasteboard_to_clipboard -bool true
+defaults write org.macosforge.xquartz.X11 sync_pasteboard_to_primary -bool true
+defaults write org.macosforge.xquartz.X11 sync_primary_on_select -bool false
+
+echo ""
+echo "Setting focus to follow mouse"
+defaults org.macosforge.xquartz.X11 wm_ffm -bool true
+
+echo ""
+echo "Setting Z Shell to default X11 shell"
+defaults write org.macosforge.xquartz.X11 login_shell -string "$(brew --prefix)/bin/zsh"
+
+###############################################################################
+# iTerm2
+###############################################################################
+
+echo ""
+echo "Don’t display the annoying prompt when quitting iTerm"
+defaults write com.googlecode.iterm2 PromptOnQuit -bool false
+
+echo ""
+echo "Installing the Solarized Dark theme for iTerm"
+open "os/$OS/ext/Solarized Dark.itermcolors"
+
+echo ""
+echo "Make iTerm report itself as a 256-color terminal"
+plistc 'Set :"New Bookmarks":0:"Terminal Type" xterm-256color' ~/Library/Preferences/com.googlecode.iterm2.plist
+
+echo ""
+echo "Setting Powerline compatible fonts (Inconsolata)"
+plistc 'Set :"New Bookmarks":0:"Non Ascii Font" InconsolataForPowerline-dz 12' ~/Library/Preferences/com.googlecode.iterm2.plist
+plistc 'Set :"New Bookmarks":0:"Normal Font" InconsolataForPowerline-dz 12' ~/Library/Preferences/com.googlecode.iterm2.plist
+
+echo ""
+echo "Hiding excessive UI elements for sleeker experience"
+defaults write com.googlecode.iterm2 HideActivityIndicator -bool true
+defaults write com.googlecode.iterm2 HideMenuBarInFullscreen -bool true
+defaults write com.googlecode.iterm2 HideTab -bool true
+defaults write com.googlecode.iterm2 UseBorder -bool false
+defaults write com.googlecode.iterm2 WindowStyle -int 0
+defaults write com.googlecode.iterm2 ShowPaneTitles -bool false
+
+echo ""
+echo "Enabling triple click for selecting fully wrapped lines"
+defaults write com.googlecode.iterm2 TripleClickSelectsFullWrappedLines -bool true
+
+echo ""
+echo "Disabling Lion style full screen mode"
+defaults write com.googlecode.iterm2 UseLionStyleFullscreen -bool false
+
+###############################################################################
 # Alfred
 ###############################################################################
 
@@ -695,9 +745,7 @@ defaults write com.irradiatedsoftware.SizeUp X11SupportEnabled -bool true
 
 echo ""
 echo "Mapping caps lock to escape"
-defaults write org.pqrs.Seil sysctl -dict \
-  enable_capslock -bool true \
-  keycode_capslock -int 53
+defaults write org.pqrs.Seil sysctl -dict enable_capslock -bool true keycode_capslock -int 53
 
 ###############################################################################
 # Google Chrome

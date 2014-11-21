@@ -25,6 +25,7 @@ binaries=(
 	"vim-gnome"
 	"dnsmasq"
 	"recode"
+	"tmux"
 	"sshfs"
 	"xclip"
 	"tree"
@@ -41,10 +42,6 @@ binaries=(
 	"jpegoptim"
 	"optipng"
 
-	# NodeJS is always essential
-	"nodejs"
-	"npm"
-
 	# Bash is old-school
 	"autojump"
 	"zsh"
@@ -59,11 +56,6 @@ binaries=(
 main() {
 	# Install binaries
 	sudo apt-get install -qy ${binaries[@]}
-
-	if [ is-installed nodejs ]; then
-		# Make nodejs accessible as 'node'
-		sudo ln -sf /usr/bin/nodejs /usr/bin/node
-	fi
 
 	if [ is-installed dnsmasq ]; then
 		# Make all *.dev requests go to local host

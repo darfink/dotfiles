@@ -1,5 +1,6 @@
 text=(
   application/javascript
+  application/json
   application/x-python
   application/x-sh
   text/asp

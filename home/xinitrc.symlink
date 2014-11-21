@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+# Disable the annoying beeps
+xset b off &

@@ -10,3 +10,6 @@
 [submodule "zsh/custom/plugins/zsh-syntax-highlighting"]
 	path = zsh/custom/plugins/zsh-syntax-highlighting
 	url = git://github.com/zsh-users/zsh-syntax-highlighting.git
+[submodule "nvm/nvm.symlink"]
+	path = nvm/nvm.symlink
+	url = git://github.com/creationix/nvm.git

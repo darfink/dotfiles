@@ -5,4 +5,4 @@
 # `less` with options to preserve color and line numbers, unless the output is
 # small enough for one screen.
 
-tree -aC -I '.git|node_modules|bower_components' --dirsfirst $argv | less -FRNX
+tree -aC -I '.git|node_modules|bower_components' --dirsfirst $@ | less -FRNX

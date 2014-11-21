@@ -1,0 +1,8 @@
+# Some OS X specific settings
+if-shell 'test "$(uname)" = "Darwin"' 'source ~/.dotfiles/tmux/tmux-osx.conf'
+
+# Enable mouse support
+set-window-option -g mode-mouse on
+set-option -g mouse-select-pane on
+set-option -g mouse-resize-pane on
+set-option -g mouse-select-window on

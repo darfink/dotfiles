@@ -1,3 +1,6 @@
+# Make brew doctor happy
+add_path /usr/local/bin
+
 # Check for command line tools
 xcode-select -p
 if [[ $? -ne 0 ]]; then
@@ -22,19 +25,12 @@ sudo softwareupdate -i -a
 if test ! $(which brew); then
   echo "Installing homebrew..."
   ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-
-  echo "Creating 'brew' user group"
-  sudo dseditgroup -o create brew
-  sudo chgrp -R brew /usr/local
-  sudo chmod -R g+w /usr/local
-  sudo chgrp -R brew /Library/Caches/Homebrew
-  sudo chmod -R g+w /Library/Caches/Homebrew
 fi
 
-# Check if the user is part of the 'brew' group
-if [ ! dseditgroup -o checkmember -m $USER brew ]; then
-  echo "Adding $USER to user group 'brew'"
-  sudo dseditgroup -o edit -a $USER -t user brew
+# Check if the user is part of the 'admin' group
+if [ ! dseditgroup -o checkmember -m $USER admin ]; then
+  echo "Adding $USER to user group 'admin'"
+  sudo dseditgroup -o edit -a $USER -t user admin
 fi
 
 # Update homebrew

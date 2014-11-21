@@ -40,6 +40,7 @@ Plug 'hail2u/vim-css3-syntax', { 'for': 'css' }
 Plug 'groenewege/vim-less', { 'for': 'less' }
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+Plug 'elzr/vim-json', { 'for': 'json' }
 Plug 'kien/ctrlp.vim'
 Plug 'FelikZ/ctrlp-py-matcher'
 Plug 'kana/vim-textobj-user'
@@ -144,6 +145,9 @@ if has('gui_running')
   set background=light
   colorscheme solarized
 
+  " Remove any toolbars
+  set guioptions=-t
+
   if GetRunningOS() == 'osx'
     set guifont=Inconsolata\ for\ Powerline:h15
   else
@@ -198,6 +202,7 @@ let g:syntastic_warning_symbol = '⚠'
 let g:syntastic_full_redraws = 1
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_javascript_checkers = ['jshint']
+let g:syntastic_json_checkers = ['jsonlint']
 let g:syntastic_scss_checkers = ['sass']
 
 " Better Whitespace
@@ -214,12 +219,15 @@ vmap <enter> <plug>(EasyAlign)
 " CtrlP
 let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
 let g:ctrlp_clear_cache_on_exit = 0
-let g:ctrlp_working_path_mode = 'r'
+let g:ctrlp_working_path_mode = ''
 let g:ctrlp_cmd = 'CtrlPBuffer'
 
 " Airline
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
+
+" JSON
+let g:vim_json_syntax_conceal = 1
 
 " NeoComplete
 source ~/.vim/neocomplete.vim

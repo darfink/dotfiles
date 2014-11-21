@@ -31,12 +31,12 @@ alias map='xargs -n1'
 # Lists the ten most used commands
 alias history-stat="history 0 | awk '{print \$2}' | sort | uniq -c | sort -n -r | head"
 
-if [ is-command grunt ]; then
+if is-command grunt; then
   alias grunt='grunt --stack'
 fi
 
 # One of @janmoesen’s ProTip™s
-for method in (GET HEAD POST PUT DELETE TRACE OPTIONS); do
+for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
   alias "$method"="lwp-request -m '$method'"
 done
 

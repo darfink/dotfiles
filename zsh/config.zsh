@@ -37,6 +37,9 @@ source "$ZSH/oh-my-zsh.sh"
 # Miscellaneous
 ###############################################################################
 
+# Make ZSH completion color the same as ls
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}  
+
 # Enable ctrl+s in Vim by disabling flow control and sending of start/stop characters
 stty -ixon -ixoff
 
