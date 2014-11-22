@@ -45,3 +45,5 @@ source "$dir/defaults.sh"
 # Remove outdated versions from the cellar
 brew cleanup
 brew prune
+
+git config -f ~/.gitconfig.local credential.helper osxkeychain

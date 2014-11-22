@@ -1,15 +1,18 @@
-[submodule "os/osx/ext/dockutil"]
+[submodule "dockutil"]
 	path = os/osx/ext/dockutil
 	url = git://github.com/kcrawford/dockutil.git
-[submodule "os/linux/ext/gnome-terminal-colors-solarized"]
+[submodule "gnome-terminal-colors-solarized"]
 	path = os/linux/ext/gnome-terminal-colors-solarized
 	url = git://github.com/Anthony25/gnome-terminal-colors-solarized.git
-[submodule "zsh/oh-my-zsh"]
+[submodule "oh-my-zsh"]
 	path = zsh/oh-my-zsh
 	url = git://github.com/robbyrussell/oh-my-zsh.git
-[submodule "zsh/custom/plugins/zsh-syntax-highlighting"]
+[submodule "zsh-syntax-highlighting"]
 	path = zsh/custom/plugins/zsh-syntax-highlighting
 	url = git://github.com/zsh-users/zsh-syntax-highlighting.git
-[submodule "nvm/nvm.symlink"]
+[submodule "nvm"]
 	path = nvm/nvm.symlink
 	url = git://github.com/creationix/nvm.git
+[submodule "powerline-fonts"]
+	path = fonts
+	url = git://github.com/Lokaltog/powerline-fonts.git

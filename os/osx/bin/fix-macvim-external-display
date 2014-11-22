@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+rm ~/Library/Preferences/org.vim.MacVim.LSSharedFileList.plist && \
+rm ~/Library/Preferences/org.vim.MacVim.plist && \
+echo 'Files deleted - you may have to restart OSX'

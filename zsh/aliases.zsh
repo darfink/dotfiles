@@ -26,6 +26,7 @@ alias mv='mv -i'
 
 # Utility aliases
 alias stats='sort | uniq -c | sort -r'
+alias gitjk='history 10 | tac | gitjk_cmd'
 alias map='xargs -n1'
 
 # Lists the ten most used commands

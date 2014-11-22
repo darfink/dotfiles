@@ -48,12 +48,3 @@ if [ -e "$HOME/.dir_colors" ]; then
         eval $(dircolors -c "$HOME/.dir_colors" | sed 's/>&\/dev\/null$//')
 fi
 
-# Configure the Git credential helper
-case "$OS" in
-'osx')
-  git config --global credential.helper osxkeychain;;
-'linux')
-  git config --global credential.helper gnome-keyring;;
-'cygwin')
-  git config --global credential.helper winstore;;
-esac

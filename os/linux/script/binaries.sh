@@ -66,9 +66,9 @@ main() {
 	if [ is-installed libgnome-keyring-dev ]; then
 		local keydir='/usr/share/doc/git/contrib/credential/gnome-keyring'
 
-		# Install the Gnome keyring and make it easily accessible
+		# Install the Gnome keyring and make it git default
 		sudo make --directory=$keydir
-		sudo ln -sf $keydir/git-credential-gnome-keyring /usr/bin/gnome-keyring
+		git config -f ~/.gitconfig.local credential.helper "$keydir/git-credential-gnome-keyring"
 	fi
 
 	if [ ! -d "$HOME/.fzf" ]; then

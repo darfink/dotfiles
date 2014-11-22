@@ -18,6 +18,7 @@ add_path "$DOTFILES/bin"
 
 # Cache the current OS
 export OS="$(os)"
+export OSDIR="$DOTFILES/os/$OS"
 
 if [ $OS = 'osx' ]; then
         # Add some brew specific paths
@@ -74,7 +75,7 @@ fi
 # Avoid this superseding other settings
 unset LC_ALL
 
-# Use UTF-8 in every case, and Swedish settings but never the Swedish language
+# Use UTF-8 in every case, and prefer Swedish settings but never the Swedish language
 
 # US influenced settings
 export LC_MESSAGES='en_US.UTF-8'    # Always US English language

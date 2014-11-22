@@ -89,6 +89,10 @@ echo "Changing the default wallpaper"
 sqlite3 '~/Library/Application Support/Dock/desktoppicture.db' "UPDATE data SET value = '$DOTFILES/ext/wallpaper.jpg'"
 
 echo ""
+echo "Disabling “application crashed” dialog"
+defaults write com.apple.CrashReporter DialogType none
+
+echo ""
 echo "Disabling scheduled updates (do it manually instead)"
 defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 0
 
@@ -212,7 +216,7 @@ sudo defaults write /Library/Preferences/com.apple.windowserver DisplayResolutio
 ###############################################################################
 
 echo ""
-echo "Disabling the sudden motion sensor as it's not useful for SSDs"
+echo "Disabling the sudden motion sensor (not useful for SSDs)"
 sudo pmset -a sms 0
 
 echo ""
@@ -229,6 +233,17 @@ sudo pmset -a standbydelay 86400
 echo ""
 echo "Disabling hibernation (only use sleep mode)"
 sudo pmset -a hibernatemode 0
+
+echo ""
+echo "Setting (battery) display sleep to 5 minutes and (disk) sleep to 10 minutes"
+sudo pmset -b displaysleep 5
+sudo pmset -b disksleep 10
+sudo pmset -b sleep 10
+
+echo ""
+echo "Setting (charger) display sleep to 15 minutes and disabling disk sleep"
+sudo pmset -c displaysleep 15
+sudo pmset -c disksleep 0
 
 echo ""
 echo "Turn off keyboard illumination when computer is not used for 5 minutes"
@@ -628,6 +643,18 @@ echo ""
 echo "Enabling the debug menu in Disk Utility"
 defaults write com.apple.DiskUtility DUDebugMenuEnabled -bool true
 defaults write com.apple.DiskUtility advanced-image-options -bool true
+###############################################################################
+# TextEdit
+###############################################################################
+
+echo ""
+echo "Using plain text mode for new TextEdit documents"
+defaults write com.apple.TextEdit RichText -int 0
+
+echo ""
+echo "Always opening (and saving) files as UTF-8"
+defaults write com.apple.TextEdit PlainTextEncoding -int 4
+defaults write com.apple.TextEdit PlainTextEncodingForWrite -int 4
 
 ###############################################################################
 # Messages
@@ -676,6 +703,8 @@ defaults write com.googlecode.iterm2 PromptOnQuit -bool false
 echo ""
 echo "Installing the Solarized Dark theme for iTerm"
 open "os/$OS/ext/Solarized Dark.itermcolors"
+plistc "Add :'Custom Color Presets':'Solarized Dark' dict" ~/Library/Preferences/com.googlecode.iterm2.plist
+plistc "Merge 'iTerm2/Solarized Dark.itermcolors' :'Custom Color Presets':'Solarized Dark'" ~/Library/Preferences/com.googlecode.iterm2.plist
 
 echo ""
 echo "Make iTerm report itself as a 256-color terminal"

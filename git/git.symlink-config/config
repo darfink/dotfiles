@@ -57,6 +57,9 @@
 	# List contributors with number of commits
 	contributors = shortlog --summary --numbered
 
+	# Undos the most recent git command
+	undo = !gitjk "$@"
+
 [apply]
 
 	# Detect whitespace errors when applying a patch
@@ -125,6 +128,11 @@
 	port = 993
 	sslverify = false
 	folder = [Gmail]/Drafts
+
+[include]
+
+	# Local git configuration
+	path = ~/.gitconfig.local
 
 [init]
 
