@@ -13,28 +13,31 @@ fail() {
 }
 
 is_command() {
-  hash "$@" 2> /dev/null
+  hash "$1" 2> /dev/null
 }
 
 install_prerequisites() {
+  # Check for git here!!!
+
   if ! is_command easy_install; then
     # OS X is bundled with this, so it never reaches here
     info 'dependency: installing easy_install'
     sudo apt-get install python-setuptools || exit 1
   fi
 
-  if ! is_command pip; then
-    info 'dependency: installing pip'
-    sudo easy_install pip || exit 1
-  fi
-
   if ! is_command invoke; then
     info 'dependency: installing invoke'
-    sudo pip install invoke || exit 1
+    sudo easy_install invoke || exit 1
   fi
 }
 
 if [ ! -f "$HOME/.dotlock" ]; then
+  # Ask for the administrator password upfront
+  sudo -v
+
+  # Keep-alive: update existing `sudo` time stamp until `install.sh` has finished
+  while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+
   info 'installing dotfiles for the first time'
 
   if ! install_prerequisites; then
@@ -63,9 +66,14 @@ if [ ! -f "$HOME/.dotlock" ]; then
     exit 1
   fi
 
-  if invoke install --directory="$directory" "$@"; then
+  # Ensure it is an absolute path
+  directory="$(readlink -f "$directory")"
+
+  if invoke install --target="$directory" "$@"; then
     # Add our 'lock' to prevent duplicates
     echo "$directory" > "$HOME/.dotlock"
+  else
+    rm -rf "$directory"
   fi
 else
   fail "dotfiles are already installed: $(cat "$HOME/.dotlock")"

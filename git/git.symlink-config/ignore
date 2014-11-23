@@ -25,6 +25,8 @@ Thumbs.db
 *~
 *.sw?
 .netrwhist
+.agignore
 
 # Common name for ctags
 .tags
+tags

@@ -71,6 +71,8 @@ set exrc
 set fileformats+=mac
 set guioptions+=c
 set guioptions-=T
+set guioptions-=L
+set guioptions-=r
 set hidden
 set history=1000
 set hlsearch
@@ -147,9 +149,6 @@ syntax sync minlines=256
 if has('gui_running')
   set background=light
   colorscheme solarized
-
-  " Remove any toolbars
-  set guioptions=-t
 
   if GetRunningOS() == 'osx'
     set guifont=Inconsolata\ for\ Powerline:h15
@@ -287,6 +286,10 @@ if executable('ag')
   " Use ag in our file navigation plugins for faster browsing
   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 endif
+
+# Walk through wrapped lines
+nnoremap <expr> k (v:count == 0 ? 'gk' : 'k')
+nnoremap <expr> j (v:count == 0 ? 'gj' : 'j')
 
 " Make Y consistent with C and D.  See :help Y.
 nnoremap Y y$

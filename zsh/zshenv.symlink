@@ -21,30 +21,32 @@ export OS="$(os)"
 export OSDIR="$DOTFILES/os/$OS"
 
 if [ $OS = 'osx' ]; then
-        # Add some brew specific paths
-        add_path "$(brew --prefix coreutils)/libexec/gnubin"
-        add_path "$(brew --prefix ruby)/bin"
+	# Add some brew specific paths
+	add_path "$(brew --prefix coreutils)/libexec/gnubin"
+	add_path "$(brew --prefix ruby)/bin"
 
-        # Add Homebrew directories
-        add_path /usr/local/sbin
-        add_path /usr/local/bin
+	# Add Homebrew directories
+	add_path /usr/local/sbin
+	add_path /usr/local/bin
 else
   # Add local gem installations to path
   add_path "$(ruby -rubygems -e 'puts Gem.user_dir')/bin"
 fi
 
 # Add binary folders to path
-add_path "$DOTFILES/os/$OS/bin"
+add_path "$OSDIR/bin"
 add_path "$HOME/bin"
 
 ###############################################################################
 # Exports
 ###############################################################################
 
-if [ -n "$DISPLAY" -a "$TERM" == "xterm" ]; then
-  # Enable 256 colors support
-  export TERM='xterm-256color'
+if [[ $COLORTERM = gnome-* && $TERM = xterm ]] && infocmp gnome-256color >/dev/null 2>&1; then
+	export TERM='gnome-256color'
+elif infocmp xterm-256color >/dev/null 2>&1; then
+	export TERM='xterm-256color'
 fi
+
 
 # Make Vim the default editor
 export EDITOR='vim'
@@ -61,11 +63,11 @@ export BLOCK_SIZE='human-readable'
 export FZF_DEFAULT_COMMAND='ag -l -g ""'
 
 if [ $OS = 'osx' ]; then
-        # We want to use the GNU man pages
-        export MANPATH="$(brew --prefix coreutils)/libexec/gnuman:$MANPATH"
+	# We want to use the GNU man pages
+	export MANPATH="$(brew --prefix coreutils)/libexec/gnuman:$MANPATH"
 
-        # Always install to “/Applications” with brew cask
-        export HOMEBREW_CASK_OPTS='--appdir=/Applications'
+	# Always install to “/Applications” with brew cask
+	export HOMEBREW_CASK_OPTS='--appdir=/Applications'
 fi
 
 ###############################################################################
@@ -80,22 +82,22 @@ unset LC_ALL
 # US influenced settings
 export LC_MESSAGES='en_US.UTF-8'    # Always US English language
 export LC_NUMERIC='en_US.UTF-8'     # Use dots instead of commas
-export LC_TIME='en_US.UTF-8'        # Have to learn ISO-8601
+export LC_TIME='en_US.UTF-8'	    # Have to learn ISO-8601
 
 # SE influenced settings
 export LC_ADDRESS='sv_SE.UTF-8'     # Address in Swedish order
 export LC_COLLATE='sv_SE.UTF-8'     # Sort order ('ö' is after 'z')
-export LC_CTYPE='sv_SE.UTF-8'       # Support Swedish characters
+export LC_CTYPE='sv_SE.UTF-8'	    # Support Swedish characters
 export LC_MEASUREMENT='sv_SE.UTF-8' # Prefer the metric system
 export LC_MONETARY='sv_SE.UTF-8'    # SEK is the currency we use
-export LC_NAME='sv_SE.UTF-8'        # Present names with our style
-export LC_PAPER='sv_SE.UTF-8'       # Print documents in A4 format
+export LC_NAME='sv_SE.UTF-8'	    # Present names with our style
+export LC_PAPER='sv_SE.UTF-8'	    # Print documents in A4 format
 export LC_TELEPHONE='sv_SE.UTF-8'   # Just like yellow pages
 
 # Fallback - just in case
 export LANG='en_US.UTF-8'
 
-if [[ -z "${TZ}" ]] ; then
+if [[ -z "${TZ}" ]]; then
   # Where I reside for the time being
   export TZ='Europe/Stockholm'
 fi

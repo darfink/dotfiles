@@ -12,3 +12,6 @@ vim/*/undo/
 # Fish shell
 generated_completions/
 fish_history
+
+# Python generated files
+*.pyc

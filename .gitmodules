@@ -13,6 +13,6 @@
 [submodule "nvm"]
 	path = nvm/nvm.symlink
 	url = git://github.com/creationix/nvm.git
-[submodule "powerline-fonts"]
+[submodule "fonts"]
 	path = fonts
 	url = git://github.com/Lokaltog/powerline-fonts.git
