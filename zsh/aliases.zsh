@@ -36,10 +36,17 @@ if is-command grunt; then
   alias grunt='grunt --stack'
 fi
 
-# One of @janmoesen’s ProTip™s
-for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
-  alias "$method"="lwp-request -m '$method'"
-done
+if is-command lwp-request; then
+  # One of @janmoesen’s ProTip™s
+  for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
+    alias "$method"="lwp-request -m '$method'"
+  done
+fi
+
+if is-command patool; then
+  alias compress='patool create --verbose'
+  alias extract='patool extract'
+fi
 
 ###############################################################################
 # OS specific
@@ -60,9 +67,14 @@ case "$OS" in
   alias spoton='sudo mdutil -a -i on'
   ;;
 'linux')
-  # Make the same functions available as OS X
-  alias pbpaste='xclip -selection clipboard -o'
-  alias pbcopy='xclip -selection clipboard'
+  if is-command xclip; then
+    alias pbpaste='xclip -selection clipboard -o'
+    alias pbcopy='xclip -selection clipboard'
+  elif is-command xsel; then
+    alias pbpaste='xsel --clipboard --output'
+    alias pbcopy='xsel --clipboard --input'
+  fi
+
   alias open='xdg-open'
   ;;
 'cygwin')

@@ -22,7 +22,7 @@ install_prerequisites() {
   if ! is_command easy_install; then
     # OS X is bundled with this, so it never reaches here
     info 'dependency: installing easy_install'
-    sudo apt-get install python-setuptools || exit 1
+    sudo apt-get install -y python-setuptools || exit 1
   fi
 
   if ! is_command invoke; then
@@ -46,7 +46,7 @@ if [ ! -f "$HOME/.dotlock" ]; then
   fi
 
   while true; do
-    user 'specify target directory (press [Enter] for ~/.dotfiles):'
+    user 'specify installation directory (press [Enter] for ~/.dotfiles):'
     read directory
 
     if [ -z "$directory" ]; then
@@ -58,6 +58,9 @@ if [ ! -f "$HOME/.dotlock" ]; then
     fail "could not create directory: $directory"
   done
 
+  # Ensure it is an absolute path
+  directory="$(readlink -f "$directory")"
+
   # Move to our dotfiles directory
   cd "$directory" || exit 1
 
@@ -66,16 +69,17 @@ if [ ! -f "$HOME/.dotlock" ]; then
     exit 1
   fi
 
-  # Ensure it is an absolute path
-  directory="$(readlink -f "$directory")"
+  # We need to ensure these paths are available
+  export PATH="$directory/bin:$PATH"
+  export PATH="$directory/os/$(os)/bin:$PATH"
 
-  if invoke install --target="$directory" "$@"; then
+  if invoke install "$@"; then
     # Add our 'lock' to prevent duplicates
     echo "$directory" > "$HOME/.dotlock"
   else
     rm -rf "$directory"
   fi
 else
-  fail "dotfiles are already installed: $(cat "$HOME/.dotlock")"
+  fail "dotfiles are already installed in $(cat "$HOME/.dotlock")"
   exit 1
 fi

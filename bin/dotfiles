@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+# Execute from dotfiles directory
+cd "$(dirname "$0")../"
+
+invoke "$@"

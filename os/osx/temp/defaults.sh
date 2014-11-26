@@ -366,6 +366,21 @@ defaults write com.apple.dock wvous-bl-corner -int 5
 defaults write com.apple.dock wvous-bl-modifier -int 0
 
 ###############################################################################
+# SSH
+###############################################################################
+
+echo ""
+echo "Enabling SSH daemon (aka remote login)"
+sudo systemsetup -setremotelogin on
+
+# Create the authorization file if it doesn't exist
+touch ~/.ssh/authorized_keys
+
+echo ""
+echo "Allowing only public-key authentication"
+sudo sed -E 's/^#?(PasswordAuthentication|ChallengeResponseAuthentication).*$/\1 no/' /etc/sshd_config
+
+###############################################################################
 # Spotlight
 ###############################################################################
 
@@ -643,6 +658,7 @@ echo ""
 echo "Enabling the debug menu in Disk Utility"
 defaults write com.apple.DiskUtility DUDebugMenuEnabled -bool true
 defaults write com.apple.DiskUtility advanced-image-options -bool true
+
 ###############################################################################
 # TextEdit
 ###############################################################################
@@ -767,6 +783,14 @@ defaults write com.irradiatedsoftware.SizeUp ShowPrefsOnNextStart -bool false
 echo ""
 echo "Allow X11 windows to be modified"
 defaults write com.irradiatedsoftware.SizeUp X11SupportEnabled -bool true
+
+###############################################################################
+# Skype
+###############################################################################
+
+defaults write com.skype.skype SKShowWelcomeOnLogin -bool false
+defaults write com.skype.skype ShowDialpadOnLogin -bool false
+defaults write com.skype.skype SKDefaultPSTNCountryCode -string 'sv'
 
 ###############################################################################
 # Seil

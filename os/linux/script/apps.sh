@@ -28,6 +28,10 @@ apps=(
 	# Make it sexy and swell!
 	"numix-icon-theme-utouch"
 	"numix-gtk-theme"
+
+	# Quicklook for Nautilus
+	"gloobus-preview"
+	"gloobus-sushi"
 )
 
 # Install apps

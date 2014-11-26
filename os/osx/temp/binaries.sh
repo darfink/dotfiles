@@ -22,6 +22,7 @@ binaries=(
 	"zsh"
 	"gzip"
 	"lesspipe"
+	"source-highlight"
 
 	# Install GNU `find`, `locate`, `updatedb`, `xargs` etc
 	"findutils --with-default-names"

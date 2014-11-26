@@ -1,10 +1,6 @@
 # My file associations defaults
 
 # source files open in mac vim
-org.vim.MacVim public.plain-text all
-org.vim.MacVim public.shell-script all
-org.vim.MacVim public.unix-executable all
-org.vim.MacVim com.apple.property-list all
 org.vim.MacVim .S all
 org.vim.MacVim .asp all
 org.vim.MacVim .bat all
@@ -41,6 +37,7 @@ org.vim.MacVim .md all
 org.vim.MacVim .pch all
 org.vim.MacVim .php all
 org.vim.MacVim .pl all
+org.vim.MacVim .plist editor
 org.vim.MacVim .py all
 org.vim.MacVim .rb all
 org.vim.MacVim .scss all
@@ -50,7 +47,11 @@ org.vim.MacVim .tex all
 org.vim.MacVim .xhtml editor
 org.vim.MacVim .xml all
 org.vim.MacVim Makefile all
+org.vim.MacVim Rakefile all
 org.vim.MacVim README all
+org.vim.MacVim public.plain-text all
+org.vim.MacVim public.shell-script all
+org.vim.MacVim public.unix-executable all
 
 # image files open up in preview
 com.apple.Preview .ai all

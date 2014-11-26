@@ -10,7 +10,7 @@ defutf8 on
 # Use a pretty status line by default (see: http://superuser.com/a/51995)
 hardstatus alwayslastline "%{b kw}%H %{r}%1` %{w}| %{g}%c %{w}| %{y}%d.%m.%Y %{w}| %{g}%l %{w}| %{-b kw}%u %-Lw%{= rW}%50> %n%f %t %{-}%+Lw%<"
 
-# Use 256 colors instead of the default 8.
+# Use 256 colors instead of the default 8
 attrcolor b ".I"
 termcapinfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
 defbce on

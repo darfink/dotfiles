@@ -4,7 +4,7 @@ filetype off
 " Load our custom defined Vim functions
 source ~/.vim/functions.vim
 
-let mapleader=" "
+let mapleader="\<space>"
 
 let plugPath=expand('~/.vim/autoload/plug.vim')
 
@@ -26,6 +26,7 @@ Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-vinegar'
+Plug 'tpope/vim-characterize'
 Plug 'bling/vim-airline'
 Plug 'junegunn/vim-easy-align'
 Plug 'altercation/vim-colors-solarized'
@@ -35,6 +36,7 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'valloric/MatchTagAlways'
 Plug 'Raimondi/delimitMate'
 Plug 'ap/vim-you-keep-using-that-word'
+Plug 'nathanaelkane/vim-indent-guides'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'hail2u/vim-css3-syntax', { 'for': 'css' }
 Plug 'groenewege/vim-less', { 'for': 'less' }
@@ -107,7 +109,6 @@ set smarttab
 set softtabstop=2
 set synmaxcol=500
 set tags+=.tags
-set t_Co=256
 set tabpagemax=50
 set tabstop=2
 set ttimeout
@@ -163,6 +164,9 @@ endif
 " We want to use a more subtle highlight color
 highlight ColorColumn ctermbg=Black guibg=#EDE7D5
 let &colorcolumn=join(range(81,999),",")
+
+" Extend % operator to HTML tags
+runtime macros/matchit.vim
 
 " Setup Vim directories (backup, view, swap, undo)
 call InitializeDirectories()

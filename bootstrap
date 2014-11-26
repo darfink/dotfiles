@@ -7,32 +7,6 @@ cd "$(dirname "$0")"
 export DOTFILES="$(pwd)"
 export OS="$(bin/os)"
 
-# Setup error handling and functions
-source "script/lib.trap.sh"
-source "script/functions.sh"
-
-install_dotfiles() {
-	local overwrite_all=$1 backup_all=false skip_all=false
-
-	for source in $(find "$DOTFILES" -maxdepth 2 -name '*.symlink*'); do
-		split=(${source//-/ })
-		destination="$HOME/."
-
-		if [ ${#split[@]} -eq 2 ]; then
-			# Target is a specific folder (eg .config, .ssh)
-			destination+="${split[1]}/"
-
-			if [ ! -e "$destination" ]; then
-				info "creating '.${split[1]}' in home"
-				mkdir "$destination"
-			fi
-		fi
-
-		destination+="$(basename "${source%.*}")"
-		link_file "$source" "$destination"
-	done
-}
-
 install_osfiles() {
 	local osdir="$DOTFILES/os/$OS"
 
@@ -89,11 +63,10 @@ install_scripts() {
     gem install sass
     gem install github-auth
   fi
-}
 
-install_vimplugins() {
-	info "installing Vim plugins"
-	vim +PlugInstall +qall 2&> /dev/null
+  if [ is-command pip ]; then
+    pip install patool
+  fi
 }
 
 execute() {

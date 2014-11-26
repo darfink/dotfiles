@@ -26,6 +26,9 @@ Thumbs.db
 *.sw?
 .netrwhist
 .agignore
+.vimrc
+
+npm-debug.log
 
 # Common name for ctags
 .tags

@@ -35,6 +35,8 @@ binaries=(
 	"par"
 	"pv"
 
+	"source-highlight"
+
 	"gnome-shell-extensions-gpaste"
 	"ubuntu-restricted-extras"
 

@@ -14,11 +14,14 @@ for file in $ZSHDIR/{config,bindings,aliases,local}.zsh; do
 done
 
 # Load the NodeJS version manager (NVM)
-[ -r '~/.nvm/nvm.sh' ] && source ~/.nvm/nvm.sh
+[ -r "$HOME.nvm/nvm.sh" ] && source "$HOME/.nvm/nvm.sh"
+
+# Load the local zshrc if provided
+[ -r "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
 
 # Always work in a tmux session if tmux is installed
-if which tmux 2>&1 >/dev/null; then
-  if [ $TERM != "screen-256color" ] && [  $TERM != "screen" ]; then
+if is-command tmux; then
+  if [ $TERM != 'screen-256color' ] && [ $TERM != 'screen' ]; then
     tmux attach -t hack || tmux new -s hack; exit
   fi
 fi
