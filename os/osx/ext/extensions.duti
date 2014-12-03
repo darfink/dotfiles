@@ -9,6 +9,7 @@ org.vim.MacVim .cc all
 org.vim.MacVim .cfg all
 org.vim.MacVim .cgi all
 org.vim.MacVim .coffee all
+org.vim.MacVim .conf all
 org.vim.MacVim .config all
 org.vim.MacVim .cpp all
 org.vim.MacVim .cs all
@@ -40,6 +41,7 @@ org.vim.MacVim .pl all
 org.vim.MacVim .plist editor
 org.vim.MacVim .py all
 org.vim.MacVim .rb all
+org.vim.MacVim .rst all
 org.vim.MacVim .scss all
 org.vim.MacVim .sh all
 org.vim.MacVim .txt all
@@ -85,6 +87,7 @@ org.videolan.vlc .wmv all
 # audio with VLC
 org.videolan.vlc .aac all
 org.videolan.vlc .aif all
+org.videolan.vlc .flac all
 org.videolan.vlc .iff all
 org.videolan.vlc .m3u all
 org.videolan.vlc .mid all

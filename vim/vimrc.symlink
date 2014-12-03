@@ -184,6 +184,12 @@ autocmd VimResized * exe "normal! \<c-w>="
 " File type specifics
 autocmd FileType css,scss,less setlocal iskeyword+=-
 
+" Python (tab width 4 chr, wrap at 79th char)
+autocmd FileType python set sw=4
+autocmd FileType python set ts=4
+autocmd FileType python set sts=4
+autocmd FileType python set textwidth=79
+
 " We want enter to work inside quickfix windows
 autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
 
@@ -207,8 +213,11 @@ let g:syntastic_warning_symbol = '⚠'
 let g:syntastic_full_redraws = 1
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_javascript_checkers = ['jshint']
+let g:syntastic_python_checkers=['flake8', 'pep8']
 let g:syntastic_json_checkers = ['jsonlint']
 let g:syntastic_scss_checkers = ['sass']
+let g:syntastic_zsh_checkers = ['shellcheck']
+let g:syntastic_sh_checkers = ['shellcheck']
 
 " Better Whitespace
 let g:better_whitespace_filetypes_blacklist=['unite']
@@ -289,6 +298,12 @@ if executable('ag')
 
   " Use ag in our file navigation plugins for faster browsing
   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+endif
+
+if has('conceal')
+    autocmd Syntax * syn match Operator "!=" conceal cchar=≠
+    highlight! link Conceal Operator
+    set conceallevel=2
 endif
 
 # Walk through wrapped lines

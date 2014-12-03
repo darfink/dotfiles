@@ -1,8 +1,9 @@
 # Disable any interrupting user prompts
 export DEBIAN_FRONTEND=noninteractive
 
-# Enable the partners repository
+# Enable the partner & multiverse repositories
 sudo sed -i "/^# deb .*partner/ s/^# //" /etc/apt/sources.list
+sudo sed -i "/^# deb .*multiverse/ s/^# //" /etc/apt/sources.list
 
 # Add the Google Chrome repository key
 wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -

@@ -1,29 +1,19 @@
+# -*- coding: utf-8 -*-
+
 import os
 
 from invoke import task
-form .utils import *
 
 @task
-def xcode():
-  def is_installed():
-    return run('xcodebuild -version', warn=False, hide=True).ok
+def computername(name):
+  run('sudo scutil --set ComputerName "{}"'.format(name))
+  run('sudo scutil --set HostName "{}"'.format(name))
+  run('sudo scutil --set LocalHostName "{}"'.format(name))
+  run('sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "{}"'.format(name))
 
-  if is_installed():
-    return
-
-  info('installing Xcode')
-  run('curl https://developer.apple.com/downloads/download.action?path=Developer_Tools/xcode_6.1/56841_xcode_6.1.dmg -#fO /tmp/xcode.dmg')
-  run('sudo hdiutil attach /tmp/xcode.dmg')
-
-  while True:
-    user('press [Enter] when the installation is finished')
-    raw_input()
-
-    if is_installed():
-      break
-    fail('could not detect Xcode')
-  run('sudo hdiutil detach /Volumes/xcode')
-  run('sudo xcodebuild -license')
+#@task(pre=[binaries.duti])
+def extensions():
+  run(os.path.expandvars('duti "$OSDIR/ext/extensions.duti"'))
 
 @task
 def xcode_clt():
@@ -50,5 +40,5 @@ def homebrew():
 def cask():
   if not binary_installed('cask'):
     info('installing Caskroom')
-    brew_install('caskroom/cask/brew-cask')
-
+    brew.install('caskroom/cask/brew-cask')
+  run('brew upgrade brew-cask')

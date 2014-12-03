@@ -7,9 +7,11 @@ if [ $# -ne 1 ]; then
   exit 1
 fi
 
-origsize=$(wc -c < $file)
-gzipsize=$(gzip -c $file | wc -c)
+file="$1"
+
+origsize=$(wc -c < "$file")
+gzipsize=$(gzip -c "$file" | wc -c)
 ratio=$(echo "$gzipsize * 100 / $origsize" | bc -l)
 
-printf "orig: %d bytes\n" $origsize
-printf "gzip: %d bytes (%2.2f%%)\n" $gzipsize $ratio
+printf "orig: %d bytes\n" "$origsize"
+printf "gzip: %d bytes (%2.2f%%)\n" "$gzipsize" "$ratio"

@@ -20,6 +20,8 @@ update() {
   npm update -g
 
   # Update ruby gems
-  sudo gem update --system
   gem update
+
+  # Update Pip packages
+  pip freeze --local | grep -v '^\-e' | cut -d = -f 1 | xargs pip install -U
 }

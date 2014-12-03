@@ -217,6 +217,10 @@ echo ""
 echo "Changing the terminal theme to Solarized Dark"
 source "os/$OS/ext/gnome-terminal-colors-solarized/set_dark.sh"
 
+echo ""
+echo "Setting Ubuntu Mono Powerline font to default"
+gconftool-2 --set /apps/gnome-terminal/profiles/Default/font --type string "Ubuntu Mono derivative Powerline 11"
+
 ###############################################################################
 # GEdit
 ###############################################################################

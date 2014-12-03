@@ -31,11 +31,13 @@ binaries=(
 	"tree"
 	"curl"
 	"make"
+	"htop"
 	"git"
 	"par"
 	"pv"
 
 	"source-highlight"
+	"shellcheck"
 
 	"gnome-shell-extensions-gpaste"
 	"ubuntu-restricted-extras"
@@ -50,6 +52,7 @@ binaries=(
 
 	# Handle different compression algorithms
 	"p7zip-full"
+	"rar"
 	"unrar"
 	"xz-utils"
 	"zopfli"

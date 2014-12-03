@@ -46,10 +46,6 @@ sudo defaults write /var/db/SystemPolicy-prefs.plist enabled -string no
 defaults write com.apple.LaunchServices LSQuarantine -bool false
 
 echo ""
-echo "Increasing the window resize speed for Cocoa applications"
-defaults write NSGlobalDomain NSWindowResizeTime -float 0.001
-
-echo ""
 echo "Expanding the save panel by default"
 defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
 defaults write NSGlobalDomain PMPrintingExpandedStateForPrint -bool true
@@ -305,6 +301,23 @@ echo "Don’t show Dashboard as a Space"
 defaults write com.apple.dock dashboard-in-overlay -bool true
 
 echo ""
+echo "Disabling mission control hotkeys (makes F9-F12 usable)
+actionids=(
+  # Application Window
+  33 35
+  # Show Desktop
+  36 37
+  # Mission Control
+  32 34
+  # Dashboard
+  62 63
+)
+
+for actionid in actionids; do
+  defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add $actionid "{ enabled = 0; }"
+done
+
+echo ""
 echo "Don’t automatically rearrange Spaces based on most recent use"
 defaults write com.apple.dock mru-spaces -bool false
 
@@ -320,6 +333,7 @@ dockapps=(
 	"Google Chrome"
 	"Messages"
 	"Skype"
+	"Dash"
 	"Mail"
 	"Spotify"
 	"Xcode"
@@ -701,10 +715,6 @@ defaults write org.macosforge.xquartz.X11 sync_pasteboard_to_primary -bool true
 defaults write org.macosforge.xquartz.X11 sync_primary_on_select -bool false
 
 echo ""
-echo "Setting focus to follow mouse"
-defaults org.macosforge.xquartz.X11 wm_ffm -bool true
-
-echo ""
 echo "Setting Z Shell to default X11 shell"
 defaults write org.macosforge.xquartz.X11 login_shell -string "$(brew --prefix)/bin/zsh"
 
@@ -757,7 +767,7 @@ echo "Binding ⌘ + Space for Alfred"
 defaults write com.runningwithcrayons.Alfred-Preferences hotkey.default -dict key -int 49 mod -int 1048576 string Space
 
 echo ""
-echo "Setting Alfred synchronization folder to ~/Dropbox"
+echo "Setting synchronization folder to ~/Dropbox"
 defaults write com.runningwithcrayons.Alfred-Preferences syncfolder -string "~/Dropbox/"
 
 echo ""
@@ -765,7 +775,7 @@ echo "Changing default Alfred theme to light-large"
 defaults write com.runningwithcrayons.Alfred-Preferences appearance.theme -string "alfred.theme.lightlarge"
 
 echo ""
-echo "Enabling blur with Alfred's background"
+echo "Enabling blur with background"
 defaults write com.runningwithcrayons.Alfred-2 experimentalBlur -int 5
 
 ###############################################################################

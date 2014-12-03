@@ -34,39 +34,42 @@ install_osfiles() {
 }
 
 install_scripts() {
-  if [ -z "$NVM_DIR" ]; then
-    local nvmpath='~/.nvm/nvm.sh'
-    [ -r "$nvmpath" ] && source "$nvmpath"
-  fi
+	if [ -z "$NVM_DIR" ]; then
+		local nvmpath='~/.nvm/nvm.sh'
+		[ -r "$nvmpath" ] && source "$nvmpath"
+	fi
 
-  if [ is-command nvm ]; then
-    # Initialize NVM using our .noderc
-    nvm install
-    nvm alias default "$(cat ~/.nvmrc)"
+	if [ is-command nvm ]; then
+		# Initialize NVM using our .noderc
+		nvm install
+		nvm alias default "$(cat ~/.nvmrc)"
 
-    local npmpackages=(
-      coffee-script
-      gitjk
-      grunt-cli
-      jshint
-      jsonlint
-      less
-      uglify-js
-    )
+		local npmpackages=(
+			coffee-script
+			gitjk
+			grunt-cli
+			jshint
+			jsonlint
+			less
+			uglify-js
+		)
 
-    # Install our node packages
-    npm install -g "${npackages[@]}"
-  fi
+		# Install our node packages
+		npm install -g "${npackages[@]}"
+	fi
 
-  if [ is-command gem ]; then
-    # Install our ruby packages
-    gem install sass
-    gem install github-auth
-  fi
+	if [ is-command gem ]; then
+		# Install our ruby packages
+		gem install sass
+		gem install github-auth
+	fi
 
-  if [ is-command pip ]; then
-    pip install patool
-  fi
+	if [ is-command pip ]; then
+		pip install patool
+		pip install youtube-dl
+		pip install flake8
+	fi
+	sudo cpan Text::Lorem
 }
 
 execute() {

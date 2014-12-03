@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import os
 import re
 import shutil
@@ -14,17 +16,8 @@ def fail(message):
 def enum(**enums):
   return type('Enum', (), enums)
 
-def remove_file(target):
-  """Remove a file, symlink or directory"""
-  if os.path.islink(target):
-    os.unlink(target)
-  elif os.path.isdir(target):
-    shutil.rmtree(target)
-  else:
-    os.remove(target)
-
 def is_valid_email(text):
   return re.match(r'[^@]+@[^@]+\.[^@]+', text)
 
 def command_exists(name):
-  return run('hash "{}"'.format(name), hide='both', warn=False).ok
+  return run('hash "{}"'.format(name), hide=True, warn=False).ok

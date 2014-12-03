@@ -1,8 +1,32 @@
+# -*- coding: utf-8 -*-
+
 import os
 import re
 
 from invoke import task, Collection
-from .util import *
+
+from .base import cask, homebrew
+from ..osx import brew, binaries, taps
+
+@task(pre=[cask, taps.cask_xcode])
+def xcode():
+  if not brew.installed('xcode', cask=True):
+    brew.install('xcode', cask=True)
+    run('sudo xcodebuild -license')
+
+@task(cask)
+def alfred():
+  brew.install('alfred', cask=True)
+
+@task(pre=[homebrew, xcode, binaries.lua, binaries.python, binaries.cscope])
+def vim():
+  brew.install('macvim', flags=['--with-cscope', '--with-python', '--with-luajit', '--override-system-vim'])
+  brew.install('shellcheck')
+  brew.install('par')
+
+@task(homebrew)
+def xpdf():
+  brew.install('xpdf')
 
 class App:
   def __init__(self,
@@ -17,13 +41,13 @@ class App:
     self.tap = tap
 
   def install(self):
-    if brew_installed(self.cask_name, cask=True):
+    if brew.installed(self.cask_name, cask=True):
       return
     info('installing {0} app'.format(self.name))
 
     if self.tap:
-      brew_tap(self.tap)
-    brew_install(self.cask_name, cask=True)
+      brew.tap(self.tap)
+    brew.install(self.cask_name, cask=True)
 
   def normalize(self, string):
     return re.sub(r'[^a-z0-9 ]', '', string.lower()).replace(' ', '-')
@@ -37,13 +61,11 @@ base_apps = [
   App('Firefox'),
   App('f.lux'),
   App('Google Chrome'),
-  App('ImageAlpha'),
-  App('ImageOptim'),
   App('iTerm2', task_name='iterm'),
   App('KeepingYouAwake'),
   App('Popcorn Time', tap='casidiablo/custom'),
   App('Seil'),
-  App('SizeUp', cask_name='sizeup-x11', tap='caskroom/versions')
+  App('SizeUp', cask_name='sizeup-x11', tap='caskroom/versions'),
   App('Skype'),
   App('Spotify'),
   App('The Unarchiver'),
@@ -51,18 +73,14 @@ base_apps = [
   App('VLC'),
   App('XQuartz'),
 
-  App('Quicklook: Archive',        cask_name='betterzipql')
-  App('Quicklook: Syntax',         cask_name='qlcolorcode')
-  App('Quicklook: Markdown',       cask_name='qlmarkdown')
-  App('Quicklook: Patch',          cask_name='qlprettypatch')
-  App('Quicklook: Extension-less', cask_name='qlstephen')
-  App('Quicklook: CSV',            cask_name='quicklook-csv')
-  App('Quicklook: JSON',           cask_name='quicklook-json')
-  App('Quicklook: WebP',           cask_name='webp-quicklook')
-  App('Quicklook: Package',        cask_name='suspicious-package')
+  App('Quicklook: Archive',        cask_name='betterzipql'),
+  App('Quicklook: Syntax',         cask_name='qlcolorcode'),
+  App('Quicklook: Markdown',       cask_name='qlmarkdown'),
+  App('Quicklook: Patch',          cask_name='qlprettypatch'),
+  App('Quicklook: Extension-less', cask_name='qlstephen'),
+  App('Quicklook: CSV',            cask_name='quicklook-csv'),
+  App('Quicklook: JSON',           cask_name='quicklook-json'),
+  App('Quicklook: WebP',           cask_name='webp-quicklook'),
+  App('Quicklook: Package',        cask_name='suspicious-package'),
 ]
 
-apps = Collection('apps')
-
-for app in base_apps:
-  apps.add_task(task(app.install, pre=[cask]), app.task_name)

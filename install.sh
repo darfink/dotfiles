@@ -17,7 +17,7 @@ is_command() {
 }
 
 install_prerequisites() {
-  # Check for git here!!!
+  # TODO: Check for git here!!!
 
   if ! is_command easy_install; then
     # OS X is bundled with this, so it never reaches here
@@ -29,6 +29,26 @@ install_prerequisites() {
     info 'dependency: installing invoke'
     sudo easy_install invoke || exit 1
   fi
+}
+
+prompt_directory() {
+  local directory
+
+  while true; do
+    user 'specify installation directory (press [Enter] for ~/.dotfiles):'
+    read directory
+
+    if [ -z "$directory" ]; then
+      directory="$HOME/.dotfiles"
+    fi
+
+    # Attempt to create the directory
+    mkdir -p "$directory" 2> /dev/null && break
+    fail "could not create directory: $directory"
+  done
+
+  # Ensure it is an absolute path
+  return "$(readlink -f "$directory")"
 }
 
 if [ ! -f "$HOME/.dotlock" ]; then
@@ -45,21 +65,7 @@ if [ ! -f "$HOME/.dotlock" ]; then
     exit 1
   fi
 
-  while true; do
-    user 'specify installation directory (press [Enter] for ~/.dotfiles):'
-    read directory
-
-    if [ -z "$directory" ]; then
-      directory="$HOME/.dotfiles"
-    fi
-
-    # Attempt to create the directory
-    mkdir -p "$directory" 2> /dev/null && break
-    fail "could not create directory: $directory"
-  done
-
-  # Ensure it is an absolute path
-  directory="$(readlink -f "$directory")"
+  directory="$(prompt_directory)"
 
   # Move to our dotfiles directory
   cd "$directory" || exit 1

@@ -75,11 +75,10 @@ export GREP_OPTIONS='--color=auto --exclude-dir=.svn --exclude-dir=.git --binary
 # Use human friendly size format (e.g 1024MB)
 export BLOCK_SIZE='human-readable'
 
-# Setup the default python user directory
-export PYTHONUSERBASE="$HOME/.local/bin"
-
-# Use 'ag' instead of 'find' for FZF
-export FZF_DEFAULT_COMMAND='ag -l -g ""'
+if is-command ag; then
+  # Use 'ag' instead of 'find' for FZF
+  export FZF_DEFAULT_COMMAND='ag -l -g ""'
+fi
 
 if [ $OS = 'osx' ]; then
   if is-command brew; then
@@ -98,7 +97,7 @@ fi
 # Avoid this superseding other settings
 unset LC_ALL
 
-# Use UTF-8 in every case, and prefer Swedish settings but never the Swedish language
+# Always UTF-8, and prefer Swedish settings but never the Swedish language
 
 # US influenced settings
 export LC_MESSAGES='en_US.UTF-8'    # Always US English language

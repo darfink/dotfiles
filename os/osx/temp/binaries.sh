@@ -23,7 +23,7 @@ binaries=(
 	"gzip"
 	"lesspipe"
 	"source-highlight"
-
+	"shellcheck"
 	# Install GNU `find`, `locate`, `updatedb`, `xargs` etc
 	"findutils --with-default-names"
 	"gnu-indent --with-default-names"
@@ -60,6 +60,7 @@ binaries=(
 	"pngcheck"
 	"sqlmap"
 	"xz"
+	"rar"
 
 	# MAMP setup
 	"mysql"
@@ -90,6 +91,7 @@ binaries=(
 main() {
   # Enable additional binaries
   brew tap homebrew/dupes
+  brew tap homebrew/binary
   brew tap homebrew/apache
   brew tap homebrew/php
 

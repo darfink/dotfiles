@@ -30,10 +30,14 @@ alias gitjk='history 10 | tac | gitjk_cmd'
 alias map='xargs -n1'
 
 # Lists the ten most used commands
-alias history-stat="history 0 | awk '{print \$2}' | sort | uniq -c | sort -n -r | head"
+alias history-stat="history 0 | awk '{print \$2}' | sort | uniq -c | sort -nr | head"
 
 if is-command grunt; then
   alias grunt='grunt --stack'
+fi
+
+if is-command hub; then
+  alias git='hub'
 fi
 
 if is-command lwp-request; then
@@ -65,6 +69,10 @@ case "$OS" in
 
   # Enable Spotlight
   alias spoton='sudo mdutil -a -i on'
+
+  if is-command gawk; then
+    alias awk='gawk'
+  fi
   ;;
 'linux')
   if is-command xclip; then
