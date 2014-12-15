@@ -30,7 +30,7 @@ def symlinks():
 @task
 def sshkey():
   """- generates an RSA key if none exists"""
-  if os.path.exists(os.path.expandhome('~/.ssh/id_rsa.pub')):
+  if os.path.exists(os.path.expanduser('~/.ssh/id_rsa.pub')):
     return
 
   while True:

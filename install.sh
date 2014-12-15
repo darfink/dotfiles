@@ -79,7 +79,7 @@ if [ ! -f "$HOME/.dotlock" ]; then
   export PATH="$directory/bin:$PATH"
   export PATH="$directory/os/$(os)/bin:$PATH"
 
-  if invoke install "$@"; then
+  if invoke bootstrap "$@"; then
     # Add our 'lock' to prevent duplicates
     echo "$directory" > "$HOME/.dotlock"
   else
