@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 
+directory=''
+
 info() {
   printf "  [ \033[00;34m..\033[0m ] $1"
 }
@@ -32,8 +34,6 @@ install_prerequisites() {
 }
 
 prompt_directory() {
-  local directory
-
   while true; do
     user 'specify installation directory (press [Enter] for ~/.dotfiles):'
     read directory
@@ -48,7 +48,7 @@ prompt_directory() {
   done
 
   # Ensure it is an absolute path
-  python -c 'import os, sys; print os.path.realpath(sys.argv[1])' $directory
+  directory="$(python -c 'import os, sys; print os.path.realpath(sys.argv[1])' $directory)"
 }
 
 if [ ! -f "$HOME/.dotlock" ]; then
@@ -65,7 +65,7 @@ if [ ! -f "$HOME/.dotlock" ]; then
     exit 1
   fi
 
-  directory="$(prompt_directory)"
+  prompt_directory
 
   # Move to our dotfiles directory
   cd "$directory" || exit 1
