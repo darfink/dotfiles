@@ -7,6 +7,7 @@ from invoke import task, run
 from .symlinker import Symlinker
 from .utils import (
   command_exists,
+  is_valid_email,
   fail,
   info,
   user,
@@ -55,7 +56,7 @@ def vimplugins():
 
 @task(symlinks)
 def nvm():
-  path = os.path.expandhome('~/.nvm')
+  path = os.path.expanduser('~/.nvm')
 
   def nvm_setup():
     run('source "{}/nvm.sh"'.format(path))
