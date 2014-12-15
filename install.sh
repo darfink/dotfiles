@@ -48,7 +48,7 @@ prompt_directory() {
   done
 
   # Ensure it is an absolute path
-  return "$(readlink -f "$directory")"
+  echo "$(readlink -f "$directory")"
 }
 
 if [ ! -f "$HOME/.dotlock" ]; then
