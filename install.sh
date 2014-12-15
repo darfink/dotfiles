@@ -48,7 +48,7 @@ prompt_directory() {
   done
 
   # Ensure it is an absolute path
-  echo "$(readlink -f "$directory")"
+  python -c 'import os, sys; print os.path.realpath(sys.argv[1])' $directory
 }
 
 if [ ! -f "$HOME/.dotlock" ]; then
