@@ -11,7 +11,7 @@ def user(message):
   print "\r  [ \033[0;33m?\033[0m ] {} ".format(message),
 
 def fail(message):
-  print "\r\033[2K  [\033[0;31mFAIL\033[0m] {}\n".format(message)
+  print "\r\033[2K  [\033[0;31mFAIL\033[0m] {}".format(message)
 
 def enum(**enums):
   return type('Enum', (), enums)

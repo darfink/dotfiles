@@ -38,7 +38,7 @@ def sshkey():
     email = raw_input()
 
     if is_valid_email(email):
-      run('ssh-keygen -t rsa -C "{}"'.format(email))
+      run('ssh-keygen -f id_rsa -t rsa -C "{}" -N ""'.format(email))
       break
     fail('invalid email address')
 
