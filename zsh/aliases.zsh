@@ -14,15 +14,24 @@ alias p='cd ~/Projects'
 alias h='history'
 
 # Different “ls” aliases
-alias la='ls -laF'
-alias lsd='ls -lF | grep --color=never "^d"'
 alias l='ls -lF'
+alias la='ls -lAF'
+alias lr='ls -tRF'
+alias lt='ls -ltF'
+alias ll='ls -l'
+alias lsd='ls -lF | grep --color=never "^d"'
+alias ldot='ls -ld .*'
+alias lS='ls -1FSsh'
+alias lart='ls -1Fcart'
+alias lrt='ls -1Fcrt'
 
 # Safer GNU tools
 alias chown='chown --preserve-root'
 alias chmod='chmod --preserve-root'
 alias chgrp='chgrp --preserve-root'
 alias mv='mv -i'
+alias cp='cp -i'
+alias rm='rm -i'
 
 # Utility aliases
 alias stats='sort | uniq -c | sort -r'
@@ -48,8 +57,8 @@ if is-command lwp-request; then
 fi
 
 if is-command patool; then
-  alias compress='patool create --verbose'
-  alias extract='patool extract'
+  alias pac='patool --verbose create'
+  alias pae='patool extract'
 fi
 
 ###############################################################################
@@ -59,7 +68,7 @@ fi
 case "$OS" in
 'osx')
   # PlistBuddy alias, because sometimes `defaults` just doesn’t cut it
-  alias plistbuddy='/usr/libexec/PlistBuddy'
+  alias plbuddy='/usr/libexec/PlistBuddy'
 
   # Remove duplicates in "Open With" menu
   alias fixow='/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user'

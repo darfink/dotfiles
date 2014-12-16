@@ -64,7 +64,7 @@ class Symlinker:
       os.symlink(source, target)
       info('linked {} to {}'.format(source, reltarget))
 
-  def prompt_path(path):
+  def prompt_path(self, path):
     """Prompt the user about a path action"""
     while True:
       user('path already exists: {}, what do you want to do? [s/S/o/O/b/B/?]'.format(path))
@@ -90,7 +90,7 @@ class Symlinker:
         info('B - backup this and remaining files')
         info('? - print help')
 
-  def remove_path(target):
+  def remove_path(self, target):
     """Remove a file, symlink or directory"""
     if os.path.islink(target):
       os.unlink(target)

@@ -27,16 +27,16 @@ defaults write NSGlobalDomain AppleShowScrollBars -string "Always"
 echo ""
 echo "Hiding the Time Machine, Volume, User, and Bluetooth icons"
 for domain in ~/Library/Preferences/ByHost/com.apple.systemuiserver.*; do
-  defaults write "${domain}" dontAutoLoad -array \
-    "/System/Library/CoreServices/Menu Extras/TimeMachine.menu" \
-    "/System/Library/CoreServices/Menu Extras/Volume.menu" \
-    "/System/Library/CoreServices/Menu Extras/User.menu"
+	defaults write "${domain}" dontAutoLoad -array \
+		"/System/Library/CoreServices/Menu Extras/TimeMachine.menu" \
+		"/System/Library/CoreServices/Menu Extras/Volume.menu" \
+		"/System/Library/CoreServices/Menu Extras/User.menu"
 done
 defaults write com.apple.systemuiserver menuExtras -array \
-  "/System/Library/CoreServices/Menu Extras/Bluetooth.menu" \
-  "/System/Library/CoreServices/Menu Extras/AirPort.menu" \
-  "/System/Library/CoreServices/Menu Extras/Battery.menu" \
-  "/System/Library/CoreServices/Menu Extras/Clock.menu"
+	"/System/Library/CoreServices/Menu Extras/Bluetooth.menu" \
+	"/System/Library/CoreServices/Menu Extras/AirPort.menu" \
+	"/System/Library/CoreServices/Menu Extras/Battery.menu" \
+	"/System/Library/CoreServices/Menu Extras/Clock.menu"
 
 echo ""
 echo "Disabling OS X Gate Keeper"
@@ -303,18 +303,18 @@ defaults write com.apple.dock dashboard-in-overlay -bool true
 echo ""
 echo "Disabling mission control hotkeys (makes F9-F12 usable)
 actionids=(
-  # Application Window
-  33 35
-  # Show Desktop
-  36 37
-  # Mission Control
-  32 34
-  # Dashboard
-  62 63
+	# Application Window
+	33 35
+	# Show Desktop
+	36 37
+	# Mission Control
+	32 34
+	# Dashboard
+	62 63
 )
 
 for actionid in actionids; do
-  defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add $actionid "{ enabled = 0; }"
+	defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add $actionid "{ enabled = 0; }"
 done
 
 echo ""
@@ -392,7 +392,7 @@ touch ~/.ssh/authorized_keys
 
 echo ""
 echo "Allowing only public-key authentication"
-sudo sed -E 's/^#?(PasswordAuthentication|ChallengeResponseAuthentication).*$/\1 no/' /etc/sshd_config
+sudo sed -E 's/^#?(PasswordAuthentication|ChallengeResponseAuthentication).*$/\1 no/' /etc/ssh/sshd_config
 
 ###############################################################################
 # Spotlight

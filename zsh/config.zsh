@@ -38,7 +38,10 @@ source "$ZSH/oh-my-zsh.sh"
 ###############################################################################
 
 # Make ZSH completion color the same as ls
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}  
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+
+# Make zsh know about hosts already accessed by SSH
+zstyle -e ':completion:*:(ssh|scp|sftp|rsh|rsync):hosts' hosts 'reply=(${=${${(f)"$(cat {/etc/ssh_,~/.ssh/known_}hosts(|2)(N) /dev/null)"}%%[# ]*}//,/ })'
 
 # Enable ctrl+s in Vim by disabling flow control and sending of start/stop characters
 stty -ixon -ixoff

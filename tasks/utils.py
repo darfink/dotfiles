@@ -4,6 +4,8 @@ import os
 import re
 import shutil
 
+from invoke import Collection
+
 def info(message):
   print "  [ \033[00;34m..\033[0m ] ", message
 
@@ -21,3 +23,7 @@ def is_valid_email(text):
 
 def command_exists(name):
   return run('hash "{}"'.format(name), hide=True, warn=False).ok
+
+def merge_collection(target, source):
+  for name in source.task_names:
+    target.add_task(source[name])

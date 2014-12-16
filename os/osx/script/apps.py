@@ -2,85 +2,103 @@
 
 import os
 import re
+import sys
 
 from invoke import task, Collection
 
-from .base import cask, homebrew
-from ..osx import brew, binaries, taps
+from ..osx import (
+  base,
+  brew,
+  binaries,
+  taps,
+)
 
-@task(pre=[cask, taps.cask_xcode])
+@task(pre=[base.cask, taps.cask_xcode])
 def xcode():
   if not brew.installed('xcode', cask=True):
     brew.install('xcode', cask=True)
     run('sudo xcodebuild -license')
 
-@task(cask)
+@task(base.cask)
 def alfred():
   brew.install('alfred', cask=True)
 
-@task(pre=[homebrew, xcode, binaries.lua, binaries.python, binaries.cscope])
+@task(base.cask)
+def asepsis():
+  brew.install('asepsis', cask=True)
+
+@task(base.cask)
+def dash():
+  brew.install('dash', cask=True)
+
+@task(base.cask)
+def deluge():
+  brew.install('deluge', cask=True)
+
+@task(base.cask)
+def dropbox():
+  brew.install('dropbox', cask=True)
+
+@task(base.cask)
+def firefox():
+  brew.install('firefox', cask=True)
+
+@task(base.cask)
+def flux():
+  brew.install('flux', cask=True)
+
+@task(base.cask, name='google-chrome')
+def google_chrome():
+  brew.install('google-chrome', cask=True)
+
+@task(base.cask)
+def iterm():
+  brew.install('iterm2', cask=True)
+
+@task(base.cask)
+def keepingyouawake():
+  brew.install('keepingyouawake', cask=True)
+
+@task(pre=[base.cask, taps.cask_popcorn], name='popcorn-time')
+def popcorn_time():
+  brew.install('popcorn-time', cask=True)
+
+@task(base.cask)
+def seil():
+  brew.install('seil', cask=True)
+
+@task(pre=[base.cask, base.xquartz, taps.cask_versions])
+def sizeup():
+  brew.install('sizeup-x11', cask=True)
+
+@task(base.cask)
+def skype():
+  brew.install('skype', cask=True)
+
+@task(base.cask)
+def spotify():
+  brew.install('spotify', cask=True)
+
+@task(base.cask, name='the-unarchiver')
+def the_unarchiver():
+  brew.install('the-unarchiver', cask=True)
+
+@task(pre=[base.homebrew, xcode, binaries.lua, binaries.python, binaries.cscope])
 def vim():
   brew.install('macvim', flags=['--with-cscope', '--with-python', '--with-luajit', '--override-system-vim'])
   brew.install('shellcheck')
   brew.install('par')
 
-@task(homebrew)
+@task(base.cask)
+def virtualbox():
+  brew.install('virtualbox', cask=True)
+
+@task(base.cask)
+def vlc():
+  brew.install('vlc', cask=True)
+
+@task(base.homebrew)
 def xpdf():
   brew.install('xpdf')
 
-class App:
-  def __init__(self,
-    display_name,
-    cask_name=None,
-    task_name=None,
-    tap=None,
-  ):
-    self.name = display_name
-    self.cask_name = cask_name or self.normalize(self.name)
-    self.task_name = task_name or self.normalize(self.name)
-    self.tap = tap
-
-  def install(self):
-    if brew.installed(self.cask_name, cask=True):
-      return
-    info('installing {0} app'.format(self.name))
-
-    if self.tap:
-      brew.tap(self.tap)
-    brew.install(self.cask_name, cask=True)
-
-  def normalize(self, string):
-    return re.sub(r'[^a-z0-9 ]', '', string.lower()).replace(' ', '-')
-
-base_apps = [
-  App('Alfred'),
-  App('Asepsis'),
-  App('Dash'),
-  App('Deluge'),
-  App('Dropbox'),
-  App('Firefox'),
-  App('f.lux'),
-  App('Google Chrome'),
-  App('iTerm2', task_name='iterm'),
-  App('KeepingYouAwake'),
-  App('Popcorn Time', tap='casidiablo/custom'),
-  App('Seil'),
-  App('SizeUp', cask_name='sizeup-x11', tap='caskroom/versions'),
-  App('Skype'),
-  App('Spotify'),
-  App('The Unarchiver'),
-  App('VirtualBox'),
-  App('VLC'),
-  App('XQuartz'),
-
-  App('Quicklook: Archive',        cask_name='betterzipql'),
-  App('Quicklook: Syntax',         cask_name='qlcolorcode'),
-  App('Quicklook: Markdown',       cask_name='qlmarkdown'),
-  App('Quicklook: Patch',          cask_name='qlprettypatch'),
-  App('Quicklook: Extension-less', cask_name='qlstephen'),
-  App('Quicklook: CSV',            cask_name='quicklook-csv'),
-  App('Quicklook: JSON',           cask_name='quicklook-json'),
-  App('Quicklook: WebP',           cask_name='webp-quicklook'),
-  App('Quicklook: Package',        cask_name='suspicious-package'),
-]
 

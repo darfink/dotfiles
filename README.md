@@ -13,7 +13,7 @@
 To awesomify your machine, run this:
 
 ```bash
-curl https://raw.githubusercontent.com/darfink/dotfiles/master/install.sh | sh
+curl https://raw.githubusercontent.com/darfink/dotfiles/master/install.sh | bash
 ```
 
 The script will guide you through the entire installation process. It was crafted with the intention of being entirely automatic. That means no other configuration or installation is required after the script is finished.

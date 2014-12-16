@@ -89,74 +89,74 @@ binaries=(
 )
 
 main() {
-  # Enable additional binaries
-  brew tap homebrew/dupes
-  brew tap homebrew/binary
-  brew tap homebrew/apache
-  brew tap homebrew/php
+	# Enable additional binaries
+	brew tap homebrew/dupes
+	brew tap homebrew/binary
+	brew tap homebrew/apache
+	brew tap homebrew/php
 
-  # Install binaries
-  brew install ${binaries[@]}
+	# Install binaries
+	brew install ${binaries[@]}
 
-  # Overwrite system python
-  brew link --overwrite python
+	# Overwrite system python
+	brew link --overwrite python
 
-  # Install the CLI lorem ipsum generator
-  sudo cpan install Text::Lorem
+	# Install the CLI lorem ipsum generator
+	sudo cpan install Text::Lorem
 
-  if [ is-installed dnsmasq ]; then
-    # Make *.dev requests reply with 127.0.0.1
-    echo 'address=/.dev/127.0.0.1' > $(brew --prefix)/etc/dnsmasq.conf
-    echo 'listen-address=127.0.0.1' >> $(brew --prefix)/etc/dnsmasq.conf
+	if [ is-installed dnsmasq ]; then
+		# Make *.dev requests reply with 127.0.0.1
+		echo 'address=/.dev/127.0.0.1' > $(brew --prefix)/etc/dnsmasq.conf
+		echo 'listen-address=127.0.0.1' >> $(brew --prefix)/etc/dnsmasq.conf
 
-    # Load dnsmasq automatically at startup
-    sudo cp $(brew --prefix dnsmasq)/homebrew.mxcl.dnsmasq.plist /Library/LaunchDaemons
-    sudo launchctl load -w /Library/LaunchDaemons/homebrew.mxcl.dnsmasq.plist
+		# Load dnsmasq automatically at startup
+		sudo cp $(brew --prefix dnsmasq)/homebrew.mxcl.dnsmasq.plist /Library/LaunchDaemons
+		sudo launchctl load -w /Library/LaunchDaemons/homebrew.mxcl.dnsmasq.plist
 
-    # Use our local host for *.dev DNS queries
-    sudo mkdir -p /etc/resolver 
-    echo 'nameserver 127.0.0.1' | sudo tee /etc/resolver/dev > /dev/null
-  fi
+		# Use our local host for *.dev DNS queries
+		sudo mkdir -p /etc/resolver 
+		echo 'nameserver 127.0.0.1' | sudo tee /etc/resolver/dev > /dev/null
+	fi
 
-  if [ is-installed mysql ]; then
-    # Use the default MySQL configuration
-    cp -f "$(brew --prefix mysql)/support-files/my-default.cnf" "$(brew --prefix mysql)/my.cnf"
+	if [ is-installed mysql ]; then
+		# Use the default MySQL configuration
+		cp -f "$(brew --prefix mysql)/support-files/my-default.cnf" "$(brew --prefix mysql)/my.cnf"
 
-    # Load MySQL at system startup
-    sudo ln -sf "$(brew --prefix mysql)/homebrew.mxcl.mysql.plist" /Library/LaunchDaemons/
-    sudo launchctl load -w /Library/LaunchDeamons/homebrew.mxcl.mysql.plist
-  fi
+		# Load MySQL at system startup
+		sudo ln -sf "$(brew --prefix mysql)/homebrew.mxcl.mysql.plist" /Library/LaunchDaemons/
+		sudo launchctl load -w /Library/LaunchDeamons/homebrew.mxcl.mysql.plist
+	fi
 
-  if [ is-installed php56 ]; then
-    # Fix a permission problem with pearl and pecl
-    touch "$(brew --prefix php56)/lib/php/.lock" && chmod 0644 "$(brew --prefix php56)/lib/php/.lock"
-  fi
+	if [ is-installed php56 ]; then
+		# Fix a permission problem with pearl and pecl
+		touch "$(brew --prefix php56)/lib/php/.lock" && chmod 0644 "$(brew --prefix php56)/lib/php/.lock"
+	fi
 
-  if [ is-installed httpd24 ]; then
-    # Disable the default httpd startup process (the one that's bundled with OS X)
-    sudo launchctl unload -w /System/Library/LaunchDaemons/org.apache.httpd.plist 2>/dev/null
+	if [ is-installed httpd24 ]; then
+		# Disable the default httpd startup process (the one that's bundled with OS X)
+		sudo launchctl unload -w /System/Library/LaunchDaemons/org.apache.httpd.plist 2>/dev/null
 
-    # Enable the virtual hosts configuration
-    sed -i 's,#\(.*httpd-vhosts.conf\),\1,g' "$(brew --prefix)/etc/apache2/2.4/httpd.conf"
-    cp -f ext/httpd-vhosts.conf "$(brew --prefix)/etc/apache2/2.4/extra/"
+		# Enable the virtual hosts configuration
+		sed -i 's,#\(.*httpd-vhosts.conf\),\1,g' "$(brew --prefix)/etc/apache2/2.4/httpd.conf"
+		cp -f ext/httpd-vhosts.conf "$(brew --prefix)/etc/apache2/2.4/extra/"
 
-    # Setup the HTTP port forwarding (80 -> 8080)
-    sudo cp -f "os/$OS/ext/co.echo.httpdfwd.plist" /Library/LaunchDaemons/
-    sudo launchctl load -w /Library/LaunchDaemons/co.echo.httpdfwd.plist
+		# Setup the HTTP port forwarding (80 -> 8080)
+		sudo cp -f "os/$OS/ext/co.echo.httpdfwd.plist" /Library/LaunchDaemons/
+		sudo launchctl load -w /Library/LaunchDaemons/co.echo.httpdfwd.plist
 
-    if [ is-installed php56 ]; then
-      cat >> $(brew --prefix)/etc/apache2/2.4/httpd.conf <<EOF
-      # Send PHP extensions to mod_php
-      AddHandler php5-script .php
-      AddType text/html .php
-      DirectoryIndex index.php index.html
-      EOF
-    fi
+		if [ is-installed php56 ]; then
+			cat >> $(brew --prefix)/etc/apache2/2.4/httpd.conf <<EOF
+			# Send PHP extensions to mod_php
+			AddHandler php5-script .php
+			AddType text/html .php
+			DirectoryIndex index.php index.html
+			EOF
+		fi
 
-    # Load Apache at system startup
-    sudo ln -sf "$(brew --prefix httpd24)/homebrew.mxcl.httpd24.plist" /Library/LaunchDaemons/
-    sudo launchctl load -w /Library/LaunchDaemons/homebrew.mxcl.httpd24.plist
-  fi
+		# Load Apache at system startup
+		sudo ln -sf "$(brew --prefix httpd24)/homebrew.mxcl.httpd24.plist" /Library/LaunchDaemons/
+		sudo launchctl load -w /Library/LaunchDaemons/homebrew.mxcl.httpd24.plist
+	fi
 }
 
 main "$@"

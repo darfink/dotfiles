@@ -43,7 +43,7 @@ Plug 'groenewege/vim-less', { 'for': 'less' }
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 Plug 'elzr/vim-json', { 'for': 'json' }
-Plug 'kien/ctrlp.vim'
+Plug 'ctrlpvim/ctrlp.vim'
 Plug 'FelikZ/ctrlp-py-matcher'
 Plug 'kana/vim-textobj-user'
 Plug 'mattn/webapi-vim'
@@ -64,6 +64,7 @@ set backspace=indent,eol,start
 set backup
 set backupskip=/tmp/*,/private/tmp/*
 set complete-=i
+set conceallevel=2
 set cryptmethod=blowfish
 set cursorline
 set display+=lastline
@@ -247,6 +248,7 @@ let g:vim_json_syntax_conceal = 1
 source ~/.vim/neocomplete.vim
 
 " Netrw
+let g:netrw_liststyle = 3
 let g:netrw_list_hide =  '^\.[^\.],'                                
 let g:netrw_list_hide .= '\.pyc$,'  
 let g:netrw_list_hide .= '\.o$,\.obj$,' 
@@ -287,9 +289,8 @@ nmap <leader>f9 :set foldlevel=9<CR>
 " Where last weapon is on Q
 nmap Q :b#<CR>
 
-" Faster save
-" I really do :w often -- this is faster.
-nnoremap <leader>w :w<CR>
+" Faster save (and like other editors)
+nnoremap <leader>w :w<cr>
 
 " The Silver Searcher
 if executable('ag')

@@ -4,6 +4,9 @@ import os
 import sys
 
 from invoke import task, Collection
+
+from .utils import merge_collection
+
 from .core import (
   fonts,
   sshkey,
@@ -20,7 +23,7 @@ else:
 
 @task(pre=[core.submodule_init, core.submodules])
 def bootstrap():
-  """- bootstrap the entire dotfiles installation"""
+  """- bootstrap for the dotfiles installation"""
   print '======================================================'
   print 'Welcome to my dotfiles installation'
   print '======================================================'
@@ -31,5 +34,4 @@ def bootstrap():
   vimplugins()
 
 ns = Collection.from_module(sys.modules[__name__])
-ns.add_collection(platform.apps)
-ns.add_collection(platform.binaries)
+merge_collection(ns, Collection.from_module(platform))
