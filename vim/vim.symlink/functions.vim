@@ -23,21 +23,20 @@ function! BuildVimProc(info)
 endfunction
 
 function! InitializeDirectories()
-	let directoryList = { 
-	\ 	'backup': 'backupdir', 
-	\ 	'view': 'viewdir', 
-	\ 	'swap': 'directory', 
-	\ 	'undo': 'undodir'
-	\ }
+  let directoryList = {
+  \   'backup': 'backupdir',
+  \   'view': 'viewdir',
+  \   'swap': 'directory',
+  \   'undo': 'undodir'
+  \ }
 
-	for [dirname, settingname] in items(directoryList)
-		let directory = '~/.vim/' . dirname . '/'
+  for [dirname, settingname] in items(directoryList)
+    let directory = expand('~/.vim/' . dirname . '/')
 
-		if exists("*mkdir")
-			if !isdirectory(directory)
-	call mkdir(directory)
-			endif
-		endif
+    if !isdirectory(directory)
+      silent !clear
+      execute "!mkdir " . directory
+    endif
 
 		if !isdirectory(directory)
 			echo "Warning: Unable to create backup directory: " . directory

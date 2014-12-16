@@ -5,8 +5,8 @@ import glob
 
 from .utils import (
   enum,
-  user,
   info,
+  user,
 )
 
 Action = enum(Unknown=0, Skip=1, Overwrite=2, Backup=3)

@@ -6,14 +6,10 @@ source ~/.vim/functions.vim
 
 let mapleader="\<space>"
 
-let plugPath=expand('~/.vim/autoload/plug.vim')
-
-if !filereadable(plugPath)
-  plugPath=shellescape(plugPath)
-
+if empty(glob('~/.vim/autoload/plug.vim'))
   echo "Installing vim-plug"
-  system('mkdir -p $(basename ' . plugPath . ')')
-  system('curl -fLo ' . plugPath . ' https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
+  silent !mkdir -p ~/.vim/autoload
+  silent !curl -fLo ~/.vim/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall
 endif
 
@@ -150,7 +146,6 @@ syntax sync minlines=256
 
 if has('gui_running')
   set background=light
-  colorscheme solarized
 
   if GetRunningOS() == 'osx'
     set guifont=Inconsolata\ for\ Powerline:h15
@@ -159,8 +154,12 @@ if has('gui_running')
   endif
 else
   set background=dark
-  colorscheme solarized
 endif
+
+try
+  colorscheme solarized
+catch /^Vim\%((\a\+)\)\=:E185/
+endtry
 
 " We want to use a more subtle highlight color
 highlight ColorColumn ctermbg=Black guibg=#EDE7D5
@@ -184,12 +183,6 @@ autocmd VimResized * exe "normal! \<c-w>="
 
 " File type specifics
 autocmd FileType css,scss,less setlocal iskeyword+=-
-
-" Python (tab width 4 chr, wrap at 79th char)
-autocmd FileType python set sw=4
-autocmd FileType python set ts=4
-autocmd FileType python set sts=4
-autocmd FileType python set textwidth=79
 
 " We want enter to work inside quickfix windows
 autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
@@ -248,13 +241,12 @@ let g:vim_json_syntax_conceal = 1
 source ~/.vim/neocomplete.vim
 
 " Netrw
-let g:netrw_liststyle = 3
-let g:netrw_list_hide =  '^\.[^\.],'                                
-let g:netrw_list_hide .= '\.pyc$,'  
-let g:netrw_list_hide .= '\.o$,\.obj$,' 
-let g:netrw_list_hide .= '\.a$,\.so$,\.lib$,\.dll$,'    
-let g:netrw_list_hide .= '\.pyc\s\+,'               
-let g:netrw_list_hide .= '\.o\s\+,\.obj\s\+,'         
+let g:netrw_list_hide =  '^\.[^\.],'
+let g:netrw_list_hide .= '\.pyc$,'
+let g:netrw_list_hide .= '\.o$,\.obj$,'
+let g:netrw_list_hide .= '\.a$,\.so$,\.lib$,\.dll$,'
+let g:netrw_list_hide .= '\.pyc\s\+,'
+let g:netrw_list_hide .= '\.o\s\+,\.obj\s\+,'
 let g:netrw_list_hide .= '\.a\s\+,\.so\s\+,\.lib\s\+,\.dll\s\+,'
 
 " User text objects
@@ -307,7 +299,7 @@ if has('conceal')
     set conceallevel=2
 endif
 
-# Walk through wrapped lines
+" Walk through wrapped lines
 nnoremap <expr> k (v:count == 0 ? 'gk' : 'k')
 nnoremap <expr> j (v:count == 0 ? 'gj' : 'j')
 
@@ -324,15 +316,8 @@ nnoremap <expr> dd match(getline('.'), '^\s*$') == -1 ? 'dd' : '"_dd'
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
 
-" We are supposed to learn Vim
-nnoremap <up> <nop>
-nnoremap <down> <nop>
-nnoremap <left> <nop>
-nnoremap <right> <nop>
-inoremap <up> <nop>
-inoremap <down> <nop>
-inoremap <left> <nop>
-inoremap <right> <nop>
+cnoremap <C-A>  <Home>
+cnoremap <C-E>  <End>
 
 " What does this actually do?
 inoremap <C-U> <C-G>u<C-U>
