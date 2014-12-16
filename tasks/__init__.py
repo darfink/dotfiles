@@ -11,7 +11,6 @@ from .core import (
   fonts,
   sshkey,
   symlinks,
-  vimplugins,
 )
 
 if sys.platform.startswith('darwin'):
@@ -31,7 +30,6 @@ def bootstrap():
   sshkey()
   symlinks()
   fonts()
-  vimplugins()
 
 ns = Collection.from_module(sys.modules[__name__])
 merge_collection(ns, Collection.from_module(platform))

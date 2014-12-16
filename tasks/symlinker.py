@@ -1,14 +1,17 @@
 # -*- coding: utf-8 -*-
 
 import os
-import sys
 import glob
 
-from .utils import enum
+from .utils import (
+  enum,
+  user,
+  info,
+)
+
+Action = enum(Unknown=0, Skip=1, Overwrite=2, Backup=3)
 
 class Symlinker:
-  Action = enum(Unknown=0, Skip=1, Overwrite=2, Backup=3)
-
   def __init__(self, directory='$HOME', action=Action.Unknown):
     """Symlink dotfiles"""
     self.directory = os.path.expandvars(directory)
@@ -36,17 +39,19 @@ class Symlinker:
         os.mkdir(target)
 
     # Combine the directory with the name (without symlink extension)
-    return (target + os.path.splitext(parts[0])[0])
+    return (target + os.path.splitext(os.path.basename(parts[0]))[0])
 
   def connect(self, source, target):
     """Connect a source path to a target path"""
     reltarget = os.path.relpath(target, self.directory)
+    abssource = os.path.abspath(source)
+
     islink = os.path.islink(target)
     action = self.action
 
     if islink or os.path.exists(target):
       if action == Action.Unknown:
-        if islink and os.readlink(target) == source:
+        if islink and os.readlink(target) == abssource:
           action = Action.Skip
         else:
           action = self.prompt_path(reltarget)
@@ -61,14 +66,14 @@ class Symlinker:
         info('skipped {}'.format(source))
 
     if action != Action.Skip:
-      os.symlink(source, target)
+      os.symlink(abssource, target)
       info('linked {} to {}'.format(source, reltarget))
 
   def prompt_path(self, path):
     """Prompt the user about a path action"""
     while True:
       user('path already exists: {}, what do you want to do? [s/S/o/O/b/B/?]'.format(path))
-      option = sys.stdin.read(1)
+      option = raw_input()
 
       try:
         action = {

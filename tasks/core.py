@@ -19,7 +19,6 @@ def submodule_init():
 
 @task(submodule_init)
 def submodules():
-  info('downloading dotfiles submodules... please wait')
   run('git submodule update --recursive')
   run('git clean -df')
 
@@ -46,13 +45,7 @@ def sshkey():
 def fonts():
   """- installs Powerline fonts (locally)"""
   info('installing patched fonts for Powerline')
-  run('fonts/install.sh')
-
-# TODO: VIM requirement here
-@task(pre=[symlinks])
-def vimplugins():
-  info('installing Vim plugins')
-  run('vim +PlugInstall +qall 2&>/dev/null')
+  run('fonts/install.sh', hide=True)
 
 @task(symlinks)
 def nvm():
