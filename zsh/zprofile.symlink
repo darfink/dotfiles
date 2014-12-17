@@ -1,0 +1,177 @@
+###############################################################################
+# Vital functions
+###############################################################################
+
+# Adds a path if it doesn't exist and is valid
+add-path() {
+  if [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then
+    PATH="$1:$PATH"
+  fi
+}
+
+# Returns successfully if a command exists
+is-command() {
+  if (( $+commands[$1] )); then
+    return 0
+  else
+    return 1
+  fi
+}
+
+###############################################################################
+# Paths and initial setup
+###############################################################################
+
+# We need some basic setup first
+export DOTFILES="$(cat "$HOME/.dotlock")"
+export ZSHDIR="$DOTFILES/zsh"
+
+# Ensure path arrays do not contain duplicates.
+typeset -gU cdpath fpath mailpath path
+
+# All of our executables
+add-path "$DOTFILES/bin"
+
+# Cache the current OS
+export OS="$(os)"
+export OSDIR="$DOTFILES/os/$OS"
+
+case "$OS" in
+'osx')
+  if is-command brew; then
+    # Add some brew specific paths
+    add-path "$(brew --prefix)/share/python"
+    add-path "$(brew --prefix coreutils)/libexec/gnubin"
+    add-path "$(brew --prefix ruby)/bin"
+
+    # Add Homebrew directories
+    add-path "$(brew --prefix)/sbin"
+    add-path "$(brew --prefix)/bin"
+  fi;;
+'*')
+  # Add local gem installations to path
+  add-path "$(ruby -rubygems -e 'puts Gem.user_dir')/bin";;
+esac
+
+# Add binary folders to path
+add-path "$OSDIR/bin"
+add-path "$HOME/bin"
+
+###############################################################################
+# Exports
+###############################################################################
+
+if [[ $COLORTERM = gnome-* && $TERM = xterm ]] && infocmp gnome-256color >/dev/null 2>&1; then
+  export TERM='gnome-256color'
+elif infocmp xterm-256color >/dev/null 2>&1; then
+  export TERM='xterm-256color'
+fi
+
+# Make Vim the default editor
+export EDITOR='vim'
+export GIT_EDITOR="$EDITOR -f"
+export VISUAL="$EDITOR"
+
+# Color grep output
+export GREP_OPTIONS='--color=auto --exclude-dir=.svn --exclude-dir=.git --binary-files=without-match'
+
+# Use human friendly size format (e.g 1024MB)
+export BLOCK_SIZE='human-readable'
+
+if is-command ag; then
+  # Use 'ag' instead of 'find' for FZF
+  export FZF_DEFAULT_COMMAND='ag -l -g ""'
+fi
+
+if [ $OS = 'osx' ]; then
+  if is-command brew; then
+    # We want to use the GNU man pages
+    export MANPATH="$(brew --prefix coreutils)/libexec/gnuman:$MANPATH"
+  fi
+
+  # Always install to “/Applications” with brew cask
+  export HOMEBREW_CASK_OPTS='--appdir=/Applications'
+fi
+
+###############################################################################
+# Exports - Localization
+###############################################################################
+
+# Avoid this superseding other settings
+unset LC_ALL
+
+# Always UTF-8, and prefer Swedish settings but never the Swedish language
+
+# US influenced settings
+export LC_MESSAGES='en_US.UTF-8'    # Always US English language
+export LC_NUMERIC='en_US.UTF-8'     # Use dots instead of commas
+export LC_TIME='en_US.UTF-8'	    # Have to learn ISO-8601
+
+# SE influenced settings
+export LC_ADDRESS='sv_SE.UTF-8'     # Address in Swedish order
+export LC_COLLATE='sv_SE.UTF-8'     # Sort order ('ö' is after 'z')
+export LC_CTYPE='sv_SE.UTF-8'	    # Support Swedish characters
+export LC_MEASUREMENT='sv_SE.UTF-8' # Prefer the metric system
+export LC_MONETARY='sv_SE.UTF-8'    # SEK is the currency we use
+export LC_NAME='sv_SE.UTF-8'	    # Present names with style
+export LC_PAPER='sv_SE.UTF-8'	    # Print documents in A4 format
+export LC_TELEPHONE='sv_SE.UTF-8'   # Just like yellow pages
+
+# Fallback - just in case
+export LANG='en_US.UTF-8'
+
+if [ -z "${TZ}" ]; then
+  # Where I reside for the time being
+  export TZ='Europe/Stockholm'
+fi
+
+###############################################################################
+# Exports - Less
+###############################################################################
+
+# Mouse scrolling is disabled in favor of not using screen clearing if the
+# content that is being viewed fits in the current terminal screen.
+export LESS='-F -g -i -M -R -S -w -X -z-4'
+
+# Set the Less input preprocessor
+if is-command src-hilite-lesspipe.sh; then
+  export LESSOPEN='| src-hilite-lesspipe.sh %s'
+elif is-command lesspipe.sh; then
+  export LESSOPEN='| lesspipe.sh %s 2>&-'
+fi
+
+# Prefer UTF-8 encoding
+export LESSCHARSET='utf-8'
+
+# Less colors for Man pages
+export LESS_TERMCAP_mb=$'\E[0;103m' # begin blinking
+export LESS_TERMCAP_md=$'\E[0;93m'  # begin bold
+export LESS_TERMCAP_me=$'\E[0m'     # end mode
+export LESS_TERMCAP_se=$'\E[0m'     # end standout-mode
+export LESS_TERMCAP_so=$(tput bold; tput setaf 8; tput setab 3) # begin standout-mode - info box
+export LESS_TERMCAP_ue=$'\E[0m'     # end underline
+export LESS_TERMCAP_us=$'\E[04;32m' # begin underline
+export LESS_TERMCAP_mr=$(tput rev)
+export LESS_TERMCAP_mh=$(tput dim)
+export LESS_TERMCAP_ZN=$(tput ssubm)
+export LESS_TERMCAP_ZV=$(tput rsubm)
+export LESS_TERMCAP_ZO=$(tput ssupm)
+export LESS_TERMCAP_ZW=$(tput rsupm)
+
+# Don’t clear the screen after quitting a manual page
+export MANPAGER='less -FRX'
+export PAGER='less'
+
+################################################################################
+# Temporary files
+################################################################################
+
+if [[ ! -d "$TMPDIR" ]]; then
+  export TMPDIR="/tmp/$USER"
+  mkdir -p -m 700 "$TMPDIR"
+fi
+
+TMPPREFIX="${TMPDIR%/}/zsh"
+if [[ ! -d "$TMPPREFIX" ]]; then
+  mkdir -p "$TMPPREFIX"
+fi

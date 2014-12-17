@@ -8,8 +8,8 @@ def install(names, cask=False, flags=[]):
   if isinstance(names, basestring):
     names = [names]
 
-  installed = installed(cask=cask)
-  names = [n for n in names if n not in installed]
+  packages = installed(cask=cask)
+  names = [n for n in names if n not in packages]
 
   if len(names) > 0:
     if cask:
@@ -37,3 +37,9 @@ def tap(repo):
 def tapped(tap=None):
   taps = run('brew tap', hide=True).stdout.strip().split("\n")
   return (tap in taps) if tap else taps
+
+def load(config):
+  if os.path.basename(config) not in run('launchctl list', hide=True).stdout:
+    run('sudo cp -f "{}" /Library/LaunchDaemons/'.format(config))
+    run('sudo chown root /Library/LaunchDaemons/{}'.format(os.path.basename(config)))
+    run('sudo launchctl load -w "/Library/LaunchDaemons/{}"'.format(os.path.basename(config)))

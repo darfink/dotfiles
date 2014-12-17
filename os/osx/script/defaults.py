@@ -17,7 +17,3 @@ defaults = {
     ]
   }
 }
-
-for key, events in defaults.iteritems():
-  info('defaults for {}:'.format(key))
-  for 

@@ -36,7 +36,7 @@ def json():
 
 @task(base.cask)
 def webp():
-  brew.install('webp-quicklook', cask=True)
+  brew.install('webpquicklook', cask=True)
 
 @task(base.cask)
 def package():

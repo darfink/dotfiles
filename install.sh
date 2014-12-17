@@ -3,31 +3,31 @@
 directory=''
 
 info() {
-  printf "  [ \033[00;34m..\033[0m ] $1"
+  printf "  [ \033[00;34m..\033[0m ] %s" "$1"
 }
 
 user() {
-  printf "\r  [ \033[0;33m?\033[0m ] $1 "
+  printf "\r  [ \033[0;33m?\033[0m ] %s " "$1"
 }
 
 fail() {
-  printf "\r\033[2K  [\033[0;31mFAIL\033[0m] $1\n"
+  printf "\r\033[2K  [\033[0;31mFAIL\033[0m] %s\n" "$1"
 }
 
-is_command() {
+is-command() {
   hash "$1" 2> /dev/null
 }
 
 install_prerequisites() {
   # TODO: Check for git here!!!
 
-  if ! is_command easy_install; then
+  if ! is-command easy_install; then
     # OS X is bundled with this, so it never reaches here
     info 'dependency: installing easy_install'
     sudo apt-get install -y python-setuptools || exit 1
   fi
 
-  if ! is_command invoke; then
+  if ! is-command invoke; then
     info 'dependency: installing invoke'
     sudo easy_install invoke || exit 1
   fi
@@ -48,7 +48,7 @@ prompt_directory() {
   done
 
   # Ensure it is an absolute path
-  directory="$(python -c 'import os, sys; print os.path.realpath(sys.argv[1])' $directory)"
+  directory="$(python -c 'import os, sys; print os.path.realpath(sys.argv[1])' "$directory")"
 }
 
 if [ ! -f "$HOME/.dotlock" ]; then

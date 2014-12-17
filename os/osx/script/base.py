@@ -2,7 +2,7 @@
 
 import os
 
-from invoke import task
+from invoke import task, run
 
 from ..osx import brew
 from ..utils import command_exists, info
@@ -20,7 +20,7 @@ def extensions():
 
 @task
 def xcode_clt():
-  if run('xcode-select -p', warn=False, hide=True).failed:
+  if run('xcode-select -p', warn=True, hide=True).failed:
     info('installing xcode command line tools')
     run('xcode-select --install')
 
@@ -35,26 +35,26 @@ class Homebrew:
 
   def install(self):
     info('installing Homebrew')
-    run('ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"')
+    run('ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"')
 
   def check_group(self):
     user = os.environ['USER']
     try:
-      run('sudo dseditgroup -o checkmember -m "{}" admin'.format(user), hide=True)
+      run('dseditgroup -o checkmember -m "{}" admin'.format(user), hide=True)
     except invoke.exceptions.Failure:
       info('adding {} to “admin” user group'.format(user))
       run('sudo dseditgroup -o edit -a "{}" -t user admin'.format(user))
 
   def check_path(self):
     # We need to ensure that the brew path is first
-    brewdir = run('brew --prefix', hide=True).stdout
+    brewdir = run('brew --prefix', hide=True).stdout.strip()
     path = os.environ['PATH'].split(os.pathsep)
 
     if brewdir in path:
       path.remove(brewdir)
 
     path.insert(0, brewdir)
-    os.environ['PATH'] = os.pathsep.join(paths)
+    os.environ['PATH'] = os.pathsep.join(path)
 
 @task(xcode_clt)
 def homebrew():
@@ -62,10 +62,11 @@ def homebrew():
 
 @task(homebrew)
 def cask():
-  if not binary_installed('cask'):
+  if not brew.installed('brew-cask'):
     info('installing Caskroom')
     brew.install('caskroom/cask/brew-cask')
-  run('brew upgrade brew-cask')
+  #TODO: Troubleshoot why this fails
+  #run('brew upgrade brew-cask')
 
 @task(cask)
 def xquartz():

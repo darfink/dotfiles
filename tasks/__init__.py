@@ -20,7 +20,7 @@ elif sys.platform.startswith('linux'):
 else:
     raise ImportError('your OS is not supported')
 
-@task(pre=[core.submodule_init, core.submodules])
+@task(pre=[core.submodule_init, core.submodules], default=True)
 def bootstrap():
   """- bootstrap for the dotfiles installation"""
   print '======================================================'

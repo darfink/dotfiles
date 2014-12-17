@@ -294,9 +294,9 @@ if executable('ag')
 endif
 
 if has('conceal')
-    autocmd Syntax * syn match Operator "!=" conceal cchar=≠
-    highlight! link Conceal Operator
-    set conceallevel=2
+  autocmd Syntax * syn match Operator "!=" conceal cchar=≠
+  highlight! link Conceal Operator
+  set conceallevel=2
 endif
 
 " Walk through wrapped lines

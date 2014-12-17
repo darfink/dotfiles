@@ -1,10 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import os
-import re
-import sys
-
-from invoke import task, Collection
+from invoke import task, Collection, run
 
 from ..osx import (
   base,
@@ -59,6 +55,17 @@ def iterm():
 def keepingyouawake():
   brew.install('keepingyouawake', cask=True)
 
+@task(base.cask)
+def osxfuse():
+  """- fuse support (sshfs, ext{2-4}, ntfs)"""
+  if not brew.installed('osxfuse', cask=True):
+    brew.install('osxfuse', cask=True)
+  #TODO: Check why this fails
+  #brew.install('ext2fuse')
+  brew.install('ext4fuse')
+  brew.install('ntfs-3g')
+  brew.install('sshfs')
+
 @task(pre=[base.cask, taps.cask_popcorn], name='popcorn-time')
 def popcorn_time():
   brew.install('popcorn-time', cask=True)
@@ -100,5 +107,3 @@ def vlc():
 @task(base.homebrew)
 def xpdf():
   brew.install('xpdf')
-
-

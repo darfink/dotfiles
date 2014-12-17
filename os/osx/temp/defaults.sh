@@ -77,12 +77,17 @@ echo "Reveal IP address, hostname, OS version, etc. when clicking the clock in t
 sudo defaults write /Library/Preferences/com.apple.loginwindow AdminHostInfo HostName
 
 echo ""
+echo "Disabling the guest user account"
+defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server AllowGuestAccess -bool NO
+defaults write /Library/Preferences/com.apple.AppleFileServer guestAccess -bool NO
+
+echo ""
 echo "Showing battery life percentage"
 defaults write com.apple.menuextra.battery ShowPercent -string "YES"
 
 echo ""
 echo "Changing the default wallpaper"
-sqlite3 '~/Library/Application Support/Dock/desktoppicture.db' "UPDATE data SET value = '$DOTFILES/ext/wallpaper.jpg'"
+sqlite3 "$HOME/Library/Application Support/Dock/desktoppicture.db" "UPDATE data SET value = '$DOTFILES/ext/wallpaper.jpg'"
 
 echo ""
 echo "Disabling “application crashed” dialog"
@@ -301,7 +306,7 @@ echo "Don’t show Dashboard as a Space"
 defaults write com.apple.dock dashboard-in-overlay -bool true
 
 echo ""
-echo "Disabling mission control hotkeys (makes F9-F12 usable)
+echo "Disabling mission control hotkeys (makes F9-F12 usable)"
 actionids=(
 	# Application Window
 	33 35
@@ -323,7 +328,7 @@ defaults write com.apple.dock mru-spaces -bool false
 
 echo ""
 echo "Reset Launchpad, but keep the desktop wallpaper intact"
-find "${HOME}/Library/Application Support/Dock" -name "*-*.db" -maxdepth 1 -delete
+find "$HOME/Library/Application Support/Dock" -name "*-*.db" -maxdepth 1 -delete
 
 echo ""
 echo "Setting up dock items"
@@ -707,7 +712,7 @@ defaults write com.apple.messageshelper.MessageController SOInputLineSettings -d
 ###############################################################################
 
 echo ""
-echo "Enabling X11 clipboard synchronization
+echo "Enabling X11 clipboard synchronization"
 defaults write org.macosforge.xquartz.X11 sync_clipboard_to_pasteboard -bool true
 defaults write org.macosforge.xquartz.X11 sync_pasteboard -bool true
 defaults write org.macosforge.xquartz.X11 sync_pasteboard_to_clipboard -bool true
@@ -830,13 +835,8 @@ open -a "Google Chrome" --args --make-default-browser
 # Personal Additions
 ###############################################################################
 
-if [ is-installed zsh ]; then
-	shell="$(brew --prefix)/bin/zsh"
-
-	# Append zsh to the shell list if not already there
-	[ sudo grep -Fxq "$shell" /etc/shells ] || echo "$shell" | sudo tee -a /etc/shells > /dev/null
-
-	echo ""
-	echo "Changing the default shell to zsh"
-	chsh -s "$shell"
+# Disable the awful non-breaking space functionality
+if [ ! -f ~/Library/KeyBindings/DefaultKeyBinding.dict ]; then
+  mkdir -p ~/Library/KeyBindings/
+  printf "{\n\t%s\n}\n" '"~ " = (insertText:, " ");' > ~/Library/KeyBindings/DefaultKeyBinding.dict
 fi

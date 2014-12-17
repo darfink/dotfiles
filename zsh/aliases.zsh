@@ -1,7 +1,8 @@
 # Easier navigation
-alias ...='../..'
-alias ....='../../..'
-alias .....='../../../..'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
 alias ~='cd ~'
 alias -- -='cd -'
 alias www='cd /var/www'
@@ -29,17 +30,11 @@ alias lrt='ls -1Fcrt'
 alias chown='chown --preserve-root'
 alias chmod='chmod --preserve-root'
 alias chgrp='chgrp --preserve-root'
-alias mv='mv -i'
-alias cp='cp -i'
-alias rm='rm -i'
 
 # Utility aliases
 alias stats='sort | uniq -c | sort -r'
 alias gitjk='history 10 | tac | gitjk_cmd'
 alias map='xargs -n1'
-
-# Lists the ten most used commands
-alias history-stat="history 0 | awk '{print \$2}' | sort | uniq -c | sort -nr | head"
 
 if is-command grunt; then
   alias grunt='grunt --stack'
@@ -59,6 +54,7 @@ fi
 if is-command patool; then
   alias pac='patool --verbose create'
   alias pae='patool extract'
+  alias pal='patool list'
 fi
 
 ###############################################################################

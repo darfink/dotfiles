@@ -2,7 +2,7 @@
 
 import os
 
-from invoke import task
+from invoke import task, run
 
 from .. import core
 from ..osx import base, brew, taps
@@ -34,9 +34,10 @@ def compression():
 def cscope():
   brew.install('cscope')
 
-@task(base.homebrew)
-def ctags():
-  brew.install('ctags')
+#TODO: This doesn't wuuurk
+#@task(base.homebrew)
+#def ctags():
+#  brew.install('ctags-exuberant')
 
 @task(base.homebrew)
 def dnsmasq():
@@ -48,10 +49,7 @@ def dnsmasq():
   run('echo "address=/.dev/127.0.0.1" > "$(brew --prefix)/etc/dnsmasq.conf"')
   run('echo "listen-address=127.0.0.1" >> "$(brew --prefix)/etc/dnsmasq.conf"')
 
-  if 'homebrew.mxcl.dnsmasq' not in run('launchctl list', hide=True).stdout:
-    # Load dnsmasq automatically at startup
-    run('sudo cp "$(brew --prefix dnsmasq)/homebrew.mxcl.dnsmasq.plist" /Library/LaunchDaemons/')
-    run('sudo launchctl load -w /Library/LaunchDaemons/homebrew.mxcl.dnsmasq.plist')
+  brew.load(run('echo "$(brew --prefix dnsmasq)/homebrew.mxcl.dnsmasq.plist"', hide=True).stdout.strip())
 
   # Use our local host for *.dev DNS queries
   run('sudo mkdir -p /etc/resolver')
@@ -88,13 +86,13 @@ def gnutools():
 
   # Install GNU `find`, `locate`, `updatedb`, `xargs` etc
   brew.install('findutils', flags=['--with-default-names'])
+  brew.install('gnu-tar', flags=['--with-default-names'])
   brew.install('gnu-indent', flags=['--with-default-names'])
   brew.install('gnu-which', flags=['--with-default-names'])
-  brew.install('gnu-tar', flags=['--with-default-names'])
   brew.install('gnu-sed', flags=['--with-default-names'])
-  brew.install('gnutls', flags=['--with-default-names'])
+  brew.install('gnutls')
   brew.install('grep', flags=['--with-default-names'])
-  brew.install('ed', flags=['--with-default-names'])
+  brew.install('ed', flags=['--default-names'])
   brew.install('wdiff', flags=['--with-gettext'])
   brew.install('wget', flags=['--with-iri'])
   brew.install('parallel')
@@ -104,7 +102,10 @@ def gnutools():
 
 @task(base.homebrew)
 def htop():
-  brew.install('htop-osx')
+  if not brew.installed('htop-osx'):
+    brew.install('htop-osx')
+    run('sudo chown root:wheel "$(brew --prefix htop)/bin/htop"')
+    run('sudo chmod u+s "$(brew --prefix htop)/bin/htop"')
 
 @task(base.homebrew)
 def icdiff():
@@ -129,18 +130,6 @@ def lynx():
 @task(base.homebrew)
 def moreutils():
   brew.install('moreutils', flags=['--without-parallel'])
-
-@task(base.homebrew)
-def osxfuse():
-  """- fuse support (sshfs, ext{2-4}, ntfs)"""
-  if not brew.installed('osxfuse'):
-    brew.install('osxfuse')
-    run('sudo cp -Rxf "$(brew --prefix osxfuse)/Library/Filesystems/osxfusefs.fs" /Library/Filesystems/')
-    run('sudo chmod +s /Library/Filesystems/osxfusefs.fs/Support/load_osxfusefs')
-  brew.install('ext2fuse')
-  brew.install('ext4fuse')
-  brew.install('ntfs-3g')
-  brew.install('sshfs')
 
 @task(base.homebrew)
 def pv():
@@ -187,37 +176,57 @@ def ssh_copy_id():
 
 @task(name='ssh-server')
 def ssh_server():
-  if not run('sudo systemsetup -getremotelogin', hide=True, warn=False).ok:
+  if not run('sudo systemsetup -getremotelogin | grep On', hide=True, warn=True).ok:
     # OSX is bundled with a SSH server
     run('sudo systemsetup -setremotelogin on')
+    run('sudo sed -i -E "s/^#?(PasswordAuthentication|ChallengeResponseAuthentication).*$/\1 no/" /etc/sshd_config')
 
 @task(pre=[base.homebrew, taps.apache, taps.dupes, taps.php, dnsmasq])
 def xamp():
   if not brew.installed('mysql'):
     brew.install('mysql')
-
     prefix = run('brew --prefix mysql', hide=True).stdout.strip()
-    run('cp -v "{0}/support-files/my-default.cnf" "{0}/my.cnf"'.format(prefix))
 
-    if 'homebrew.mxcl.mysql.plist' not in run('launchctl list', hide=True).stdout:
-      # Load MySQL automatically at startup
-      run('sudo cp "{}/homebrew.mxcl.mysql.plist" /Library/LaunchDaemons/'.format(prefix))
-      run('sudo launchctl load -w /Library/LaunchDaemons/homebrew.mxcl.mysql.plist')
+    run('cp -v "{0}/support-files/my-default.cnf" "{0}/my.cnf"'.format(prefix))
+    brew.load('{}/homebrew.mxcl.mysql.plist'.format(prefix))
 
   if not brew.installed('httpd24'):
+    # Unload the default Apache if running
+    run('sudo launchctl unload -w /System/Library/LaunchDaemons/org.apache.httpd.plist 2>/dev/null', hide=True, warn=True)
+
     brew.install('httpd24', flags=['--with-brewed-openssl'])
 
+    # Setup apache port forwarding (port 80 -> 8080)
+    run('sudo cp -f os/osx/ext/apache /etc/pf.anchors/')
+    run('sudo cp -f os/osx/ext/com.apple.pfctl.plist /System/Library/LaunchDaemons/')
+    run('printf "%s\\n" /rdr-anchor/a \'rdr-anchor "apache"\' . w q | sudo ex -s /etc/pf.conf')
+    run('echo \'load anchor "apache" from "/etc/pf.anchors/apache"\' | sudo tee -a /etc/pf.conf')
+
+    config = run('echo "$(brew --prefix)/etc/apache2/2.4/httpd.conf"').stdout.strip()
+
+    # Enable frequently used/required mods (PHP is enabled automatically by brew)
+    run('sed -i "s,#\(.*vhost_alias_module.*\),\1,g" "{}"'.format(config))
+    run('sed -i "s,#\(.*httpd-vhosts.conf\),\1,g" "{}"'.format(config))
+    run('sed -i "s,#\(.*rewrite_module.*\),\1,g" "{}"'.format(config))
+
     # Enable the virtual hosts configuration
-    run('sed -i "s,#\(.*httpd-vhosts.conf\),\1,g" "$(brew --prefix)/etc/apache2/2.4/httpd.conf"')
-    run('ln -sf ext/httpd-vhosts.conf "$(brew --prefix)/etc/apache2/2.4/extra/"')
+    run('cp -f ext/httpd-vhosts.conf "$(brew --prefix)/etc/apache2/2.4/extra/"')
+    run('sed -i s#%PREFIX%#$(brew --prefix)# "$(brew --prefix)/etc/apache2/2.4/extra/httpd-vhosts.conf"')
 
+    # Give apache full access to the 'www' directory
+    run('sudo chown -R daemon:daemon "$(brew --prefix)/var/www/*"')
 
-  """- setup for Apache, MariaDB & PHP
-        "httpd24 --with-brewed-openssl"
-        "php56 --with-homebrew-openssl --homebrew-apxs --with-apache"
-        "php56-opcache"
-  """
-  pass
+  if not brew.installed('php56'):
+    brew.install('php56', flags=['--without-snmp', '--with-homebrew-openssl', '--homebrew-apxs', '--with-apache'])
+
+    with open(run('echo "$(brew --prefix)/etc/apache2/2.4/httpd.conf"', hide=True).stdout.strip(), 'a') as config:
+      config.write(
+        'AddHandler php5-script .php'
+        'AddType text/html .php'
+        'DirectoryIndex index.php index.html')
+
+  # Load apache after all modules have been properly setup
+  brew.load(run('echo "$(brew --prefix httpd24)/homebrew.mxcl.httpd24.plist"').stdout.strip())
 
 @task(base.homebrew)
 def webkit2png():
@@ -228,7 +237,7 @@ def zsh():
   if brew.installed('zsh'):
     return
   brew.install('zsh')
-  path = run('echo "$(brew --prefix)/bin/zsh"', hide=True).stdout
+  path = run('echo "$(brew --prefix)/bin/zsh"', hide=True).stdout.strip()
 
   # Append zsh to the shell list if not already there, and then change to it
   run('[ grep -Fxq "{0}" /etc/shells ] || echo "{0}" | sudo tee -a /etc/shells > /dev/null'.format(path))
