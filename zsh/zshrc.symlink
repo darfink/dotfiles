@@ -7,6 +7,7 @@ for function in $ZSHDIR/functions/*; do
   source "$function"
 done
 
+
 for file in $ZSHDIR/{bindings,aliases,local}.zsh; do
   [ -s "$file" ] && source "$file"
 done
@@ -17,16 +18,5 @@ done
 # Load the local zshrc if provided
 [ -s "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
 
-if [ -e "$HOME/.dir_colors" ]; then
-  # Make the 'ls' command pretty (solarized dark theme by default)
-  eval "$(dircolors -b "$HOME/.dir_colors" | sed 's/>&\/dev\/null$//')"
-
-  # Make ZSH completion color the same as ls
-  zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
-fi
-
-# Make zsh know about hosts already accessed by SSH
-zstyle -e ':completion:*:(ssh|scp|sftp|rsh|rsync):hosts' hosts 'reply=(${=${${(f)"$(cat {/etc/ssh_,~/.ssh/known_}hosts(|2)(N) /dev/null)"}%%[# ]*}//,/ })'
-
 # Enable ctrl+s in Vim by disabling flow control and sending of start/stop characters
-stty -ixon -ixoff
+setopt NO_FLOW_CONTROL

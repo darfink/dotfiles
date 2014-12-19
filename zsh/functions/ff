@@ -1,7 +1,0 @@
-ff() {
-  if is-command fzf; then
-    fzf "$@"
-  else
-    find . -type f -iname "*${1:-}*"
-  fi
-}

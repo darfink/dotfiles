@@ -1,8 +1,0 @@
-# Opens a directory or file using the default editor
-e() {
-  if [ $# -eq 0 ]; then
-    $EDITOR .
-  else
-    $EDITOR $@
-  fi
-}

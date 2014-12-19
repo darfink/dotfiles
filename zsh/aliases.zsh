@@ -19,7 +19,6 @@ alias l='ls -lF'
 alias la='ls -lAF'
 alias lr='ls -tRF'
 alias lt='ls -ltF'
-alias ll='ls -l'
 alias lsd='ls -lF | grep --color=never "^d"'
 alias ldot='ls -ld .*'
 alias lS='ls -1FSsh'
@@ -30,6 +29,12 @@ alias lrt='ls -1Fcrt'
 alias chown='chown --preserve-root'
 alias chmod='chmod --preserve-root'
 alias chgrp='chgrp --preserve-root'
+
+# Override Prezto 'interactive' settings
+alias ln='nocorrect ln'
+alias cp='nocorrect cp'
+alias mv='nocorrect mv'
+alias rm='nocorrect rm'
 
 # Utility aliases
 alias stats='sort | uniq -c | sort -r'
@@ -80,21 +85,11 @@ case "$OS" in
   fi
   ;;
 'linux')
-  if is-command xclip; then
-    alias pbpaste='xclip -selection clipboard -o'
-    alias pbcopy='xclip -selection clipboard'
-  elif is-command xsel; then
-    alias pbpaste='xsel --clipboard --output'
-    alias pbcopy='xsel --clipboard --input'
-  fi
-
-  alias open='xdg-open'
+  alias open='o'
   ;;
 'cygwin')
   # Make all platforms uniformed
-  alias pbpaste='putclip'
-  alias pbcopy='getclip'
-  alias open='cygstart'
+  alias open='o'
   ;;
 esac
 

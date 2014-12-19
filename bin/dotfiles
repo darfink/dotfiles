@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 
 # Execute from dotfiles directory
-cd "$(dirname "$0")../"
+cd "$(dirname "$0")/.."
 
-invoke "$@"
+if [ $# -eq 0 ]; then
+  invoke --list
+else
+  invoke "$@"
+fi

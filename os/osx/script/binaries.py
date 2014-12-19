@@ -192,7 +192,7 @@ def xamp():
 
   if not brew.installed('httpd24'):
     # Unload the default Apache if running
-    run('sudo launchctl unload -w /System/Library/LaunchDaemons/org.apache.httpd.plist 2>/dev/null', hide=True, warn=True)
+    run('sudo launchctl unload -w /System/Library/LaunchDaemons/org.apache.httpd.plist', hide=True, warn=True)
 
     brew.install('httpd24', flags=['--with-brewed-openssl'])
 

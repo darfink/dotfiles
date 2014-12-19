@@ -38,6 +38,7 @@ def tapped(tap=None):
   taps = run('brew tap', hide=True).stdout.strip().split("\n")
   return (tap in taps) if tap else taps
 
+#TODO: Find a better place for this
 def load(config):
   if os.path.basename(config) not in run('launchctl list', hide=True).stdout:
     run('sudo cp -f "{}" /Library/LaunchDaemons/'.format(config))
