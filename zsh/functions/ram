@@ -17,8 +17,8 @@ ram() {
   sum=$(echo "scale=2; $sum / 1024.0" | bc)
 
   if [[ $sum != "0" ]]; then
-    echo "${fg[blue]}${app}${reset_color} uses ${fg[green]}${sum}${reset_color} MBs of RAM"
+    echo "$FG[blue]${app}$FG[none] uses $FG[green]${sum}$FG[none] MBs of RAM"
   else
-    echo "There are no processes with pattern '${fg[blue]}${app}${reset_color}' running"
+    echo "There are no processes with pattern '$FG[blue]${app}$FG[none]' running"
   fi
 }

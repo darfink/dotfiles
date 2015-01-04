@@ -11,7 +11,7 @@ alias www='cd /var/www'
 alias db='cd ~/Dropbox'
 alias dl='cd ~/Downloads'
 alias dt='cd ~/Desktop'
-alias p='cd ~/Projects'
+alias pj='cd ~/Projects'
 alias h='history'
 
 # Different “ls” aliases
