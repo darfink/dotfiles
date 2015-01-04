@@ -16,3 +16,4 @@ fish_history
 # Python generated files
 pip/*/cache/
 *.pyc
+*.log
