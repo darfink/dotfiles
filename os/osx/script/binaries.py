@@ -17,8 +17,8 @@ def ag():
   brew.install('the_silver_searcher')
 
 @task(base.homebrew)
-def autojump():
-  brew.install('autojump')
+def fasd():
+  brew.install('fasd')
 
 @task(pre=[base.homebrew, taps.dupes, taps.binary])
 def compression():

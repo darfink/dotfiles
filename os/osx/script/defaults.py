@@ -21,12 +21,13 @@ defaults = {
     'disabling the guest user account': [
       'sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server AllowGuestAccess -bool NO',
       'sudo defaults write /Library/Preferences/com.apple.AppleFileServer guestAccess -bool NO',
+      'sudo defaults write /Library/Preferences/com.apple.loginwindow GuestEnabled -bool NO',
     ],
     'restarting automatically if the computer freezes': [
       'sudo systemsetup -setrestartfreeze on',
     ],
     'setting login window text': [
-      'sudo defaults write /Library/Preferences/com.apple.loginwindow LoginwindowText -string "I am sorry Dave, I am afraid I cannot do that"',
+      'sudo defaults write /Library/Preferences/com.apple.loginwindow LoginwindowText -string "I\'m sorry Dave, I\'m afraid I can\'t do that"',
     ],
   },
   'User Experience': {
@@ -71,9 +72,10 @@ defaults = {
     'showing battery life percentage': [
       'defaults write com.apple.menuextra.battery ShowPercent -string "YES"',
     ],
-    'changing the default wallpaper': [
-      'sqlite3 "$HOME/Library/Application Support/Dock/desktoppicture.db" "UPDATE data SET value = \'$DOTFILES/ext/wallpaper.jpg\'"',
-    ],
+    #TODO: Find some badass picture
+    #'changing the default wallpaper': [
+    #  'sqlite3 "$HOME/Library/Application Support/Dock/desktoppicture.db" "UPDATE data SET value = \'$DOTFILES/ext/wallpaper.jpg\'"',
+    #],
     'displaying ASCII control characters using caret notation in standard text views': [
       'defaults write NSGlobalDomain NSTextShowsControlCharacters -bool true',
     ],
@@ -95,10 +97,10 @@ defaults = {
       'defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false',
     ],
     'setting a blazingly fast keyboard repeat rate': [
-      'defaults write NSGlobalDomain KeyRepeat -int 0',
+      'defaults write NSGlobalDomain KeyRepeat -int 2',
     ],
     'setting trackpad & mouse speed to a reasonable number': [
-      'defaults write -g com.apple.trackpad.scaling 1',
+      'defaults write -g com.apple.trackpad.scaling 0.875',
       'defaults write -g com.apple.mouse.scaling 1.5',
     ],
     'enabling tap to click (Trackpad) for this user and for the login screen': [
@@ -126,14 +128,23 @@ defaults = {
   'Localization': {
     'setting language and text format to English': [
       'defaults write NSGlobalDomain AppleLanguages -array "en" "sv"',
-      'defaults write NSGlobalDomain AppleLocale -string "en_US@currency=SEK"',
+      'defaults write NSGlobalDomain AppleLocale -string "en_SE@currency=SEK"',
     ],
     'using the metric system instead of the imperial': [
       'defaults write NSGlobalDomain AppleMeasurementUnits -string "Centimeters"',
       'defaults write NSGlobalDomain AppleMetricUnits -bool true',
     ],
+    'using dot notation as decimal separator': [
+      'defaults write NSGlobalDomain AppleICUNumberSymbols -dict 0 "."',
+    ],
+    'using swedish date & time format with English language': [
+      'defaults write NSGlobalDomain AppleICUDateFormatStrings -dict 1 "y-MM-dd" 2 "d MMM y" 3 "d MMMM y"',
+      'defaults write com.apple.menuextra.clock DateFormat -string "EEE HH:mm"',
+    ],
     'setting the timezone to Swedish (Stockholm)': [
       'sudo systemsetup -settimezone "Europe/Stockholm" > /dev/null',
+      'sudo systemsetup -setnetworktimeserver "time.euro.apple.com" > /dev/null',
+      'sudo systemsetup -setusingnetworktime on > /dev/null',
     ],
   },
   'Screen': {
@@ -142,7 +153,7 @@ defaults = {
       'defaults write com.apple.screensaver askForPasswordDelay -int 5',
     ],
     'saving screenshots to ~/Screenshots': [
-      'defaults write com.apple.screencapture location -string "${HOME}/Screenshots"',
+      'defaults write com.apple.screencapture location -string "$HOME/Screenshots"',
       # Create the directory if it doesn't exist
       'mkdir -p ~/Screenshots',
     ],
@@ -164,6 +175,7 @@ defaults = {
       'sudo pmset -a sms 0',
     ],
     'removing the sleep image file to save disk space': [
+      'sudo chflags nouchg /Private/var/vm/sleepimage',
       'sudo rm /Private/var/vm/sleepimage',
       'sudo touch /Private/var/vm/sleepimage',
       'sudo chflags uchg /Private/var/vm/sleepimage',
@@ -183,6 +195,7 @@ defaults = {
     'setting (charger) display sleep to 15 minutes and disabling disk sleep': [
       'sudo pmset -c displaysleep 15',
       'sudo pmset -c disksleep 0',
+      'sudo pmset -c sleep 0',
     ],
     'setting keyboard illumination to turn off when computer is not used for 5 minutes': [
       'defaults write com.apple.BezelServices kDimTime -int 300',
@@ -198,8 +211,8 @@ defaults = {
     'minimizing windows into their own application icon': [
       'defaults write com.apple.dock mineffect -string "scale"',
     ],
-    'setting the icon size of items to 36 pixels for optimal size/screen-realestate': [
-      'defaults write com.apple.dock tilesize -int 36',
+    'setting the icon size of items to 56 pixels': [
+      'defaults write com.apple.dock tilesize -int 56',
     ],
     'enabling spring loading for all items': [
       'defaults write com.apple.dock enable-spring-load-actions-on-all-items -bool true',
@@ -233,12 +246,8 @@ defaults = {
       'dockutil --add "/Applications/MacVim.app"',
       'dockutil --add "/Applications/iTerm.app"',
 
-      # Add a separator between the applications and folders
-      'defaults write com.apple.dock persistent-apps -array-add \'{"tile-type"="spacer-tile";}\'',
-
       # ... and some default folders
       'dockutil --add "/Applications" --view list --display folder --sort name',
-      'dockutil --add "~/Dropbox" --view grid --display folder --sort name',
       'dockutil --add "~/Downloads" --view grid --display stack --sort dateadded',
     ],
   },
@@ -382,16 +391,24 @@ defaults = {
 
       # Add each item to the toolbar
       '/usr/libexec/PlistBuddy -c \'Add "NSToolbar Configuration Browser:TB Item Identifiers:0" string "com.apple.finder.BACK"\' ~/Library/Preferences/com.apple.finder.plist',
-      '/usr/libexec/PlistBuddy -c \'Add "NSToolbar Configuration Browser:TB Item Identifiers:1" string "com.apple.finder.PATH"\' ~/Library/Preferences/com.apple.finder.plist',
-      '/usr/libexec/PlistBuddy -c \'Add "NSToolbar Configuration Browser:TB Item Identifiers:2" string "com.apple.finder.ARNG"\' ~/Library/Preferences/com.apple.finder.plist',
-      '/usr/libexec/PlistBuddy -c \'Add "NSToolbar Configuration Browser:TB Item Identifiers:3" string "com.apple.finder.ACTN"\' ~/Library/Preferences/com.apple.finder.plist',
+      '/usr/libexec/PlistBuddy -c \'Add "NSToolbar Configuration Browser:TB Item Identifiers:1" string "com.apple.finder.ARNG"\' ~/Library/Preferences/com.apple.finder.plist',
+      '/usr/libexec/PlistBuddy -c \'Add "NSToolbar Configuration Browser:TB Item Identifiers:2" string "com.apple.finder.ACTN"\' ~/Library/Preferences/com.apple.finder.plist',
+      '/usr/libexec/PlistBuddy -c \'Add "NSToolbar Configuration Browser:TB Item Identifiers:3" string "NSToolbarSpaceItem"\' ~/Library/Preferences/com.apple.finder.plist',
       '/usr/libexec/PlistBuddy -c \'Add "NSToolbar Configuration Browser:TB Item Identifiers:4" string "com.apple.finder.SWCH"\' ~/Library/Preferences/com.apple.finder.plist',
-      '/usr/libexec/PlistBuddy -c \'Add "NSToolbar Configuration Browser:TB Item Identifiers:5" string "NSToolbarSpaceItem"\' ~/Library/Preferences/com.apple.finder.plist',
+      '/usr/libexec/PlistBuddy -c \'Add "NSToolbar Configuration Browser:TB Item Identifiers:5" string "com.apple.finder.SRCH"\' ~/Library/Preferences/com.apple.finder.plist',
       '/usr/libexec/PlistBuddy -c \'Add "NSToolbar Configuration Browser:TB Item Identifiers:6" string "NSToolbarFlexibleSpaceItem"\' ~/Library/Preferences/com.apple.finder.plist',
-      '/usr/libexec/PlistBuddy -c \'Add "NSToolbar Configuration Browser:TB Item Identifiers:7" string "com.apple.finder.INFO"\' ~/Library/Preferences/com.apple.finder.plist',
+      '/usr/libexec/PlistBuddy -c \'Add "NSToolbar Configuration Browser:TB Item Identifiers:7" string "com.apple.finder.loc "\' ~/Library/Preferences/com.apple.finder.plist',
       '/usr/libexec/PlistBuddy -c \'Add "NSToolbar Configuration Browser:TB Item Identifiers:8" string "com.apple.finder.CNCT"\' ~/Library/Preferences/com.apple.finder.plist',
-      '/usr/libexec/PlistBuddy -c \'Add "NSToolbar Configuration Browser:TB Item Identifiers:9" string "com.apple.finder.EJCT"\' ~/Library/Preferences/com.apple.finder.plist',
-      '/usr/libexec/PlistBuddy -c \'Add "NSToolbar Configuration Browser:TB Item Identifiers:10" string "com.apple.finder.TRSH"\' ~/Library/Preferences/com.apple.finder.plist',
+      '/usr/libexec/PlistBuddy -c \'Add "NSToolbar Configuration Browser:TB Item Identifiers:9" string "com.apple.finder.TRSH"\' ~/Library/Preferences/com.apple.finder.plist',
+
+      # Remove the custom defined items
+      '/usr/libexec/PlistBuddy -c \'Delete "NSToolbar Configuration Browser:TB Item Plists"\' ~/Library/Preferences/com.apple.finder.plist',
+      '/usr/libexec/PlistBuddy -c \'Add "NSToolbar Configuration Browser:TB Item Plists" dict\' ~/Library/Preferences/com.apple.finder.plist',
+
+      # Add the terminal opener item
+      '/usr/libexec/PlistBuddy -c \'Add "NSToolbar Configuration Browser:TB Item Plists:7" dict\' ~/Library/Preferences/com.apple.finder.plist',
+      '/usr/libexec/PlistBuddy -c "Add \'NSToolbar Configuration Browser:TB Item Plists:7:_CFURLString\' string \'file://$DOTFILES/os/osx/ext/open-terminal.app\'" ~/Library/Preferences/com.apple.finder.plist',
+      '/usr/libexec/PlistBuddy -c \'Add "NSToolbar Configuration Browser:TB Item Plists:7:_CFURLStringType" integer 15\' ~/Library/Preferences/com.apple.finder.plist',
     ],
     'making the home library folder visible': [
       'chflags nohidden ~/Library',
@@ -526,13 +543,24 @@ defaults = {
     ]
   },
   'Skype': {
-    'disabling login greeting and dialpad': [
+    'disabling login greeting, welcome tour and dialpad': [
+      'defaults write com.skype.skype SKDisableWelcomeTour -bool true',
       'defaults write com.skype.skype SKShowWelcomeOnLogin -bool false',
       'defaults write com.skype.skype ShowDialpadOnLogin -bool false',
     ],
     'setting default country code to Swedish': [
-      'defaults write com.skype.skype SKDefaultPSTNCountryCode -string "sv"',
-    ]
+      'defaults write com.skype.skype SKDefaultPSTNCountryCode -string "se"',
+    ],
+    'disabling recipient notification when writing': [
+      'defaults write com.skype.skype SKChatReportMeTyping -bool false',
+    ],
+    'hiding the skype dialog during calls': [
+      'defaults write com.skype.skype CallsMonitorEnabled -bool false',
+    ],
+    'enabling developer extras': [
+      'defaults write com.skype.skype DisableWebKitDeveloperExtras -bool false',
+      'defaults write com.skype.skype IncludeDebugMenu -bool true',
+    ],
   },
   'Seil': {
     'mapping caps lock to escape': [
@@ -551,7 +579,30 @@ defaults = {
     'setting Chrome to the default web browser': [
       'open -a "Google Chrome" --args --make-default-browser'
     ]
-  }
+  },
+  'Transmission': {
+    'using "~/Downloads/Incomplete" to store incomplete downloads': [
+      'defaults write org.m0k.transmission UseIncompleteDownloadFolder -bool true',
+      'mkdir -p ~/Downloads/Incomplete',
+      'defaults write org.m0k.transmission IncompleteDownloadFolder -string "$HOME/Downloads/Incomplete"',
+    ],
+    'disabling prompts for confirmation before downloading': [
+      'defaults write org.m0k.transmission DownloadAsk -bool false',
+    ],
+    'trashing original torrent files': [
+      'defaults write org.m0k.transmission DeleteOriginalTorrent -bool true',
+    ],
+    'hiding the donation message': [
+      'defaults write org.m0k.transmission WarningDonate -bool false',
+    ],
+    'hiding the legal disclaimer': [
+      'defaults write org.m0k.transmission WarningLegal -bool false',
+    ],
+    'disabling quit and download prompt': [
+      'defaults write org.m0k.transmission CheckRemoveDownloading -bool true',
+      'defaults write org.m0k.transmission CheckQuit -bool false',
+    ],
+  },
 }
 
 ns = Collection()
@@ -559,7 +610,7 @@ ns = Collection()
 for category, actions in defaults.iteritems():
   def context(category, actions):
     def default():
-      info('configuring defaults for {}'.format(category))
+      info('============ {} ============'.format(category))
       for action, tweaks in actions.iteritems():
         info('• {}'.format(action))
         for tweak in tweaks:

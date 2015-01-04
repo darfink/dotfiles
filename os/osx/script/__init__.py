@@ -21,7 +21,6 @@ for module in (apps, binaries, quicklook, defaults):
       executor = Executor(collection, context)
 
       for task in collection.task_names:
-        print 'EXECUTING:', task
         executor.execute(task)
     return setup
   ns.add_task(task(context(module), name=module.__name__.split('.')[-1]))

@@ -16,7 +16,7 @@ def computername(name):
 
 #@task(pre=[binaries.duti])
 def extensions():
-  run(os.path.expandvars('duti "$OSDIR/ext/extensions.duti"'))
+  run(os.path.expandvars('duti "os/osx/ext/extensions.duti"'))
 
 @task
 def xcode_clt():

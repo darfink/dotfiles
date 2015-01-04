@@ -24,12 +24,12 @@ def asepsis():
   brew.install('asepsis', cask=True)
 
 @task(base.cask)
-def dash():
-  brew.install('dash', cask=True)
+def bettertouchtool():
+  brew.install('bettertouchtool', cask=True)
 
 @task(base.cask)
-def deluge():
-  brew.install('deluge', cask=True)
+def dash():
+  brew.install('dash', cask=True)
 
 @task(base.cask)
 def dropbox():
@@ -74,10 +74,6 @@ def popcorn_time():
 def seil():
   brew.install('seil', cask=True)
 
-@task(pre=[base.cask, base.xquartz, taps.cask_versions])
-def sizeup():
-  brew.install('sizeup-x11', cask=True)
-
 @task(base.cask)
 def skype():
   brew.install('skype', cask=True)
@@ -89,6 +85,10 @@ def spotify():
 @task(base.cask, name='the-unarchiver')
 def the_unarchiver():
   brew.install('the-unarchiver', cask=True)
+
+@task(base.cask)
+def transmission():
+  brew.install('transmission', cask=True)
 
 @task(pre=[base.homebrew, xcode, binaries.lua, binaries.python, binaries.cscope])
 def vim():

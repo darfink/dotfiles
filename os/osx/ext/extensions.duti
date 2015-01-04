@@ -1,6 +1,6 @@
 # My file associations defaults
 
-# source files open in mac vim
+# source files with MacVim
 org.vim.MacVim .S all
 org.vim.MacVim .asp all
 org.vim.MacVim .bat all
@@ -55,7 +55,7 @@ org.vim.MacVim public.plain-text all
 org.vim.MacVim public.shell-script all
 org.vim.MacVim public.unix-executable all
 
-# image files open up in preview
+# imagery with preview
 com.apple.Preview .ai all
 com.apple.Preview .bmp all
 com.apple.Preview .jpeg all
@@ -97,3 +97,5 @@ org.videolan.vlc .ogg all
 org.videolan.vlc .ra all
 org.videolan.vlc .wav all
 
+# torrents with Deluge
+org.m0k.transmission .torrent
