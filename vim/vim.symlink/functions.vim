@@ -15,10 +15,19 @@ function! BuildVimProc(info)
 	let os = GetRunningOS()
 	if os == "win"
 		call system('tools\\update-dll-mingw')
-	else if os == "osx"
+  elseif os == "osx"
 		call system('make -f make_mac.mak')
 	else
 		call system('make -f make_unix.mak')
+	endif
+endfunction
+
+function! BuildOmniSharp(info)
+	let os = GetRunningOS()
+	if os == "win"
+		call system('msbuild ./server')
+	else
+		call system('xbuild ./server')
 	endif
 endfunction
 
