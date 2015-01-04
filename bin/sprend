@@ -11,6 +11,11 @@ file="$1"
 email="$2"
 from="${3:-service@sprend.com}"
 
+if [ ! -r "$file" ]; then
+  echo "File '$file' does not exist"
+  exit 1
+fi
+
 uploadKey="$(curl 'https://www.sprend.com/generate-uploadkey.htm' 2> /dev/null)"
 
 if [ $? -ne 0 ]; then
@@ -20,8 +25,8 @@ fi
 
 result="$(curl -s -D - -F "UploadFile=@$file" -F "fromAddress=$from" -F "EmailAddress=$email" -F "EmailAddressMulti=$email" -F "UserMessage=" -F "UseMultiView=false" "https://www.sprend.com/u?UploadKey=$uploadKey" -o /dev/null)"
 
-if [[ $? && $(echo "$result" | grep 'uploadfinished') ]]; then
-  echo "File sent to: $email"
+if echo "$result" | grep -q 'uploadfinished'; then
+  echo "File sent to: $(tput setaf 64)$email$(tput sgr0)"
 else
   echo 'File could not be sent'
   exit 1

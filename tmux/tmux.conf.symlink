@@ -23,6 +23,11 @@ setw -g mode-keys vi
 # Decrease command delay (increases vim responsiveness)
 set -sg escape-time 1
 
+# Use Ctrl-A to mimic the screen behavior
+unbind C-b
+set -g prefix C-a
+bind C-a send-prefix
+
 ###############################################################################
 # Bindings
 ###############################################################################
@@ -37,5 +42,5 @@ bind R source ~/.tmux.conf \; display "Conf Reloaded..."
 # Load our tmux theme (solarized)
 source "$DOTFILES/tmux/tmux-theme.conf"
 
-# Load OS specific settings
-source "$OSDIR/ext/tmux.conf"
+# Load OS X specifics (reattach-to-user-namespace to be exact)
+if-shell "test $OS = 'osx'" "source-file $DOTFILES/os/osx/ext/tmux.conf"
