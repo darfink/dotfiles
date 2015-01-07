@@ -6,6 +6,3 @@ referer = ";auto"
 
 # Wait 60 seconds before timing out
 connect-timeout = 60
-
-# Display progress
-progress-bar
