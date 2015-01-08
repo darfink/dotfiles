@@ -51,6 +51,10 @@ if is-command ruby && is-command gem; then
   add-path "$(ruby -rubygems -e 'puts Gem.user_dir')/bin"
 fi
 
+if is-command python && is-command pip; then
+  add-path "$(python -m site --user-base)/bin"
+fi
+
 # Add this last so it has the highest priority
 add-path "$HOME/bin"
 
