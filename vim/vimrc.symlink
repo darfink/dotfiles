@@ -232,6 +232,7 @@ let g:syntastic_scss_checkers = ['sass']
 let g:syntastic_zsh_checkers = ['shellcheck']
 let g:syntastic_sh_checkers = ['shellcheck']
 let g:syntastic_cs_checkers = ['syntax', 'semantic', 'issues']
+let g:syntastic_php_checkers = ['php']
 
 " Better Whitespace
 let g:better_whitespace_filetypes_blacklist=['unite', 'vim-plug']
