@@ -236,7 +236,7 @@ let g:syntastic_cs_checkers = ['syntax', 'semantic', 'issues']
 let g:syntastic_php_checkers = ['php']
 
 " Better Whitespace
-let g:better_whitespace_filetypes_blacklist=['unite', 'vim-plug']
+let g:better_whitespace_filetypes_blacklist = ['unite', 'vim-plug']
 
 " Edit vimrc
 noremap <silent> <leader>ve :edit $MYVIMRC<cr>
@@ -272,7 +272,7 @@ let g:OmniSharp_timeout = 1
 let g:ragtag_global_maps = 1
 
 " NeoSnippets
-let g:neosnippet#snippets_directory='~/Projects/vim-snippets/neosnippets'
+let g:neosnippet#snippets_directory = '~/Dropbox/Snippets'
 
 imap <C-K> <Plug>(neosnippet_expand_or_jump)
 smap <C-K> <Plug>(neosnippet_expand_or_jump)
