@@ -51,6 +51,10 @@ binaries=(
 	"autojump"
 	"zsh"
 
+  # Exfat support
+  "exfat-utils"
+  "exfat-fuse"
+
 	# Handle different compression algorithms
 	"p7zip-full"
 	"rar"
