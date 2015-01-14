@@ -21,8 +21,9 @@ Plug 'Shougo/neocomplete.vim'
 Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
 Plug 'OmniSharp/omnisharp-vim', { 'do': function('BuildOmniSharp') }
+Plug 'mattn/emmet-vim'
+Plug 'justinmk/vim-gtfo'
 Plug 'tpope/vim-surround'
-Plug 'tpope/vim-ragtag'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-vinegar'
 Plug 'tpope/vim-characterize'
@@ -44,7 +45,9 @@ Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 Plug 'elzr/vim-json', { 'for': 'json' }
 Plug 'marijnh/tern_for_vim', { 'do': 'npm install' }
 Plug 'ctrlpvim/ctrlp.vim'
+Plug 'tacahiroy/ctrlp-funky'
 Plug 'FelikZ/ctrlp-py-matcher'
+Plug 'php.vim-html-enhanced'
 Plug 'mattn/webapi-vim'
 Plug 'mattn/gist-vim', { 'on': 'Gist' }
 Plug 'scrooloose/syntastic'
@@ -243,7 +246,6 @@ noremap <silent> <leader>ve :edit $MYVIMRC<cr>
 noremap <silent> <leader>vr :source $MYVIMRC<cr>
 
 " EasyAlign
-nmap <leader>a <plug>(EasyAlign)
 vmap <enter> <plug>(EasyAlign)
 
 " Plist
@@ -268,8 +270,9 @@ let g:vim_json_syntax_conceal = 1
 " OmniSharp
 let g:OmniSharp_timeout = 1
 
-" RagTag
-let g:ragtag_global_maps = 1
+" Emmet
+let g:user_emmet_expandabbr_key = '<C-X><Space>'
+imap <C-X><CR> <Plug>(emmet-expand-abbr)<CR><Esc>O
 
 " NeoSnippets
 let g:neosnippet#snippets_directory = '~/Dropbox/Snippets'
