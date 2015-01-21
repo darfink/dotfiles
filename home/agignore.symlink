@@ -12,6 +12,7 @@ ehthumbs.db
 # App generated files #
 #######################
 
+*.map
 .tags
 .sass-cache/
 bower_components/
