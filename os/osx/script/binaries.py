@@ -113,6 +113,8 @@ def icdiff():
 
 @task(base.homebrew)
 def imagetools():
+  brew.install('imagemagick')
+
   """- image optimization software"""
   brew.install('gifsicle')
   brew.install('jpegoptim')

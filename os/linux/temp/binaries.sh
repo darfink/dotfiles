@@ -39,6 +39,7 @@ binaries=(
 	"openssh-server"
 	"source-highlight"
 	"shellcheck"
+  "imagemagick"
 
 	"gnome-shell-extensions-gpaste"
 	"ubuntu-restricted-extras"
