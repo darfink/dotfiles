@@ -155,6 +155,10 @@ def recode():
 def ruby():
   brew.install('ruby')
 
+@task(base.homebrew)
+def sassc():
+  brew.install('sassc')
+
 @task(pre=[base.homebrew, core.symlinks, taps.dupes])
 def shiny():
   """- replacements for OS X outdated tools"""
@@ -218,6 +222,7 @@ def xamp():
 
   if not brew.installed('php56'):
     brew.install('php56', flags=['--without-snmp', '--with-homebrew-openssl', '--homebrew-apxs', '--with-apache'])
+    brew.install('phpsh')
 
     with open(run('echo "$(brew --prefix)/etc/apache2/2.4/httpd.conf"', hide=True).stdout.strip(), 'a') as config:
       config.write(
