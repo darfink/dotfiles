@@ -11,6 +11,10 @@ set-option -g mouse-select-window on
 # Avoid oddly numbered windows
 set-option -g renumber-windows on
 
+# The zero is so far away
+set -g base-index 1
+set-window-option -g pane-base-index 1
+
 # Enable 256 colors
 set -g default-terminal screen-256color
 
@@ -38,9 +42,6 @@ bind R source ~/.tmux.conf \; display "Conf Reloaded..."
 ###############################################################################
 # Miscellaneous
 ###############################################################################
-
-# Load our tmux theme (solarized)
-source "$DOTFILES/tmux/tmux-theme.conf"
 
 # Load OS X specifics (reattach-to-user-namespace to be exact)
 if-shell "test $OS = 'osx'" "source-file $DOTFILES/os/osx/ext/tmux.conf"
