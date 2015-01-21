@@ -271,11 +271,14 @@ let g:vim_json_syntax_conceal = 1
 let g:OmniSharp_timeout = 1
 
 " Emmet
-let g:user_emmet_expandabbr_key = '<C-X><Space>'
+imap <C-X><Space> <Plug>(emmet-expand-abbr)
 imap <C-X><CR> <Plug>(emmet-expand-abbr)<CR><Esc>O
 
 " NeoSnippets
 let g:neosnippet#snippets_directory = '~/Dropbox/Snippets'
+let g:neosnippet#disable_runtime_snippets = {
+\		'css': 1, 'less': 1, 'scss': 1,
+\ }
 
 imap <C-K> <Plug>(neosnippet_expand_or_jump)
 smap <C-K> <Plug>(neosnippet_expand_or_jump)
@@ -314,6 +317,7 @@ nmap <leader>f9 :set foldlevel=9<CR>
 nmap Q :b#<CR>
 
 " Faster save (and like other editors)
+nnoremap <leader>wa :wa<cr>
 nnoremap <leader>w :w<cr>
 
 " The Silver Searcher
