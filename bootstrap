@@ -61,6 +61,7 @@ install_scripts() {
 	if [ is-command gem ]; then
 		# Install our ruby packages
 		gem install sass
+		gem install tmuxinator
 		gem install github-auth
 	fi
 
