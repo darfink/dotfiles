@@ -34,7 +34,7 @@ zstyle ':prezto:load' pmodule \
 ###############################################################################
 
 # Set the key mapping style to 'vi'
-zstyle ':prezto:module:editor' key-bindings 'vi'
+zstyle ':prezto:module:editor' key-bindings 'emacs'
 
 ###############################################################################
 # Git
