@@ -66,15 +66,15 @@ binaries=(
 
 main() {
 	# Install binaries
-	sudo apt-get install -qy ${binaries[@]}
+	sudo apt-get install -qy "${binaries[@]}"
 
-	if [ is-installed dnsmasq ]; then
+	if is-installed dnsmasq; then
 		# Make all *.dev requests go to local host
 		sudo mkdir -p /etc/NetworkManager/dnsmasq.d
 		echo 'address=/dev/127.0.0.1' | sudo tee /etc/NetworkManager/dnsmasq.d/dev-tld > /dev/null
 	fi
 
-	if [ is-installed libgnome-keyring-dev ]; then
+	if is-installed libgnome-keyring-dev; then
 		local keydir='/usr/share/doc/git/contrib/credential/gnome-keyring'
 
 		# Install the Gnome keyring and make it git default
