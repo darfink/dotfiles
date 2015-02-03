@@ -9,6 +9,13 @@ vim/*/undo/
 .netrwbook
 .netrwhist
 
+# Emacs generated files
+emacs/*/auto-save-list/
+emacs/*/tramp/
+emacs/*/swank/
+emacs/*/elpa/
+emacs/*/emms/
+
 # Fish shell
 generated_completions/
 fish_history
