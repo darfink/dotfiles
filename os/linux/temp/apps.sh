@@ -9,6 +9,7 @@ apps=(
 	"google-chrome-stable"
 	"spotify-client"
 	"popcorn-time"
+  "remmina"
   "rtorrent"
 	"dropbox"
 	"deluge"
