@@ -44,4 +44,4 @@ bind R source ~/.tmux.conf \; display "Conf Reloaded..."
 ###############################################################################
 
 # Load OS X specifics (reattach-to-user-namespace to be exact)
-if-shell "test $OS = 'osx'" "source-file $DOTFILES/os/osx/ext/tmux.conf"
+if-shell "test $OS" "source-file $DOTFILES/os/$OS/ext/tmux.conf"
