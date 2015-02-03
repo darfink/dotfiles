@@ -342,10 +342,6 @@ nnoremap <CR> :noh<CR>
 " This disables empty line deletes to set the register
 nnoremap <expr> dd match(getline('.'), '^\s*$') == -1 ? 'dd' : '"_dd'
 
-" Move visual block
-vnoremap J :m '>+1<CR>gv=gv
-vnoremap K :m '<-2<CR>gv=gv
-
 cnoremap <C-A>  <Home>
 cnoremap <C-E>  <End>
 
