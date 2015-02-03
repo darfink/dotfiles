@@ -9,7 +9,9 @@ vim/*/undo/
 .netrwbook
 .netrwhist
 
-# Emacs generated files
+# Emacs generated files and folders
+emacs/*/savehist
+emacs/*/recentf
 emacs/*/auto-save-list/
 emacs/*/tramp/
 emacs/*/swank/
