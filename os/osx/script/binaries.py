@@ -154,6 +154,10 @@ def recode():
   brew.install('recode')
 
 @task(base.homebrew)
+def rtorrent():
+  brew.install('rtorrent', flags=['--with-xmlrpc-c'])
+
+@task(base.homebrew)
 def ruby():
   brew.install('ruby')
 
