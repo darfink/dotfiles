@@ -36,6 +36,10 @@ bind C-a send-prefix
 # Bindings
 ###############################################################################
 
+# Natural Vim bindings
+bind-key -t vi-copy 'v' begin-selection
+bind-key -t vi-copy 'y' copy-selection
+
 # Reload tmux config
 bind R source ~/.tmux.conf \; display "Conf Reloaded..."
 
