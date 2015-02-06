@@ -91,10 +91,11 @@ zstyle ':prezto:module:syntax-highlighting' highlighters \
   'root'
 
 # Set syntax highlighting styles.
-#zstyle ':prezto:module:syntax-highlighting' styles \
-#  'builtin' 'bg=green' \
-#  'command' 'bg=green' \
-#  'function' 'bg=green'
+zstyle ':prezto:module:syntax-highlighting' styles \
+   'builtin' 'fg=blue' \
+   'command' 'fg=blue' \
+   'function' 'fg=blue' \
+   'alias' 'fg=blue,underline'
 
 ###############################################################################
 # Terminal
