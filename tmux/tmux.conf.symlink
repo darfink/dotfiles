@@ -39,6 +39,10 @@ bind C-a send-prefix
 # Natural Vim bindings
 bind-key -t vi-copy 'v' begin-selection
 bind-key -t vi-copy 'y' copy-selection
+bind h select-pane -L
+bind j select-pane -D
+bind k select-pane -U
+bind l select-pane -R
 
 # Reload tmux config
 bind R source ~/.tmux.conf \; display "Conf Reloaded..."
