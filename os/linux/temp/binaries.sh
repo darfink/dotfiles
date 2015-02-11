@@ -41,6 +41,10 @@ binaries=(
 	"shellcheck"
   "imagemagick"
 
+  # Encoding detector
+  "libuchardet-dev"
+  "cmatrix"
+
 	"gnome-shell-extensions-gpaste"
 	"ubuntu-restricted-extras"
 	"moreutils"

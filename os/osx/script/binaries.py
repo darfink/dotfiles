@@ -20,6 +20,10 @@ def ag():
 def fasd():
   brew.install('fasd')
 
+@task(base.homebrew)
+def cmatrix():
+  brew.install('cmatrix')
+
 @task(pre=[base.homebrew, taps.dupes, taps.binary])
 def compression():
   """- essential compression tools"""
@@ -190,6 +194,10 @@ def ssh_server():
     # OSX is bundled with a SSH server
     run('sudo systemsetup -setremotelogin on')
     run('sudo sed -i -E "s/^#?(PasswordAuthentication|ChallengeResponseAuthentication).*$/\1 no/" /etc/sshd_config')
+
+@task(base.homebrew)
+def uchardet():
+  brew.install('uchardet')
 
 @task(pre=[base.homebrew, taps.apache, taps.dupes, taps.php, dnsmasq])
 def xamp():
