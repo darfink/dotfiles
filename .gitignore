@@ -12,7 +12,7 @@ vim/*/undo/
 # Emacs generated files and folders
 emacs/*/savehist
 emacs/*/recentf
-emacs/*/auto-save-list/
+emacs/*/saves/
 emacs/*/tramp/
 emacs/*/swank/
 emacs/*/elpa/

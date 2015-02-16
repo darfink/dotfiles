@@ -1,5 +1,6 @@
-;; Use a directory specifically for backups
+;; Use a directory specifically for backup and saves
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+(setq auto-save-file-name-transforms '((".*" "~/.emacs.d/saves/" nil)))
 
 ;; Remember last edit positions
 (setq save-place-file "~/.emacs.d/saveplace")
