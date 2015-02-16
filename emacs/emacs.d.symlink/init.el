@@ -1,9 +1,18 @@
-;; Disable the tool bar first to speed up initialization
-(if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
-
 ;; User information
 (setq user-full-name "Elliott Linder")
 (setq user-mail-address "elliott.darfink@gmail.com")
+
+;; "after" macro definition
+(if (fboundp 'with-eval-after-load)
+    (defmacro after (feature &rest body)
+      "After FEATURE is loaded, evaluate BODY."
+      (declare (indent defun))
+      `(with-eval-after-load ,feature ,@body))
+  (defmacro after (feature &rest body)
+    "After FEATURE is loaded, evaluate BODY."
+    (declare (indent defun))
+    `(eval-after-load ,feature
+        '(progn ,@body))))
 
 ;; Add the config directory to path
 (add-to-list 'load-path (expand-file-name "configs" user-emacs-directory))
@@ -14,11 +23,11 @@
 (require 'init-persistence)
 (require 'init-colors)
 (require 'init-evil)
-
-;; Enable smart paranthesis
-(require 'smartparens-config)
-(smartparens-global-mode t)
+(require 'init-text-edition)
+(require 'init-i18n)
+(require 'init-flycheck)
 
 ;; Enable the right option modifier on OS X
 (when (eq system-type 'darwin)
-  (setq mac-right-option-modifier 'none))
+  (setq mac-right-option-modifier 'none)
+  (exec-path-from-shell-initialize))

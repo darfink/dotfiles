@@ -5,10 +5,13 @@
     saveplace
     savehist
     recentf
+    flycheck
+    powerline
+    exec-path-from-shell
     color-identifiers-mode
     linum-relative
     rainbow-delimiters
-    solarized-theme
+    color-theme-solarized
     smartparens))
 
 ;; Add additional package sources

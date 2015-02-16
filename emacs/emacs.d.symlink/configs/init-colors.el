@@ -2,24 +2,15 @@
 (color-theme-approximate-on)
 
 ;; Setup Solarized theme
-(load-theme 'solarized-light t)
-(load-theme 'solarized-dark t)
+(load-theme 'solarized t)
 
-(defun mb/pick-color-theme (frame)
-  (select-frame frame)
-  (if (window-system frame)
-    (progn
-      (disable-theme 'solarized-dark)
-      (enable-theme 'solarized-light))
-    (progn
-      (disable-theme 'solarized-light)
-      (enable-theme 'solarized-dark))))
-(add-hook 'after-make-frame-functions 'mb/pick-color-theme)
-
-;; For when started with emacs or emacs -nw rather than emacs --daemon
-(if window-system
-  (enable-theme 'solarized-light)
-  (enable-theme 'solarized-dark))
+;; Use dark in terminal, and light in GUI
+(add-hook 'after-make-frame-functions
+          (lambda (frame)
+            (set-frame-parameter frame
+                                 'background-mode
+                                 (if (display-graphic-p frame) 'light 'dark))
+            (enable-theme 'solarized)))
 
 ;; Highlight everything with colors
 (global-color-identifiers-mode)
