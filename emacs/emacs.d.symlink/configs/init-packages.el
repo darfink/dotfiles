@@ -1,15 +1,17 @@
 ; list the packages you want
 (setq package-list
   '(evil
+    evil-matchit
     diminish
     saveplace
     savehist
     recentf
-    smart-mode-line
     flycheck
+    smart-mode-line
     powerline
     exec-path-from-shell
     color-identifiers-mode
+    web-mode
     linum-relative
     rainbow-delimiters
     color-theme-solarized

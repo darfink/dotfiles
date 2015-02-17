@@ -26,6 +26,7 @@
 (require 'init-text-edition)
 (require 'init-i18n)
 (require 'init-flycheck)
+(require 'init-web-mode)
 
 ;; Enable the right option modifier on OS X
 (when (eq system-type 'darwin)

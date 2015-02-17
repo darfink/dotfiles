@@ -13,6 +13,10 @@
 (require 'evil)
 (evil-mode 1)
 
+;; Improve our '%' operator
+(require 'evil-matchit)
+(global-evil-matchit-mode 1)
+
 ;; Do not use the system clipboard unless explicit
 (setq x-select-enable-clipboard nil)
 (setq x-select-enable-primary nil)
