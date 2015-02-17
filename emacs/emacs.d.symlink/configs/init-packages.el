@@ -5,6 +5,7 @@
     saveplace
     savehist
     recentf
+    smart-mode-line
     flycheck
     powerline
     exec-path-from-shell
