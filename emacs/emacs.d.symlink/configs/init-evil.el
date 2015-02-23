@@ -17,8 +17,24 @@
 (require 'evil-matchit)
 (global-evil-matchit-mode 1)
 
+;; Enable the surruound operator
+(require 'evil-surround)
+(global-evil-surround-mode 1)
+
+;; Enable persistent highlighting
+(require 'highlight)
+(require 'evil-search-highlight-persist)
+(global-evil-search-highlight-persist t)
+
 ;; Do not use the system clipboard unless explicit
 (setq x-select-enable-clipboard nil)
 (setq x-select-enable-primary nil)
+
+;; ---------------------------------
+;; Custom key bindings
+;; ---------------------------------
+
+;; Make 'RET' remove any search highlights
+(define-key evil-normal-state-map (kbd "RET") 'evil-search-highlight-persist-remove-all)
 
 (provide 'init-evil)

@@ -16,25 +16,7 @@
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("/\\(views\\|html\\|theme\\|templates\\)/.*\\.php\\'" . web-mode))
 
-;; Make web-mode play nice with smartparens
-(setq web-mode-enable-auto-pairing nil)
-
-(sp-with-modes '(web-mode)
-  (sp-local-pair "%" "%"
-                 :unless '(sp-in-string-p)
-                 :post-handlers '(((lambda (&rest _ignored)
-                                     (just-one-space)
-                                     (save-excursion (insert " ")))
-                                   "SPC" "=" "#")))
-  (sp-local-pair "<% "  " %>" :insert "C-c %")
-  (sp-local-pair "<%= " " %>" :insert "C-c =")
-  (sp-local-pair "<%# " " %>" :insert "C-c #")
-  (sp-local-tag "%" "<% "  " %>")
-  (sp-local-tag "=" "<%= " " %>")
-  (sp-local-tag "#" "<%# " " %>"))
-
 ;; Sort of like matchit
-(plist-put evilmi-plugins web-mode
-           '((evilmi-html-get-tag web-mode-navigate)))
+(plist-put evilmi-plugins 'web-mode '((evilmi-html-get-tag web-mode-navigate)))
 
 (provide 'init-web-mode)

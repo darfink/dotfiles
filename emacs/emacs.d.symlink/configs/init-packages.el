@@ -1,8 +1,11 @@
 ; list the packages you want
 (setq package-list
   '(evil
+    evil-surround
+    evil-search-highlight-persist
     evil-matchit
     diminish
+    highlight
     saveplace
     savehist
     recentf
