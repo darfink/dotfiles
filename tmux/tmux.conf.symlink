@@ -52,4 +52,4 @@ bind R source ~/.tmux.conf \; display "Conf Reloaded..."
 ###############################################################################
 
 # Load OS specific configs
-if-shell "test $OS" "source-file ~/tmux-$OS.conf"
+if-shell "test $OS" "source-file ~/.tmux-$OS.conf"
