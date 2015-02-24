@@ -7,15 +7,15 @@ if [ $# -ne 1 ]; then
   exit 1
 fi
 
-# Use temporary file because of progress bar 
-tmpfile="$(mktemp -t transferXXX)" 
+# Use temporary file because of progress bar
+tmpfile="$(mktemp -t transferXXX)"
 
-if tty -s; then 
+if tty -s; then
   basefile="$(basename "$1" | sed -e 's/[^a-zA-Z0-9._-]/-/g')"
   curl --progress-bar --upload-file "$1" "https://transfer.sh/$basefile" >> $tmpfile
-else 
+else
   curl --progress-bar --upload-file "-" "https://transfer.sh/$1"
-fi 
+fi
 
 cat $tmpfile
 rm -f $tmpfile
