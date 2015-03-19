@@ -50,6 +50,10 @@ if is-command hub; then
   alias git='hub'
 fi
 
+if is-command fzf; then
+  alias fzfl='fzf -e | xargs less'
+fi
+
 if is-command lwp-request; then
   # One of @janmoesen’s ProTip™s
   for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
