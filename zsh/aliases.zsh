@@ -51,7 +51,8 @@ if is-command hub; then
 fi
 
 if is-command fzf; then
-  alias fzfl='fzf -e | xargs less'
+  alias fzl='fzf -e | xargs less'
+  alias fzv="fzf -e | xargs vim"
 fi
 
 if is-command lwp-request; then
