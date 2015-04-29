@@ -2,7 +2,7 @@
 # Vital functions
 ###############################################################################
 
-# Adds a path if it doesn't exist and is valid
+# Adds a path if it exists and is valid
 add-path() {
   if [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then
     PATH="$1:$PATH"
