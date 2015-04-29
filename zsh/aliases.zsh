@@ -47,7 +47,9 @@ if is-command grunt; then
 fi
 
 if is-command hub; then
-  alias git='hub'
+  alias git='noglob hub'
+elif is-command git; then
+  alias git='noglob git'
 fi
 
 if is-command fzf; then
