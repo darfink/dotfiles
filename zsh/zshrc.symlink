@@ -12,6 +12,9 @@ for file in $ZSHDIR/{bindings,aliases,local}.zsh; do
   [ -s "$file" ] && source "$file"
 done
 
+# Setup auto completions
+compdef _gnu_generic df cat tr nl
+
 # Load the NodeJS version manager (NVM)
 [ -s "$HOME/.nvm/nvm.sh" ] && source "$HOME/.nvm/nvm.sh"
 
