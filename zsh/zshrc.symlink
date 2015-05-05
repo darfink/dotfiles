@@ -13,7 +13,9 @@ for file in $ZSHDIR/{bindings,aliases,local}.zsh; do
 done
 
 # Setup auto completions
-compdef _gnu_generic df cat tr nl
+compdef _gnu_generic \
+  df cat tr nl curl mv file head paste tail \
+  touch wc shred htop make whois recode compare
 
 # Load the NodeJS version manager (NVM)
 [ -s "$HOME/.nvm/nvm.sh" ] && source "$HOME/.nvm/nvm.sh"
