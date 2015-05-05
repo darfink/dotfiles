@@ -190,6 +190,9 @@ autocmd BufReadPost *
 \   exe "normal! g`\"" |
 \ endif
 
+" Prevent clipboard from being cleared by vim
+autocmd VimLeave * call system("xsel -ib", getreg('+'))
+
 " Resize splits when the window is resized
 autocmd VimResized * exe "normal! \<c-w>="
 
