@@ -113,7 +113,7 @@
 [github]
 
 	# Used by (among others) Gist-Vim
-	user = darfink
+	user = elliott.darfink@gmail.com
 
 [help]
 
@@ -148,6 +148,7 @@
 
 	# Include summaries of merged commits in newly created merge commit messages
 	log = true
+	tool = vimdiff
 
 [pull]
 
