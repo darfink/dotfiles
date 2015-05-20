@@ -7,7 +7,7 @@ ram() {
 
   if [ -z "$app" ]; then
     echo 'Usage: `ram <pattern>`'
-    exit 1
+    return 1
   fi
 
   for i in $(ps aux | grep -i "$app" | grep -v "grep" | awk '{print $6}'); do
