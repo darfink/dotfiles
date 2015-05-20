@@ -55,6 +55,10 @@ if is-command python && is-command pip; then
   add-path "$(python -m site --user-base)/bin"
 fi
 
+if test -e "$HOME/.fzf/bin"; then
+  add-path "$HOME/.fzf/bin"
+fi
+
 # Add this last so it has the highest priority
 add-path "$HOME/bin"
 
