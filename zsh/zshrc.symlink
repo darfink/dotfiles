@@ -25,3 +25,6 @@ compdef _gnu_generic \
 
 # Enable ctrl+s in Vim by disabling flow control and sending of start/stop characters
 setopt NO_FLOW_CONTROL
+
+# Enable instant menu completion
+setopt menu_complete
