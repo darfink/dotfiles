@@ -52,11 +52,6 @@ elif is-command git; then
   alias git='noglob git'
 fi
 
-if is-command fzf; then
-  alias fzl='fzf -e | xargs less'
-  alias fzv="fzf -e | xargs vim"
-fi
-
 if is-command lwp-request; then
   # One of @janmoesen’s ProTip™s
   for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do

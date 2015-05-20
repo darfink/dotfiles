@@ -1,0 +1,8 @@
+# Open filtered files in Vim
+
+if is-command fzf; then
+  fzv() {
+    file=$(fzf $@)
+    if (( $? == 0)); then vim "$file"; fi
+  }
+fi
