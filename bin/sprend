@@ -16,7 +16,7 @@ if [ ! -r "$file" ]; then
   exit 1
 fi
 
-uploadKey="$(curl 'https://www.sprend.com/generate-uploadkey.htm' 2> /dev/null)"
+uploadKey="$(curl 'https://www.sprend.com/init-upload.htm' 2> /dev/null)"
 
 if [ $? -ne 0 ]; then
   echo 'Failed to generate upload key'
