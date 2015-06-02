@@ -48,6 +48,7 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'tacahiroy/ctrlp-funky'
 Plug 'FelikZ/ctrlp-py-matcher'
 Plug 'php.vim-html-enhanced'
+Plug 'tommcdo/vim-exchange'
 Plug 'mattn/webapi-vim'
 Plug 'mattn/gist-vim', { 'on': 'Gist' }
 Plug 'scrooloose/syntastic'
