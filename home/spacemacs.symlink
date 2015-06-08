@@ -1,0 +1,79 @@
+;; -*- mode: dotspacemacs -*-
+(defun dotspacemacs/layers ()
+  "Configuration Layers declaration."
+  (setq-default
+   ;; List of additional paths where to look for configuration layers.
+   ;; Paths must have a trailing slash (ie. `~/.mycontribs/')
+   dotspacemacs-configuration-layer-path '()
+   ;; List of configuration layers to load. If it is the symbol `all' instead
+   ;; of a list then all discovered layers will be installed.
+   dotspacemacs-configuration-layers
+   '(syntax-checking
+     html
+     php)
+   dotspacemacs-additional-packages '(editorconfig)
+   dotspacemacs-excluded-packages '()
+   dotspacemacs-delete-orphan-packages t))
+
+(defun dotspacemacs/init ()
+  "Initialization function.
+This function is called at the very startup of Spacemacs initialization
+before layers configuration."
+  ;; This setq-default sexp is an exhaustive list of all the supported
+  ;; spacemacs settings.
+  (setq-default
+   dotspacemacs-editing-style 'vim
+   dotspacemacs-verbose-loading nil
+   dotspacemacs-startup-banner 'official
+   dotspacemacs-always-show-changelog t
+   dotspacemacs-startup-lists '(recents projects bookmarks)
+   dotspacemacs-themes '(solarized-light
+                         solarized-dark
+                         leuven
+                         monokai
+                         zenburn)
+   dotspacemacs-colorize-cursor-according-to-state t
+   dotspacemacs-default-font '("Source Code Pro"
+                               :size 13
+                               :weight normal
+                               :width normal
+                               :powerline-scale 1.1)
+   dotspacemacs-leader-key "SPC"
+   dotspacemacs-emacs-leader-key "M-m"
+   dotspacemacs-major-mode-leader-key ","
+   dotspacemacs-major-mode-emacs-leader-key "C-M-m"
+   dotspacemacs-command-key ":"
+   dotspacemacs-enable-paste-micro-state t
+   dotspacemacs-guide-key-delay 0.4
+   dotspacemacs-loading-progress-bar t
+   dotspacemacs-fullscreen-at-startup nil
+   dotspacemacs-fullscreen-use-non-native nil
+   dotspacemacs-maximized-at-startup nil
+   dotspacemacs-active-transparency 90
+   dotspacemacs-inactive-transparency 90
+   dotspacemacs-mode-line-unicode-symbols t
+   dotspacemacs-smooth-scrolling t
+   dotspacemacs-smartparens-strict-mode t
+   dotspacemacs-persistent-server t
+   dotspacemacs-search-tools '("ag" "pt" "ack" "grep")
+   dotspacemacs-default-package-repository nil
+   )
+  ;; User initialization goes here
+  (add-to-list 'auto-mode-alist '("\\.twig$" . web-mode))
+)
+
+(defun dotspacemacs/config ()
+  (setq c-basic-offset 2)
+  (setq sgml-basic-offset 2)
+  (setq web-mode-markup-indent-offset 2)
+  (global-linum-mode t)
+  (linum-relative-toggle)
+)
+
+
+;; Do not use the system clipboard unless explicit
+(setq x-select-enable-clipboard nil)
+(setq x-select-enable-primary nil)
+
+;; Do not write anything past this comment. This is where Emacs will
+;; auto-generate custom variable definitions.
