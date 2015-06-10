@@ -59,17 +59,22 @@ before layers configuration."
    dotspacemacs-default-package-repository nil
    )
   ;; User initialization goes here
-  (add-to-list 'auto-mode-alist '("\\.twig$" . web-mode))
 )
 
 (defun dotspacemacs/config ()
   (setq c-basic-offset 2)
   (setq sgml-basic-offset 2)
   (setq web-mode-markup-indent-offset 2)
+  (setq-default require-final-newline t)
   (global-linum-mode t)
   (linum-relative-toggle)
+  (add-to-list 'auto-mode-alist '("/\\(views\\|html\\|theme\\|templates\\)/.*\\.php\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.twig$" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.as[cp]x$" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.tpl\\.php$" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.tpl\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.blade\\.php$" . web-mode))
 )
-
 
 ;; Do not use the system clipboard unless explicit
 (setq x-select-enable-clipboard nil)
