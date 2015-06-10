@@ -9,6 +9,8 @@
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
    '(syntax-checking
+     auto-completion
+     javascript
      html
      php)
    dotspacemacs-additional-packages '(editorconfig)
@@ -65,6 +67,8 @@ before layers configuration."
   (setq c-basic-offset 2)
   (setq sgml-basic-offset 2)
   (setq web-mode-markup-indent-offset 2)
+  (setq web-mode-code-indent-offset 2)
+  (setq web-mode-css-indent-offset 2)
   (setq-default require-final-newline t)
   (global-linum-mode t)
   (linum-relative-toggle)
