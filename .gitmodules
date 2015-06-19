@@ -7,3 +7,6 @@
 [submodule "fonts"]
 	path = fonts
 	url = git://github.com/Lokaltog/powerline-fonts.git
+[submodule "spacemacs"]
+	path = emacs/emacs.d.symlink
+	url = git://github.com/syl20bnr/spacemacs.git
