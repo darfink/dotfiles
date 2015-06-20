@@ -721,9 +721,9 @@ if [ ! -f "$HOME/.dotlock" ]; then
   # We need to ensure these paths are available
   export PATH="$directory/bin:$PATH"
 
-  setup_sshkey
   setup_fonts
-  #setup_symlinks
+  python -m tools.sshkey
+  python -m tools.symlinker
 
   if setup_brew; then
     info 'ensuring brew is up-to-date'
