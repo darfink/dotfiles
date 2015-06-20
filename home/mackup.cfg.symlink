@@ -1,0 +1,11 @@
+[storage]
+engine = dropbox
+
+[applications_to_sync]
+DefaultKeyBinding
+BetterTouchTool
+Popcorn-Time
+iTerm2
+Skype
+Seil
+Dash
