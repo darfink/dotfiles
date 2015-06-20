@@ -518,6 +518,7 @@ setup_binaries() {
     "reattach-to-user-namespace --with-wrap-pbcopy-and-pbpaste"
     "duti"
     "zsh"
+    "bash"
     "gzip"
     "cmatrix"
     "shellcheck"
