@@ -6,6 +6,10 @@ info() {
   printf "  [ \033[00;34m..\033[0m ] %s\n" "$1"
 }
 
+setting() {
+  printf "  [ \033[00;32m⚙\033[0m ] %s\n" "$1"
+}
+
 user() {
   printf "\r  [ \033[0;33m?\033[0m ] %s " "$1"
 }
@@ -47,10 +51,10 @@ setup_defaults() {
     defaults write com.apple.LaunchServices LSQuarantine -bool false
   fi
 
-  info 'revealing IP address, hostname, OS version, etc when clicking the clock in the login window'
+  setting 'revealing IP address, hostname, OS version, etc when clicking the clock in the login window'
   sudo defaults write /Library/Preferences/com.apple.loginwindow AdminHostInfo HostName
 
-  info 'restarting automatically if computer freezes'
+  setting 'restarting automatically if computer freezes'
   sudo systemsetup -setrestartfreeze on
 
   if ask 'set default login text?'; then
@@ -59,68 +63,68 @@ setup_defaults() {
 
   info '[User experience]'
 
-  info 'disabling system-wide resume upon login'
+  setting 'disabling system-wide resume upon login'
   defaults write com.apple.systempreferences NSQuitAlwaysKeepsWindows -bool false
 
-  info 'disabling automatic termination of inactive apps'
+  setting 'disabling automatic termination of inactive apps'
   defaults write NSGlobalDomain NSDisableAutomaticTermination -bool true
 
-  info 'setting scrollbars behavior to automatic'
+  setting 'setting scrollbars behavior to automatic'
   defaults write NSGlobalDomain AppleShowScrollBars -string "Automatic"
 
-  info 'automatically quit the print app once the print jobs complete'
+  setting 'automatically quit the print app once the print jobs complete'
   defaults write com.apple.print.PrintingPrefs "Quit When Finished" -bool true
 
-  info 'saving to disk (instead of iCloud) by default'
+  setting 'saving to disk (instead of iCloud) by default'
   defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
 
-  info 'disabling "application crashed" dialog'
+  setting 'disabling "application crashed" dialog'
   defaults write com.apple.CrashReporter DialogType none
 
-  info 'setting the update frequency to once every week'
+  setting 'setting the update frequency to once every week'
   defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 7
 
-  info 'disabling smart quotes and dashes'
+  setting 'disabling smart quotes and dashes'
   defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
   defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
 
   info '[User interface]'
 
-  info 'setting highlight color to #cc99cc'
+  setting 'setting highlight color to #cc99cc'
   defaults write NSGlobalDomain AppleHighlightColor -string "0.600000 0.800000 0.600000"
 
-  info 'setting sidebar icon size to medium'
+  setting 'setting sidebar icon size to medium'
   defaults write NSGlobalDomain NSTableViewDefaultSizeMode -int 2
 
-  info 'expanding the save panel by default'
+  setting 'expanding the save panel by default'
   defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
   defaults write NSGlobalDomain PMPrintingExpandedStateForPrint -bool true
   defaults write NSGlobalDomain PMPrintingExpandedStateForPrint2 -bool true
 
-  info 'showing battery life percentage'
+  setting 'showing battery life percentage'
   defaults write com.apple.menuextra.battery ShowPercent -string "YES"
 
-  info 'displaying ASCII control characters using caret notation in standard text views'
+  setting 'displaying ASCII control characters using caret notation in standard text views'
   defaults write NSGlobalDomain NSTextShowsControlCharacters -bool true
 
-  info 'setting help viewer windows to non-floating mode'
+  setting 'setting help viewer windows to non-floating mode'
   defaults write com.apple.helpviewer DevMode -bool true
 
-  info 'adding hotkey to quickly switch to Dark Mode (ctrl+opt+⌘+t)'
+  setting 'adding hotkey to quickly switch to Dark Mode (ctrl+opt+⌘+t)'
   sudo defaults write /Library/Preferences/.GlobalPreferences.plist _HIEnableThemeSwitchHotKey -bool true
 
   info '[Input/output]'
 
-  info 'increasing sound quality for Bluetooth headphones/headsets'
+  setting 'increasing sound quality for Bluetooth headphones/headsets'
   defaults write com.apple.BluetoothAudioAgent "Apple Bitpool Min (editable)" -int 40
 
-  info 'enabling full keyboard access for all controls (e.g. enable Tab in modal dialogs)'
+  setting 'enabling full keyboard access for all controls (e.g. enable Tab in modal dialogs)'
   defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
 
-  info 'disabling press-and-hold for keys in favor of key repeat'
+  setting 'disabling press-and-hold for keys in favor of key repeat'
   defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
 
-  info 'setting a blazingly fast keyboard repeat rate'
+  setting 'setting a blazingly fast keyboard repeat rate'
   defaults write NSGlobalDomain KeyRepeat -int 2
 
   if ask 'enable tap-to-click?'; then
@@ -140,133 +144,142 @@ setup_defaults() {
     defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
   fi
 
-  info 'enabling scroll gesture with the Ctrl (^) modifier key to zoom'
+  setting 'enabling scroll gesture with the Ctrl (^) modifier key to zoom'
   defaults write com.apple.universalaccess closeViewScrollWheelToggle -bool true
   defaults write com.apple.universalaccess HIDScrollZoomModifierMask -int 262144
 
   info '[Localization]'
 
-  info 'setting language and text format to English'
+  setting 'setting language and text format to English'
   defaults write NSGlobalDomain AppleLanguages -array "en" "sv"
   defaults write NSGlobalDomain AppleLocale -string "en_SE@currency=SEK"
 
-  info 'using the metric system instead of the imperial'
+  setting 'using the metric system instead of the imperial'
   defaults write NSGlobalDomain AppleMeasurementUnits -string "Centimeters"
   defaults write NSGlobalDomain AppleMetricUnits -bool true
 
-  info 'using dot notation as decimal separator'
+  setting 'using dot notation as decimal separator'
   defaults write NSGlobalDomain AppleICUNumberSymbols -dict 0 "."
 
-  info 'using swedish date & time format with English language'
+  setting 'using swedish date & time format with English language'
   defaults write NSGlobalDomain AppleICUDateFormatStrings -dict 1 "y-MM-dd" 2 "d MMM y" 3 "d MMMM y"
   defaults write com.apple.menuextra.clock DateFormat -string "EEE HH:mm"
 
-  info 'setting the timezone to Swedish (Stockholm)'
+  setting 'setting the timezone to Swedish (Stockholm)'
   sudo systemsetup -settimezone "Europe/Stockholm" > /dev/null
   sudo systemsetup -setnetworktimeserver "time.euro.apple.com" > /dev/null
   sudo systemsetup -setusingnetworktime on > /dev/null
 
   info '[Screen]'
 
-  info 'requiring password immediately (5s) after sleep or screen saver begins'
+  setting 'requiring password immediately (5s) after sleep or screen saver begins'
   defaults write com.apple.screensaver askForPassword -int 1
   defaults write com.apple.screensaver askForPasswordDelay -int 5
 
-  info 'saving screenshots to ~/Screenshots'
+  setting 'saving screenshots to ~/Screenshots'
   defaults write com.apple.screencapture location -string "$HOME/Screenshots"
   mkdir -p ~/Screenshots
 
-  info 'saving screenshots in PNG format (other options: BMP, GIF, JPG, PDF, TIFF)'
+  setting 'saving screenshots in PNG format (other options: BMP, GIF, JPG, PDF, TIFF)'
   defaults write com.apple.screencapture type -string "png"
 
-  info 'enabling subpixel font rendering on non-Apple LCDs'
+  setting 'enabling subpixel font rendering on non-Apple LCDs'
   defaults write NSGlobalDomain AppleFontSmoothing -int 2
 
-  info 'showing displays in menu bar'
+  setting 'showing displays in menu bar'
   defaults write com.apple.airplay showInMenuBarIfPresent -bool false
 
-  info 'enabling HiDPI display modes (requires restart)'
+  setting 'enabling HiDPI display modes (requires restart)'
   sudo defaults write /Library/Preferences/com.apple.windowserver DisplayResolutionEnabled -bool true
 
   info '[Power management]'
 
-  info 'disabling the sudden motion sensor (not useful for SSDs)'
+  setting 'disabling the sudden motion sensor (not useful for SSDs)'
   sudo pmset -a sms 0
 
-  info 'removing the sleep image file to save disk space'
+  setting 'removing the sleep image file to save disk space'
   sudo chflags nouchg /Private/var/vm/sleepimage
   sudo rm /Private/var/vm/sleepimage
   sudo touch /Private/var/vm/sleepimage
   sudo chflags uchg /Private/var/vm/sleepimage
 
-  info 'speeding up wake from sleep from 24 hours to an hour'
+  setting 'speeding up wake from sleep from 24 hours to an hour'
   # http://www.cultofmac.com/221392/quick-hack-speeds-up-retina-macbooks-wake-from-sleep-os-x-tips/
   sudo pmset -a standbydelay 86400
 
-  info 'disabling hibernation (only use sleep mode)'
+  setting 'disabling hibernation (only use sleep mode)'
   sudo pmset -a hibernatemode 0
 
-  info 'setting (battery) display sleep to 5 minutes and (disk) sleep to 10 minutes'
+  setting 'setting (battery) display sleep to 5 minutes and (disk) sleep to 10 minutes'
   sudo pmset -b sleep 10
   sudo pmset -b displaysleep 5
   sudo pmset -b disksleep 10
 
-  info 'setting (charger) display sleep to 15 minutes and disabling disk sleep'
+  setting 'setting (charger) display sleep to 15 minutes and disabling disk sleep'
   sudo pmset -c sleep 0
   sudo pmset -c displaysleep 15
   sudo pmset -c disksleep 0
 
-  info 'setting keyboard illumination to turn off when computer is not used for 5 minutes'
+  setting 'setting keyboard illumination to turn off when computer is not used for 5 minutes'
   defaults write com.apple.BezelServices kDimTime -int 300
 
   info '[Dock]'
 
-  info 'enabling highlight hover effect for the grid view of a stack'
+  setting 'enabling highlight hover effect for the grid view of a stack'
   defaults write com.apple.dock mouse-over-hilite-stack -bool true
 
-  info 'changing minimize/maximize window effect'
+  setting 'changing minimize/maximize window effect'
   defaults write com.apple.dock mineffect -string "scale"
 
-  info 'minimizing windows into their own application icon'
+  setting 'minimizing windows into their own application icon'
   defaults write com.apple.dock mineffect -string "scale"
 
-  info 'setting the icon size of items to 56 pixels'
+  setting 'setting the icon size of items to 56 pixels'
   defaults write com.apple.dock tilesize -int 56
 
-  info 'enabling spring loading for all items'
+  setting 'enabling spring loading for all items'
   defaults write com.apple.dock enable-spring-load-actions-on-all-items -bool true
 
-  info 'showing indicator lights for open applications'
+  setting 'showing indicator lights for open applications'
   defaults write com.apple.dock show-process-indicators -bool true
 
-  info 'disabling animations when opening applications'
+  setting 'disabling animations when opening applications'
   defaults write com.apple.dock launchanim -bool false
 
-  info 'enabling auto-hide and removing the display delay'
+  setting 'enabling auto-hide and removing the display delay'
   defaults write com.apple.dock autohide -bool true
   defaults write com.apple.dock autohide-delay -float 0
   defaults write com.apple.dock autohide-time-modifier -float 0
 
-  info 'making icons of hidden applications translucent'
+  setting 'making icons of hidden applications translucent'
   defaults write com.apple.dock showhidden -bool true
 
   if ask 'setup default dock apps?'; then
     dockutil --remove all
 
-    # The default applications
-    dockutil --add "/Applications/Google Chrome.app"
-    dockutil --add "/Applications/Messages.app"
-    dockutil --add "/Applications/Skype.app"
-    dockutil --add "/Applications/Dash.app"
-    dockutil --add "/Applications/Mail.app"
-    dockutil --add "/Applications/Spotify.app"
-    dockutil --add "/Applications/Xcode.app"
-    dockutil --add "/Applications/Popcorn-Time.app"
-    dockutil --add "/Applications/MacVim.app"
-    dockutil --add "/Applications/1Password 5.app"
-    dockutil --add "/Applications/iTerm.app"
+    apps=(
+      "/Applications/Google Chrome.app"
+      "/Applications/Messages.app"
+      "/Applications/Skype.app"
+      "/Applications/Dash.app"
+      "/Applications/Mail.app"
+      "/Applications/Spotify.app"
+      "/Applications/Xcode.app"
+      "/Applications/Popcorn-Time.app"
+      "/Applications/MacVim.app"
+      "/Applications/1Password 5.app"
+      "/Applications/iTerm.app"
+    )
 
-    # ... and some default folders
+    for app in "${apps[@]}"; do
+      if [ -d "$app" ]; then
+        dockutil --add "$app"
+      else
+        fail "could not add $app to dock (does not exist)"
+      fi
+    done
+
+    # ... the default folders
     dockutil --add "/Applications" --view list --display folder --sort name
     dockutil --add "$HOME/Downloads" --view grid --display stack --sort dateadded
   fi
@@ -285,111 +298,111 @@ setup_defaults() {
     # 11: Launchpad
     # 12: Notification Center
 
-    info 'top left screen corner → Mission Control'
+    setting 'top left screen corner → Mission Control'
     defaults write com.apple.dock wvous-tl-corner -int 2
     defaults write com.apple.dock wvous-tl-modifier -int 0
 
-    info 'top right screen corner → Mission Control'
+    setting 'top right screen corner → Mission Control'
     defaults write com.apple.dock wvous-tr-corner -int 4
     defaults write com.apple.dock wvous-tr-modifier -int 0
 
-    info 'bottom left screen corner → Mission Control'
+    setting 'bottom left screen corner → Mission Control'
     defaults write com.apple.dock wvous-bl-corner -int 5
     defaults write com.apple.dock wvous-bl-modifier -int 0
   fi
 
   info '[Mission control]'
 
-  info 'speeding up animations'
+  setting 'speeding up animations'
   defaults write com.apple.dock expose-animation-duration -float 0.1
 
-  info 'grouping windows by application'
+  setting 'grouping windows by application'
   defaults write com.apple.dock expose-group-by-app -bool true
 
-  info 'disabling most-recently-used (MRU) ordering of spaces'
+  setting 'disabling most-recently-used (MRU) ordering of spaces'
   defaults write com.apple.dock mru-spaces -bool false
 
   info '[Spotlight]'
 
-  info 'hiding the spotlight tray icon'
+  setting 'hiding the spotlight tray icon'
   sudo chmod 600 /System/Library/CoreServices/Search.bundle/Contents/MacOS/Search
 
-  info 'disabling indexing for mounted volumes'
+  setting 'disabling indexing for mounted volumes'
   sudo defaults write /.Spotlight-V100/VolumeConfiguration Exclusions -array "/Volumes"
 
-  info 'disabling display of disclaimer text'
+  setting 'disabling display of disclaimer text'
   defaults write com.apple.Spotlight useCount -int 3
   defaults write com.apple.Spotlight showedFTE -bool YES
 
-  info 'disabling shortcuts in favor of Alfred'
+  setting 'disabling shortcuts in favor of Alfred'
   defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 64 "{ enabled = 0; value = { parameters = ( 32, 49, 1048576); type = standard; }; }"
   defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 65 "{ enabled = 0; value = { parameters = ( 32, 49, 1048576); type = standard; }; }"
 
-  info 'ensuring indexing is enabled for the main volume'
+  setting 'ensuring indexing is enabled for the main volume'
   sudo mdutil -i on / > /dev/null
 
   info '[Finder]'
 
-  info 'disabling window animations and Get Info animations'
+  setting 'disabling window animations and Get Info animations'
   defaults write com.apple.finder DisableAllAnimations -bool true
 
-  info 'setting home (~) as the default finder location'
+  setting 'setting home (~) as the default finder location'
   defaults write com.apple.finder NewWindowTarget -string "PfHm"
   defaults write com.apple.finder NewWindowTargetPath -string "file://${HOME}/"
 
-  info 'showing icons for hard drives server and removable media on the desktop'
+  setting 'showing icons for hard drives server and removable media on the desktop'
   defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool true
 
-  info 'showing all filename extensions'
+  setting 'showing all filename extensions'
   defaults write NSGlobalDomain AppleShowAllExtensions -bool true
 
-  info 'showing status and path bar'
+  setting 'showing status and path bar'
   defaults write com.apple.finder ShowStatusBar -bool true
   defaults write com.apple.finder ShowPathbar -bool true
 
-  info 'preferring to group by kind'
+  setting 'preferring to group by kind'
   defaults write com.apple.finder FXPreferredGroupBy -string "Kind"
 
-  info 'allowing text selection in Quick Look/Preview'
+  setting 'allowing text selection in Quick Look/Preview'
   defaults write com.apple.finder QLEnableTextSelection -bool true
 
-  info 'displaying full POSIX path in the window title'
+  setting 'displaying full POSIX path in the window title'
   defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
 
-  info 'setting the default search scope to the current folder'
+  setting 'setting the default search scope to the current folder'
   defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
 
-  info 'disabling warning when changing a file extension'
+  setting 'disabling warning when changing a file extension'
   defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
 
-  info 'using list view in all windows by default'
+  setting 'using list view in all windows by default'
   defaults write com.apple.finder FXPreferredViewStyle "Nlsv"
 
-  info 'expanding "General", "Open with" and "Sharing & Permissions" info panes'
+  setting 'expanding "General", "Open with" and "Sharing & Permissions" info panes'
   defaults write com.apple.finder FXInfoPanesExpanded -dict General -bool true OpenWith -bool true Privileges -bool true
 
-  info 'disabling the warning when emptying the Trash'
+  setting 'disabling the warning when emptying the Trash'
   defaults write com.apple.finder WarnOnEmptyTrash -bool false
 
-  info 'disabling the creation of .DS_Store files on network volumes'
+  setting 'disabling the creation of .DS_Store files on network volumes'
   defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
 
-  info 'disabling disk image verification'
+  setting 'disabling disk image verification'
   defaults write com.apple.frameworks.diskimages skip-verify -bool true
   defaults write com.apple.frameworks.diskimages skip-verify-locked -bool true
   defaults write com.apple.frameworks.diskimages skip-verify-remote -bool true
 
-  info 'showing item info near icons on the desktop and in other icon views'
+  setting 'showing item info near icons on the desktop and in other icon views'
   /usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:showItemInfo true" ~/Library/Preferences/com.apple.finder.plist
   /usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:showItemInfo true" ~/Library/Preferences/com.apple.finder.plist
   /usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:showItemInfo true" ~/Library/Preferences/com.apple.finder.plist
 
-  info 'enabling snap-to-grid for icons on the desktop and in other icon views'
+  setting 'enabling snap-to-grid for icons on the desktop and in other icon views'
   /usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
   /usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
   /usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
 
-  info 'setting the icon size and grid spacing to 64 pixels'
+  setting 'setting the icon size and grid spacing to 64 pixels'
   /usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:gridSpacing 64" ~/Library/Preferences/com.apple.finder.plist
   /usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:iconSize 64" ~/Library/Preferences/com.apple.finder.plist
 
@@ -416,11 +429,11 @@ setup_defaults() {
 
     # Add the terminal opener item
     /usr/libexec/PlistBuddy -c 'Add "NSToolbar Configuration Browser:TB Item Plists:7" dict' ~/Library/Preferences/com.apple.finder.plist
-    /usr/libexec/PlistBuddy -c "Add 'NSToolbar Configuration Browser:TB Item Plists:7:_CFURLString' string 'file://$directory/os/osx/ext/open-terminal.app'" ~/Library/Preferences/com.apple.finder.plist
+    /usr/libexec/PlistBuddy -c "Add 'NSToolbar Configuration Browser:TB Item Plists:7:_CFURLString' string 'file://$directory/ext/open-terminal.app'" ~/Library/Preferences/com.apple.finder.plist
     /usr/libexec/PlistBuddy -c 'Add "NSToolbar Configuration Browser:TB Item Plists:7:_CFURLStringType" integer 15' ~/Library/Preferences/com.apple.finder.plist
   fi
 
-  info 'making the home library folder visible'
+  setting 'making the home library folder visible'
   chflags nohidden ~/Library
 
   if ask 'enable spring loading for directories?'; then
@@ -428,8 +441,17 @@ setup_defaults() {
     defaults write NSGlobalDomain com.apple.springing.delay -float 0.5
   fi
 
-  info 'enabling AirDrop over Ethernet and on unsupported Macs running Lion'
+  setting 'enabling AirDrop over Ethernet and on unsupported Macs running Lion'
   defaults write com.apple.NetworkBrowser BrowseAllInterfaces -bool true
+}
+
+setup_file_assoc() {
+  if ! is-command duti || ! ask "configure file associations?"; then
+    return 1
+  fi
+
+  info 'running duti (file associator)'
+  duti "ext/extensions.duti"
 }
 
 setup_quicklook() {
@@ -619,18 +641,28 @@ setup_cask() {
   fi
 }
 
+setup_taps() {
+  taps=(
+    "homebrew/dupes"
+    "homebrew/binary"
+    "railwaycat/emacsmacport"
+    "casidiablo/custom"
+    "darfink/custom"
+  )
+
+  for tap in "${taps[@]}"; do
+    if ! brew tap | grep -Fq "$tap"; then
+      info "tapping $tap"
+      brew tap "$tap" > /dev/null
+    fi
+  done
+}
+
 setup_brew() {
   if is-command brew; then
     return 0
   elif ask "install brew? (required for apps, binaries & ql)"; then
     ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-
-    info 'tapping required sources'
-    brew tap homebrew/dupes
-    brew tap homebrew/binary
-    brew tap railwaycat/emacsmacport
-    brew tap casidiablo/custom
-    brew tap darfink/custom
   else
     return 1
   fi
@@ -728,6 +760,8 @@ if [ ! -f "$HOME/.dotlock" ]; then
   python -m tools.symlinker
 
   if setup_brew; then
+    setup_taps
+
     info 'ensuring brew is up-to-date'
     brew update > /dev/null
     brew upgrade
@@ -745,6 +779,7 @@ if [ ! -f "$HOME/.dotlock" ]; then
   fi
 
   # Last but not least!
+  setup_file_assoc
   setup_defaults
 else
   fail "dotfiles are already installed in $(cat "$HOME/.dotlock")"
