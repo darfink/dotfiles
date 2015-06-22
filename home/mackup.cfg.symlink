@@ -4,6 +4,7 @@ engine = dropbox
 [applications_to_sync]
 DefaultKeyBinding
 BetterTouchTool
+Transmission
 Popcorn-Time
 iTerm2
 Skype
