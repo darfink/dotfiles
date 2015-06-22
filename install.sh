@@ -626,7 +626,7 @@ setup_binaries() {
     local name=($binary)
 
     if [ -z "$(brew ls --versions "${name[0]}")" ]; then
-      brew install $binary
+      brew install "${name[@]}"
     fi
   done
 }
@@ -732,56 +732,51 @@ prompt_directory() {
   directory="$(python -c 'import os, sys; print os.path.realpath(sys.argv[1])' "$directory")"
 }
 
-if [ ! -f "$HOME/.dotlock" ]; then
-  info '------ DOTFILES ------'
+info '------ DOTFILES ------'
 
-  # Ask for the administrator password upfront
-  sudo -v
+# Ask for the administrator password upfront
+sudo -v
 
-  # Keep-alive: update existing `sudo` time stamp until `install.sh` has finished
-  while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+# Keep-alive: update existing `sudo` time stamp until `install.sh` has finished
+while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
-  install_prerequisites || exit 1
-  prompt_directory || exit 1
+install_prerequisites || exit 1
+prompt_directory || exit 1
 
-  # Move to our dotfiles directory
-  cd "$directory" || exit 1
+# Move to our dotfiles directory
+cd "$directory" || exit 1
 
-  if ! git clone --recursive https://github.com/darfink/dotfiles.git "$directory"; then
-    fail 'could not clone dotfiles repository'
-    exit 1
-  fi
-
-  # We need to ensure these paths are available
-  export PATH="$directory/bin:$PATH"
-
-  setup_fonts
-  python -m tools.sshkey
-  python -m tools.symlinker
-
-  if setup_brew; then
-    setup_taps
-
-    info 'ensuring brew is up-to-date'
-    brew update > /dev/null
-    brew upgrade
-
-    setup_binaries
-
-    if setup_cask; then
-      setup_apps
-      setup_quicklook
-    fi
-
-    info 'removing old and unused versions'
-    brew cleanup
-    brew prune
-  fi
-
-  # Last but not least!
-  setup_file_assoc
-  setup_defaults
-else
-  fail "dotfiles are already installed in $(cat "$HOME/.dotlock")"
+if ! git clone --recursive https://github.com/darfink/dotfiles.git "$directory"; then
+  fail 'could not clone dotfiles repository'
   exit 1
 fi
+
+# We need to ensure these paths are available
+export PATH="$directory/bin:$PATH"
+
+setup_fonts
+python -m tools.sshkey
+python -m tools.symlinker
+
+if setup_brew; then
+  setup_taps
+
+  info 'ensuring brew is up-to-date'
+  brew update > /dev/null
+  brew upgrade
+
+  setup_binaries
+
+  if setup_cask; then
+    setup_apps
+    setup_quicklook
+  fi
+
+  info 'removing old and unused versions'
+  brew cleanup
+  brew prune
+fi
+
+# Last but not least!
+setup_file_assoc
+setup_defaults

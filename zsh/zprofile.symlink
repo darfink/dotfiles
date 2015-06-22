@@ -22,15 +22,11 @@ is-command() {
 # Paths and initial setup
 ###############################################################################
 
-# We need some basic setup first
-export DOTFILES="$(cat "$HOME/.dotlock")"
-export ZSHDIR="$DOTFILES/zsh"
-
 # Ensure path arrays do not contain duplicates.
 typeset -gU cdpath fpath mailpath path
 
 # All of our executables
-add-path "$DOTFILES/bin"
+add-path "$HOME/.dotbin"
 
 # Cache the current OS
 export OS="$(os)"

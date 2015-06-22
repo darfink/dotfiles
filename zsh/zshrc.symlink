@@ -3,19 +3,18 @@ if [[ -s "$HOME/.zprezto/init.zsh" ]]; then
   source "$HOME/.zprezto/init.zsh"
 fi
 
-for function in $ZSHDIR/functions/*; do
+for function in $HOME/.zcustom/functions/*; do
   source "$function"
 done
 
-
-for file in $ZSHDIR/{bindings,aliases,local}.zsh; do
+for file in $HOME/.zcustom/{bindings,aliases}.zsh; do
   [ -s "$file" ] && source "$file"
 done
 
 # Setup auto completions
-#compdef _gnu_generic \
-#  df cat tr nl curl mv file head paste tail fzf \
-#  touch wc shred htop make whois recode compare tac
+compdef _gnu_generic \
+  df cat tr nl curl mv file head paste tail fzf \
+  touch wc shred htop make whois recode compare tac
 
 # Load the NodeJS version manager (NVM)
 [ -s "$HOME/.nvm/nvm.sh" ] && source "$HOME/.nvm/nvm.sh"
