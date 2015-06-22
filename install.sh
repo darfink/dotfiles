@@ -268,7 +268,7 @@ setup_defaults() {
 
     # ... and some default folders
     dockutil --add "/Applications" --view list --display folder --sort name
-    dockutil --add "~/Downloads" --view grid --display stack --sort dateadded
+    dockutil --add "$HOME/Downloads" --view grid --display stack --sort dateadded
   fi
 
   if ask 'setup hot corners?'; then
@@ -447,13 +447,14 @@ setup_quicklook() {
     "qlstephen"
     "quicklook-csv"
     "quicklook-json"
+    "provisionql"
     "webpquicklook"
     "suspicious-package"
   )
 
   for ql in "${qls[@]}"; do
-    if ! brew cask list $ql &>-; then
-      sudo brew cask install $ql --qlplugindir=/Library/QuickLook
+    if ! brew cask list "$ql" &>-; then
+      sudo brew cask install "$ql" --qlplugindir=/Library/QuickLook
     fi
   done
 }
@@ -489,8 +490,8 @@ setup_apps() {
   )
 
   for app in "${apps[@]}"; do
-    if ! brew cask list $app &>-; then
-      brew cask install $app --appdir=/Applications
+    if ! brew cask list "$app" &>-; then
+      brew cask install "$app" --appdir=/Applications
     fi
   done
 }
@@ -602,7 +603,7 @@ setup_binaries() {
   for binary in "${binaries[@]}"; do
     local name=($binary)
 
-    if [ -z "$(brew ls --versions ${name[0]})" ]; then
+    if [ -z "$(brew ls --versions "${name[0]}")" ]; then
       brew install $binary
     fi
   done
@@ -708,8 +709,8 @@ if [ ! -f "$HOME/.dotlock" ]; then
   # Keep-alive: update existing `sudo` time stamp until `install.sh` has finished
   while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
-  install_prerequisites || exit 1
-  prompt_directory || exit 1
+  install_prerequisites || exit 1
+  prompt_directory || exit 1
 
   # Move to our dotfiles directory
   cd "$directory" || exit 1
