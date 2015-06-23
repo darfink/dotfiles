@@ -20,7 +20,7 @@ compdef _gnu_generic \
 [ -s "$HOME/.nvm/nvm.sh" ] && source "$HOME/.nvm/nvm.sh"
 
 # Load the local zshrc if provided
-[ -s "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
+[ -s "$HOME/Dropbox/configs/zshrc.local" ] && source "$HOME/Dropbox/configs/zshrc.local"
 
 # Enable ctrl+s in Vim by disabling flow control and sending of start/stop characters
 setopt NO_FLOW_CONTROL

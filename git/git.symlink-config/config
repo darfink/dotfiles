@@ -110,29 +110,15 @@
 	# Detect copies as well as renames
 	renames = copies
 
-[github]
-
-	# Used by (among others) Gist-Vim
-	user = elliott.darfink@gmail.com
-
 [help]
 
 	# Automatically correct and execute mistyped commands
 	autocorrect = 1
 
-[imap]
-
-	# Setup IMAP settings for Gmail
-	user = elliott.darfink@gmail.com
-	host = imaps://imap.gmail.com
-	port = 993
-	sslverify = false
-	folder = [Gmail]/Drafts
-
 [include]
 
 	# Local git configuration
-	path = ~/.gitconfig.local
+	path = ~/Dropbox/configs/git.local
 
 [init]
 
@@ -159,12 +145,6 @@
 
 	# Only push the currently active branch
 	default = simple
-
-[user]
-
-	# Our user credentials
-	name = Elliott Linder
-	email = elliott.darfink@gmail.com
 
 # URL shorthands
 
