@@ -1,5 +1,0 @@
-# Copy to clipboard by default
-bind-key -t vi-copy y copy-pipe 'xclip -selection clipboard >/dev/null'
-
-# Move x clipboard into tmux paste buffer
-bind C-v run "tmux set-buffer \"$(xclip -o)\"; tmux paste-buffer"
