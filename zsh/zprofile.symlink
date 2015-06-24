@@ -65,6 +65,9 @@ add-path "$HOME/bin"
 # Make the home configuration directory available
 [[ -z $XDG_CONFIG_HOME ]] && export XDG_CONFIG_HOME="$HOME/.config"
 
+# Make the emacs info directory available
+[[ -z $INFOPATH ]] && export INFOPATH='/usr/share/info'
+
 if [[ $COLORTERM = gnome-* && $TERM = xterm ]] && infocmp gnome-256color >/dev/null 2>&1; then
   export TERM='gnome-256color'
 elif infocmp xterm-256color >/dev/null 2>&1; then
@@ -86,8 +89,9 @@ fi
 
 if [ $OS = 'osx' ]; then
   if is-command brew; then
-    # We want to use the GNU man pages
+    # We want to use the GNU man & info pages
     export MANPATH="$(brew --prefix coreutils)/libexec/gnuman:$MANPATH"
+    export INFOPATH="$(brew --prefix)/share/info:$INFOPATH"
   fi
 
   # Always install to “/Applications” with brew cask
