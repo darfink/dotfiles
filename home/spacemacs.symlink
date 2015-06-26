@@ -7,12 +7,13 @@
    dotspacemacs-configuration-layer-path '()
    ;; List of configuration layers to load. If it is the symbol `all' instead
    ;; of a list then all discovered layers will be installed.
-   dotspacemacs-configuration-layers
-   '(syntax-checking
-     auto-completion
-     javascript
-     html
-     php)
+    dotspacemacs-configuration-layers
+    '(syntax-checking
+       auto-completion
+       javascript
+       html
+       php
+       osx)
    dotspacemacs-additional-packages '(editorconfig)
    dotspacemacs-excluded-packages '()
    dotspacemacs-delete-orphan-packages t))
@@ -29,11 +30,7 @@ before layers configuration."
    dotspacemacs-startup-banner 'official
    dotspacemacs-always-show-changelog t
    dotspacemacs-startup-lists '(recents projects bookmarks)
-   dotspacemacs-themes '(solarized-light
-                         solarized-dark
-                         leuven
-                         monokai
-                         zenburn)
+   dotspacemacs-themes '(solarized-light solarized-dark)
    dotspacemacs-colorize-cursor-according-to-state t
    dotspacemacs-default-font '("Source Code Pro"
                                :size 13
