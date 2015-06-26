@@ -94,8 +94,8 @@ if [ $OS = 'osx' ]; then
     export INFOPATH="$(brew --prefix)/share/info:$INFOPATH"
   fi
 
-  # Always install to “/Applications” with brew cask
-  export HOMEBREW_CASK_OPTS='--appdir=/Applications'
+  # Always install to system-wide locations with brew cask
+  export HOMEBREW_CASK_OPTS='--appdir=/Applications --qlplugindir=/Library/QuickLook'
 fi
 
 if [ -s "$HOME/perl5" ]; then
