@@ -589,7 +589,7 @@ setup_binaries() {
     "cscope"
     "luajit"
     "vim --with-cscope --with-python --with-luajit --override-system-vim"
-    "emacs-mac"
+    "emacs-mac --with-dbus --with-xml2 --with-spacemacs-icon"
 
     # Tools for development
     "mackup"
@@ -629,6 +629,8 @@ setup_binaries() {
       brew install "${name[@]}"
     fi
   done
+
+  brew linkapps
 }
 
 setup_cask() {
