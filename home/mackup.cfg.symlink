@@ -2,7 +2,6 @@
 engine = dropbox
 
 [applications_to_sync]
-DefaultKeyBinding
 BetterTouchTool
 Transmission
 Popcorn-Time
