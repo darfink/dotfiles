@@ -46,6 +46,10 @@ if is-command grunt; then
   alias grunt='grunt --stack'
 fi
 
+if is-command tree; then
+  alias treel='tree -C | less'
+fi
+
 if is-command hub; then
   alias git='noglob hub'
 elif is-command git; then
