@@ -105,6 +105,9 @@
 	changed = green
 	untracked = cyan
 
+[credential]
+	helper = osxkeychain
+
 [diff]
 
 	# Detect copies as well as renames
