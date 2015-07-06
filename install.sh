@@ -498,6 +498,7 @@ setup_apps() {
     "flux"
     "google-chrome"
     "iterm2"
+    "itsycal"
     "keepingyouawake"
     "popcorn-time"
     "seil"
