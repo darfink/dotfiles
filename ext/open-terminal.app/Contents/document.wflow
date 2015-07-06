@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>AMApplicationBuild</key>
-	<string>409</string>
+	<string>409.2</string>
 	<key>AMApplicationVersion</key>
 	<string>2.5</string>
 	<key>AMDocumentVersion</key>
@@ -51,44 +51,7 @@
 				<key>ActionParameters</key>
 				<dict>
 					<key>source</key>
-					<string>ObjC.import("Cocoa");
-
-function run(input, parameters) {	finder = Application('Finder');
-	
-	if(finder.windows.length &gt; 0) {
-		path = finder.windows[0].target().url();
-		cdTo(path.replace('file://', ''));
-	}
-		return input;}
-
-function cdTo(path) {
-	isRunning = isAppRunning('iTerm');
-	iterm = Application('iTerm');
-	session = null;
-	
-	if(!isRunning) {
-		session = iterm.currentTerminal().currentSession();
-		iterm.activate();
-	} else {
-		iterm.terminals.push(iterm.Terminal());
-		session = iterm.terminals[-1].launch({ session: 'Default' });
-	}
-	
-	session.write({ text: 'cd "' + path + '"; clear' })
-}
-
-function isAppRunning(appName) {
-	apps = $.NSWorkspace.sharedWorkspace.runningApplications;
-	
-	for(var i = 0; i &lt; parseInt(apps.count); i++) {
-		app = apps.objectAtIndex(i);
-		if(app.localizedName.isEqualToString(appName)) {
-			return true;
-		}
-	}
-	
-	return false;
-}</string>
+					<string>ObjC.import("Cocoa");function run(input, parameters) {	finder = Application('Finder');		if(finder.windows.length &gt; 0) {		path = decodeURIComponent(finder.windows[0].target().url());		cdTo(path.replace('file://', ''));	}		return input;}function cdTo(path) {	isRunning = isAppRunning('iTerm');	iterm = Application('iTerm');	session = null;		if(!isRunning) {		session = iterm.currentTerminal().currentSession();		iterm.activate();	} else {		iterm.terminals.push(iterm.Terminal());		session = iterm.terminals[-1].launch({ session: 'Default' });	}		session.write({ text: 'cd "' + path + '"; clear' })}function isAppRunning(appName) {	apps = $.NSWorkspace.sharedWorkspace.runningApplications;		for(var i = 0; i &lt; parseInt(apps.count); i++) {		app = apps.objectAtIndex(i);		if(app.localizedName.isEqualToString(appName)) {			return true;		}	}		return false;}</string>
 				</dict>
 				<key>BundleIdentifier</key>
 				<string>com.apple.Automator.RunJavaScript</string>
@@ -140,12 +103,10 @@ function isAppRunning(appName) {
 						<string>0</string>
 					</dict>
 				</dict>
-				<key>conversionLabel</key>
-				<integer>0</integer>
 				<key>isViewVisible</key>
 				<true/>
 				<key>location</key>
-				<string>529.000000:817.000000</string>
+				<string>309.000000:564.000000</string>
 				<key>nibPath</key>
 				<string>/System/Library/Automator/Run JavaScript.action/Contents/Resources/Base.lproj/main.nib</string>
 			</dict>
