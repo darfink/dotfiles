@@ -101,8 +101,13 @@ zstyle ':prezto:module:syntax-highlighting' styles \
 # Terminal
 ###############################################################################
 
-# Auto set the tab and window titles.
-zstyle ':prezto:module:terminal' auto-title 'yes'
+
+if [[ -n $EMACS ]]; then
+  zstyle ':prezto:module:terminal' auto-title 'no'
+else
+  # Auto set the tab and window titles.
+  zstyle ':prezto:module:terminal' auto-title 'yes'
+fi
 
 # Set the window title format.
 zstyle ':prezto:module:terminal:window-title' format '%n @ %s'
