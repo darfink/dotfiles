@@ -14,7 +14,7 @@
        javascript
        html
        php
-       osx)
+       (osx :variables osx-use-option-as-meta nil))
    dotspacemacs-additional-packages '(editorconfig)
    dotspacemacs-excluded-packages '()
    dotspacemacs-delete-orphan-packages t))
