@@ -79,6 +79,21 @@ before layers configuration."
   (add-to-list 'auto-mode-alist '("\\.blade\\.php$" . web-mode))
 )
 
+;; Don't ask which shell, use the default
+(defvar my-term-shell (getenv "SHELL"))
+(defadvice ansi-term (before force-bash)
+  (interactive (list my-term-shell)))
+(ad-activate 'ansi-term)
+
+;; Delete the terminal buffer upon exit
+(defadvice term-sentinel (around my-advice-term-sentinel (proc msg))
+  (if (memq (process-status proc) '(signal exit))
+      (let ((buffer (process-buffer proc)))
+        ad-do-it
+        (kill-buffer buffer))
+    ad-do-it))
+(ad-activate 'term-sentinel)
+
 ;; Do not use the system clipboard unless explicit
 (setq x-select-enable-clipboard nil)
 (setq x-select-enable-primary nil)
