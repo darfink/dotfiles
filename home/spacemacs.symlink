@@ -63,14 +63,23 @@ before layers configuration."
   )
 
 (defun dotspacemacs/config ()
+  ;; Always prefer two spaces for indentation
+  (setq-default require-final-newline t)
+  (setq-default indent-tabs-mode nil)
+  (setq-default tab-width 2)
+  (setq-default standard-indent 2)
   (setq c-basic-offset 2)
+  (setq js-indent-level 2)
   (setq sgml-basic-offset 2)
   (setq web-mode-markup-indent-offset 2)
   (setq web-mode-code-indent-offset 2)
   (setq web-mode-css-indent-offset 2)
-  (setq-default require-final-newline t)
+
+  ;; Enable relative line numbering
   (global-linum-mode t)
   (linum-relative-toggle)
+
+  ;; Add additional file support for web-mode
   (add-to-list 'auto-mode-alist '("/\\(views\\|html\\|theme\\|templates\\)/.*\\.php\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.twig$" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.as[cp]x$" . web-mode))
