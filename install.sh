@@ -539,6 +539,7 @@ setup_binaries() {
     "htop-osx"
     "tmux"
     "icdiff"
+    "httpie"
     "reattach-to-user-namespace --with-wrap-pbcopy-and-pbpaste"
     "duti"
     "zsh"
@@ -594,7 +595,6 @@ setup_binaries() {
 
     # Tools for development
     "mackup"
-    "bfg"
     "node"
     "sassc"
     "hub"

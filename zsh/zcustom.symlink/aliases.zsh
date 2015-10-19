@@ -40,6 +40,7 @@ alias rm='nocorrect rm'
 alias dateutc='date -u +"%Y-%m-%dT%H:%M:%SZ"'
 alias stats='sort | uniq -c | sort -r'
 alias gitjk='history 10 | tac | gitjk_cmd'
+alias gpR='git push-all'
 alias map='xargs -n1'
 
 if is-command grunt; then
