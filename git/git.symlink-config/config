@@ -16,7 +16,7 @@
 	p = !"git pull; git submodule foreach git pull origin master"
 
   # Push to all remotes
-  push-all = "!p() { for r in $(git remote); do git push $r ${1:-master}; done }; p"
+  push-remotes = "!p() { for r in $(git remote); do git push $r ${1:-master}; done }; p"
 
 	# Clone a repository including all submodules
 	c = clone --recursive
