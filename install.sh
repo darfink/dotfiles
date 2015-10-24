@@ -463,6 +463,7 @@ setup_quicklook() {
     "betterzipql"
     "qlimagesize"
     "ipaql"
+    "qlvideo"
     "qlcolorcode"
     "qlmarkdown"
     "qlprettypatch"
