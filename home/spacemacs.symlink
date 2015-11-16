@@ -74,6 +74,10 @@ before layers configuration."
   (setq web-mode-code-indent-offset 2)
   (setq web-mode-css-indent-offset 2)
 
+  ;; Disable natural swiping
+  (global-set-key [swipe-left] 'mac-next-buffer)
+  (global-set-key [swipe-right] 'mac-previous-buffer)
+
   ;; Enable relative line numbering
   (global-linum-mode t)
   (linum-relative-toggle)
