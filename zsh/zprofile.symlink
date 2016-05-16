@@ -33,7 +33,6 @@ export OS="$(os)"
 
 if [ "$OS" = 'osx' ] && is-command brew; then
   # Add some brew specific paths
-  add-path "$(brew --prefix)/share/python"
   add-path "$(brew --prefix coreutils)/libexec/gnubin"
   add-path "$(brew --prefix ruby)/bin"
 
