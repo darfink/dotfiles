@@ -68,6 +68,11 @@
 	# Detect whitespace errors when applying a patch
 	whitespace = fix
 
+[commit]
+
+  # Use custom commit template
+  template = ~/.config/git/template
+
 [core]
 
 	# Use custom `.gitignore` and `.gitattributes`
@@ -125,11 +130,6 @@
 
 	# Local git configuration
 	path = ~/Dropbox/configs/git.local
-
-[init]
-
-	# Used for example custom hooks
-	templatedir = ~/.config/git/templates
 
 [log]
 
