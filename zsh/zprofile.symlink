@@ -50,6 +50,14 @@ if is-command python && is-command pip; then
   add-path "$(python -m site --user-base)/bin"
 fi
 
+if is-command cargo; then
+  if [ -n "$CARGO_HOME" ]; then
+    add-path "$CARGO_HOME/bin"
+  else
+    add-path "$HOME/.cargo/bin"
+  fi
+fi
+
 if test -e "$HOME/.fzf/bin"; then
   add-path "$HOME/.fzf/bin"
 fi
