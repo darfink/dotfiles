@@ -265,7 +265,6 @@ setup_defaults() {
       "/Applications/Mail.app"
       "/Applications/Spotify.app"
       "/Applications/Xcode.app"
-      "/Applications/Popcorn-Time.app"
       "/Applications/MacVim.app"
       "/Applications/1Password 5.app"
       "/Applications/iTerm.app"
@@ -520,6 +519,23 @@ setup_apps() {
   done
 }
 
+setup_fonts() {
+  if ! ask "install fonts?"; then
+    return 1
+  fi
+
+  fonts=(
+    "font-inconsolata"
+    "font-source-code-pro"
+  )
+
+  for font in "${fonts[@]}"; do
+    if ! brew cask list "$font" &>-; then
+      brew cask install "$font"
+    fi
+  done
+}
+
 setup_binaries() {
   if ! ask "install binaries?"; then
     return 1
@@ -650,7 +666,6 @@ setup_taps() {
     "homebrew/dupes"
     "homebrew/binary"
     "railwaycat/emacsmacport"
-    "casidiablo/custom"
     "darfink/custom"
   )
 
@@ -690,7 +705,7 @@ setup_fonts() {
 setup_sshkey() {
   if [ ! -e "$HOME/.ssh/id_rsa" ]; then
     user 'generating SSH key; please input your email:'
-    read email
+    read -r email
     ssh-keygen -f ~/.ssh/id_rsa -t rsa -C "$email" -N ""
   else
     return 0
@@ -773,6 +788,7 @@ if setup_brew; then
 
   if setup_cask; then
     setup_apps
+    setup_fonts
     setup_quicklook
   fi
 
