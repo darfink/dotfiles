@@ -281,19 +281,6 @@ let g:OmniSharp_timeout = 1
 imap <C-X><Space> <Plug>(emmet-expand-abbr)
 imap <C-X><CR> <Plug>(emmet-expand-abbr)<CR><Esc>O
 
-" NeoSnippets
-let g:neosnippet#snippets_directory = '~/Dropbox/Snippets'
-let g:neosnippet#disable_runtime_snippets = {
-\		'css': 1, 'less': 1, 'scss': 1,
-\ }
-
-imap <C-K> <Plug>(neosnippet_expand_or_jump)
-smap <C-K> <Plug>(neosnippet_expand_or_jump)
-xmap <C-K> <Plug>(neosnippet_expand_target)
-
-" NeoComplete
-source ~/.vim/neocomplete.vim
-
 " Netrw
 let g:netrw_altv = 1
 let g:netrw_browse_split = 4
