@@ -28,6 +28,11 @@ Thumbs.db
 .netrwhist
 .agignore
 .vimrc
+.#*
+
+# Visual Studio Code - https://code.visualstudio.com/
+.settings/
+.vscode/
 
 npm-debug.log
 
