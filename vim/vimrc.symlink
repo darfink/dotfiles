@@ -217,6 +217,9 @@ autocmd FileType javascript setlocal omnifunc=tern#Complete
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
+" Enable syntax for Vue files
+autocmd BufNewFile,BufRead *.vue set ft=html
+
 " Indent all tags in HTML files
 let g:html_indent_inctags = "html,body,head,tbody"
 
