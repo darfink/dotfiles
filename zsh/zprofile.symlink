@@ -50,12 +50,15 @@ if is-command python && is-command pip; then
   add-path "$(python -m site --user-base)/bin"
 fi
 
-if is-command cargo; then
-  if [ -n "$CARGO_HOME" ]; then
-    add-path "$CARGO_HOME/bin"
-  else
-    add-path "$HOME/.cargo/bin"
-  fi
+if [ -n "$CARGO_HOME" ]; then
+  add-path "$CARGO_HOME/bin"
+else
+  add-path "$HOME/.cargo/bin"
+fi
+
+if is-command rustup && is-command racer; then
+  local toolchain="${$(rustup show | grep default | head -1)%% *}"
+  export RUST_SRC_PATH="$HOME/.rustup/toolchains/$toolchain/lib/rustlib/src/rust/src"
 fi
 
 if test -e "$HOME/.fzf/bin"; then
