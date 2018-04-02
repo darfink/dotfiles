@@ -558,6 +558,7 @@ setup_binaries() {
     "icdiff"
     "httpie"
     "reattach-to-user-namespace --with-wrap-pbcopy-and-pbpaste"
+    "sox --with-lame"
     "duti"
     "zsh"
     "bash"
