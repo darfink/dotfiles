@@ -1,8 +1,42 @@
 # Open filtered files in Vim
 
+if is-command rg; then
+  rgl() {
+    rg -n --color=always $1 | less
+  }
+fi
+
 if is-command fzf; then
   fzv() {
     file=$(fzf $@)
     if (( $? == 0)); then vim "$file"; fi
   }
 fi
+
+if is-command prettier; then
+  prettdiff() {
+    prettier --single-quote --trailing-comma all $1 | diff --color $1 - | less
+  }
+
+  pretthtml() {
+    tags=($(rg -n '</?script>' "$1" | tr -cd '[0-9]\n'))
+    start=$tags[1]
+    end=$tags[2]
+
+    echo "$(head -$start "$1")"
+    echo "$(sed -n $(( $start + 1 )),$(( $end - 1 ))p "$1" | prettier)"
+    echo "$(tail -n +$end "$1")"
+  }
+fi
+
+if is-command cargo; then
+  cargo-dockertest() {
+    if [ "$#" -lt 1 ]; then
+      echo "Usage: cargo-dockertest <docker image> <test flags>"
+      return 1
+    fi
+
+    docker run --dns-opt=single-request -v $PWD:/build_dir -w /build_dir -t $1 cargo test ${@:2}
+  }
+fi
+
