@@ -88,6 +88,9 @@ case "$OS" in
   # Enable Spotlight
   alias spoton='sudo mdutil -a -i on'
 
+  # List dynamic libraries
+  alias ldd='otool -L'
+
   if is-command gawk; then
     alias awk='gawk'
   fi
