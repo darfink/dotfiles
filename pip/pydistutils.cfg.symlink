@@ -1,2 +1,3 @@
 [install]
-prefix=
+install-data=/usr/local
+install-headers=/usr/local
