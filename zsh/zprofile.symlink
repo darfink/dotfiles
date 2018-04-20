@@ -31,14 +31,22 @@ add-path "$HOME/.dotbin"
 # Cache the current OS
 export OS="$(os)"
 
-if [ "$OS" = 'osx' ] && is-command brew; then
-  # Add some brew specific paths
-  add-path "$(brew --prefix coreutils)/libexec/gnubin"
-  add-path "$(brew --prefix ruby)/bin"
-
+if [ "$OS" = 'osx' ]; then
   # Add Homebrew directories
-  add-path "$(brew --prefix)/sbin"
-  add-path "$(brew --prefix)/bin"
+  add-path "/usr/local/sbin"
+  add-path "/usr/local/bin"
+
+  if is-command brew; then
+    export HOMEBREW_NO_AUTO_UPDATE=1
+
+    # Add some brew specific paths
+    add-path "/usr/local/opt/coreutils/libexec/gnubin"
+    add-path "/usr/local/opt/ruby/bin"
+  fi
+
+  if test -e "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/"; then
+    export DYLD_LIBRARY_PATH="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/"
+  fi
 fi
 
 if is-command ruby && is-command gem; then
@@ -94,8 +102,8 @@ fi
 if [ $OS = 'osx' ]; then
   if is-command brew; then
     # We want to use the GNU man & info pages
-    export MANPATH="$(brew --prefix coreutils)/libexec/gnuman:$MANPATH"
-    export INFOPATH="$(brew --prefix)/share/info:$INFOPATH"
+    export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+    export INFOPATH="/usr/local/share/info:$INFOPATH"
   fi
 
   # Always install to system-wide locations with brew cask
