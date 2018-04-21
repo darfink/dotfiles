@@ -11,6 +11,11 @@ if is-command fzf; then
     file=$(fzf $@)
     if (( $? == 0)); then vim "$file"; fi
   }
+
+  fzc() {
+    file=$(fzf $@)
+    if (( $? == 0)); then echo -n "$file" | pbcopy; fi
+  }
 fi
 
 if is-command prettier; then
