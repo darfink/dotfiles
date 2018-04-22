@@ -32,11 +32,12 @@ before layers configuration."
    dotspacemacs-startup-lists '(recents projects)
    dotspacemacs-themes '(solarized-light solarized-dark)
    dotspacemacs-colorize-cursor-according-to-state t
-   dotspacemacs-default-font '("Source Code Pro"
-                               :size 13
+   dotspacemacs-default-font '("Operator Mono"
+                               :size 12
                                :weight normal
+                               :slant normal
                                :width normal
-                               :powerline-scale 1.1)
+                               :powerline-scale 1.4)
    dotspacemacs-leader-key "SPC"
    dotspacemacs-emacs-leader-key "M-m"
    dotspacemacs-major-mode-leader-key ","
