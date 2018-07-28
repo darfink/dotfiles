@@ -16,6 +16,11 @@ if is-command fzf; then
     file=$(fzf $@)
     if (( $? == 0)); then echo -n "$file" | pbcopy; fi
   }
+
+  fzd() {
+    directory=$(FZF_DEFAULT_COMMAND="fd --type d" fzf $@)
+    if (( $? == 0)); then cd "$directory"; fi
+  }
 fi
 
 if is-command prettier; then
