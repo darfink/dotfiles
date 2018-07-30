@@ -22,6 +22,16 @@
     "vim.easymotionKeys": "hklyuiopnm,qwertzxcvbasdgjf",
     "vim.substituteGlobalFlag": true,
     "vim.leader": "<space>",
+    "vim.normalModeKeyBindings": [
+        {
+            "before": [ "<enter>" ],
+            "commands": [ ":nohl" ]
+        },
+        {
+            "before": [ "t" ],
+            "after": [ "<leader>", "<leader>", "s"]
+        },
+    ],
     "vim.normalModeKeyBindingsNonRecursive": [
         {
             "before": [ "Y" ],
