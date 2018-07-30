@@ -19,6 +19,7 @@
     "vim.hlsearch": true,
     "vim.surround": true,
     "vim.easymotion": true,
+    "vim.easymotionKeys": "hklyuiopnm,qwertzxcvbasdgjf",
     "vim.leader": "<space>",
     "vim.normalModeKeyBindingsNonRecursive": [
         {
