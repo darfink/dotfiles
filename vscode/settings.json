@@ -1,0 +1,72 @@
+{
+    // Place your settings in this file to overwrite the default settings
+    "explorer.openEditors.visible": 0,
+    "explorer.autoReveal": false,
+    "editor.codeLens": true,
+    "editor.cursorBlinking": "solid",
+    "editor.fontFamily": "Operator Mono, Menlo, Monaco, 'Courier New', monospace",
+    "editor.lineNumbers": "relative",
+    "editor.folding": false,
+    "editor.tabSize": 2,
+    "editor.wordWrap": "off",
+    "editor.minimap.enabled": false,
+    "lldb.executable": "~/.dotbin/syslldb",
+    "prettier.singleQuote": true,
+    "prettier.trailingComma": "all",
+    "search.useRipgrep": true,
+    "search.smartCase": true,
+    "vim.autoindent": true,
+    "vim.hlsearch": true,
+    "vim.surround": true,
+    "vim.easymotion": true,
+    "vim.leader": "<space>",
+    "vim.normalModeKeyBindingsNonRecursive": [
+        {
+            "before": [ "Y" ],
+            "after": [ "y", "$" ]
+        },
+        {
+            "before": [ "<leader>", "p", "$" ],
+            "commands": [
+                { "command": "workbench.action.terminal.toggleTerminal" }
+            ]
+        },
+        {
+            "before": [ "<leader>", "p", "t" ],
+            "commands": [
+                { "command": "workbench.action.toggleSidebarVisibility" }
+            ]
+        },
+        {
+            "before": [ "<leader>", "tab" ],
+            "commands": [
+                {
+                    "command": "workbench.action.openPreviousEditorFromHistory"
+                }
+            ]
+        },
+    ],
+    "vetur.validation.template": false,
+    "workbench.colorTheme": "Braver's Solarized Light",
+    "workbench.iconTheme": "vscode-icons",
+    "terminal.integrated.macOptionIsMeta": true,
+    "terminal.external.osxExec": "iTerm.app",
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/obj/": true,
+        "**/.vscode": true,
+        "StyleCop.Cache": true,
+        "node_modules/": true,
+        "dist/": true
+    },
+    "workbench.activityBar.visible": false,
+    "window.zoomLevel": 0,
+    "vsicons.dontShowNewVersionMessage": true,
+    "extensions.ignoreRecommendations": false,
+    "explorer.confirmDelete": false,
+    "explorer.confirmDragAndDrop": false
+}
