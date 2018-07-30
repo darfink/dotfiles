@@ -1,6 +1,7 @@
 // Place your key bindings in this file to overwrite the defaults
 [
     { "key": "cmd+w", "command": "-workbench.action.closeWindow", "when": "!editorIsOpen" },
+    { "key": "shift+cmd+r", "command": "workbench.action.openRecent" },
     {
         "key": "alt+b",
         "command": "cursorWordStartLeft",
