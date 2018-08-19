@@ -7,7 +7,7 @@ for function in $HOME/.zcustom/functions/*; do
   source "$function"
 done
 
-for file in $HOME/.zcustom/{bindings,aliases}.zsh; do
+for file in $HOME/.zcustom/{bindings,aliases,fzf}.zsh; do
   [ -s "$file" ] && source "$file"
 done
 

@@ -69,8 +69,14 @@ if is-command rustup && is-command racer; then
   export RUST_SRC_PATH="$HOME/.rustup/toolchains/$toolchain/lib/rustlib/src/rust/src"
 fi
 
-if test -e "$HOME/.fzf/bin"; then
-  add-path "$HOME/.fzf/bin"
+if is-command fzf; then
+  if is-command fd; then
+    export FZF_ALT_C_COMMAND="fd --type d"
+    export FZF_CTRL_T_COMMAND="fd"
+    export FZF_DEFAULT_COMMAND='fd --type f'
+  fi
+
+  export FZF_CTRL_R_OPTS="--reverse"
 fi
 
 # Add this last so it has the highest priority
@@ -93,11 +99,6 @@ export VISUAL="$EDITOR"
 
 # Use human friendly size format (e.g 1024MB)
 export BLOCK_SIZE='human-readable'
-
-if is-command ag; then
-  # Use 'ag' instead of 'find' for FZF
-  export FZF_DEFAULT_COMMAND='fd --type f'
-fi
 
 if [ $OS = 'osx' ]; then
   if is-command brew; then
