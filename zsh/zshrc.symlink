@@ -28,3 +28,6 @@ setopt NO_FLOW_CONTROL
 
 # Enable instant menu completion
 setopt menu_complete
+
+# Enable curly brackets (used with git)
+unsetopt BRACE_CCL
