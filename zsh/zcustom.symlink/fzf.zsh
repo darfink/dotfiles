@@ -82,7 +82,15 @@ fzf-history-widget() {
   typeset -f zle-line-init >/dev/null && zle zle-line-init
   return $ret
 }
-zle     -N   fzf-history-widget
-bindkey '^R' fzf-history-widget
+
+# Accept history selection instead of putting it on
+# the command line
+fzf-history-widget-accept() {
+  fzf-history-widget
+  zle accept-line
+}
+
+zle     -N   fzf-history-widget-accept
+bindkey '^R' fzf-history-widget-accept
 
 fi
