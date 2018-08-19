@@ -1,0 +1,3 @@
+function text2img() {
+  echo -n "$@" | convert -size 400x -background black -gravity center -border 30 -bordercolor "#000" -pointsize 50 -font GillSansB -fill red caption:@- png:- | impbcopy -
+}
