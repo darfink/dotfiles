@@ -54,7 +54,7 @@ if is-command ruby && is-command gem; then
   add-path "$(ruby -rubygems -e 'puts Gem.user_dir')/bin"
 fi
 
-if is-command python && is-command pip; then
+if is-command python; then
   add-path "$(python -m site --user-base)/bin"
 fi
 
@@ -65,7 +65,7 @@ else
 fi
 
 if is-command rustup && is-command racer; then
-  local toolchain="${$(rustup show | grep default | head -1)%% *}"
+  local toolchain="${$(rustup show | rg default | head -1)%% *}"
   export RUST_SRC_PATH="$HOME/.rustup/toolchains/$toolchain/lib/rustlib/src/rust/src"
 fi
 
@@ -79,9 +79,6 @@ if is-command fzf; then
   export FZF_DEFAULT_OPTS="--bind ctrl-k:kill-line"
   export FZF_CTRL_R_OPTS="--reverse"
 fi
-
-# Add this last so it has the highest priority
-add-path "$HOME/bin"
 
 ###############################################################################
 # Exports

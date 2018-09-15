@@ -18,6 +18,7 @@ zstyle ':prezto:load' pmodule \
   'editor' \
   'history' \
   'directory' \
+  'autosuggestions' \
   'spectrum' \
   'utility' \
   'completion' \
@@ -100,7 +101,6 @@ zstyle ':prezto:module:syntax-highlighting' styles \
 ###############################################################################
 # Terminal
 ###############################################################################
-
 
 if [[ -n $EMACS ]]; then
   zstyle ':prezto:module:terminal' auto-title 'no'

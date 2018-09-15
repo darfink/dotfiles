@@ -1,4 +1,0 @@
-# Create a directory and change into it
-mkd() {
-  mkdir -p "$@" && cd "$_"
-}

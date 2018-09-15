@@ -1,7 +1,0 @@
-# Execute commands for each file in current directory.
-each() {
-  for file in $(find . -name "*.$1"); do
-    echo "File - $file"
-    ${@:2}
-  done
-}

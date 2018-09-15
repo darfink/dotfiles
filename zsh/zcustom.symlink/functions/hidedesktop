@@ -1,8 +1,0 @@
-# Hide desktop icons
-hidedesktop() {
-  if [ $OS = 'osx' ]; then
-    defaults write com.apple.finder CreateDesktop -bool false && killall Finder
-  elif [ $OS = 'linux' ]; then
-    gsettings set org.gnome.desktop.background show-desktop-icons false
-  fi
-}

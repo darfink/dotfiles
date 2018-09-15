@@ -8,7 +8,6 @@ alias -- -='cd -'
 alias www='cd /var/www'
 
 # Shortcuts
-alias db='cd ~/Dropbox'
 alias dl='cd ~/Downloads'
 alias dt='cd ~/Desktop'
 alias pj='cd ~/Projects'
@@ -43,9 +42,13 @@ alias rm='nocorrect rm'
 # Utility aliases
 alias dateutc='date -u +"%Y-%m-%dT%H:%M:%SZ"'
 alias stats='sort | uniq -c | sort -r'
-alias gitjk='history 10 | tac | gitjk_cmd'
-alias gpR='git push-remotes'
 alias map='xargs -n1'
+alias week='date +%V'
+
+# Additional git
+alias git='noglob git'
+alias gff='git pull --ff'
+alias gpR='git push-remotes'
 
 if is-command grunt; then
   alias grunt='grunt --stack'
@@ -53,19 +56,7 @@ fi
 
 if is-command tree; then
   alias treel='tree -C | less'
-fi
-
-if is-command hub; then
-  alias git='noglob hub'
-elif is-command git; then
-  alias git='noglob git'
-fi
-
-if is-command lwp-request; then
-  # One of @janmoesen’s ProTip™s
-  for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
-    alias "$method"="lwp-request -m '$method'"
-  done
+  alias tre='fd | tree'
 fi
 
 if is-command patool; then
@@ -100,11 +91,8 @@ case "$OS" in
   fi
   ;;
 'linux')
-  alias open='o'
   ;;
 'cygwin')
-  # Make all platforms uniformed
-  alias open='o'
   ;;
 esac
 

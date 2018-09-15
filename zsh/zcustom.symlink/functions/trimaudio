@@ -1,5 +1,0 @@
-trimaudio() {
-  ext="${1##*.}"
-  sox "$1" "temp.$ext" silence 1 0.1 0.1% reverse silence 1 0.1 0.1% reverse
-  mv "temp.$ext" "$1"
-}

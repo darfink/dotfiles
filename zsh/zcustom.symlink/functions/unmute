@@ -1,8 +1,0 @@
-# Enable the system sound
-unmute() {
-  if [ $OS = 'osx' ]; then
-    osascript -e 'set volume output muted false'
-  elif [ $OS = 'linux' ]; then
-    amixer -q -D pulse set Master unmute
-  fi
-}

@@ -3,11 +3,7 @@ if [[ -s "$HOME/.zprezto/init.zsh" ]]; then
   source "$HOME/.zprezto/init.zsh"
 fi
 
-for function in $HOME/.zcustom/functions/*; do
-  source "$function"
-done
-
-for file in $HOME/.zcustom/{bindings,aliases,fzf}.zsh; do
+for file in $HOME/.zcustom/{bindings,functions,aliases,fzf}.zsh; do
   [ -s "$file" ] && source "$file"
 done
 
@@ -21,7 +17,7 @@ compdef _gnu_generic \
 [ -s "$HOME/.nvm/nvm.sh" ] && source "$HOME/.nvm/nvm.sh"
 
 # Load the local zshrc if provided
-[ -s "$HOME/Dropbox/configs/zshrc.local" ] && source "$HOME/Dropbox/configs/zshrc.local"
+[ -s "$HOME/Cloud/Configs/zshrc" ] && source "$HOME/Cloud/Configs/zshrc"
 
 # Enable ctrl+s in Vim by disabling flow control and sending of start/stop characters
 setopt NO_FLOW_CONTROL
