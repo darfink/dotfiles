@@ -1,0 +1,101 @@
+# Install GNU core utilities (those that come with OS X are outdated)
+coreutils
+diffutils
+binutils
+
+# Install some other useful utilities
+moreutils --without-parallel
+uchardet
+dockutil
+gifify
+fasd
+htop
+tmux
+icdiff
+diff-so-fancy
+dos2unix
+httpie
+sox --with-lame
+duti
+zsh
+bash
+gzip
+cmatrix
+shellcheck
+editorconfig
+ascii
+jq
+
+# Install GNU `find`, `locate`, `updatedb`, `xargs` etc
+findutils --with-default-names
+gnu-indent --with-default-names
+gnu-which --with-default-names
+gnu-tar --with-default-names
+gnu-sed --with-default-names
+gnutls
+grep --with-default-names
+ed --with-default-names
+wdiff --with-gettext
+wget
+parallel
+watch
+gawk
+
+# OS X outdated tools
+git
+file-formula
+openssh
+rsync
+gpatch
+nano
+less
+source-highlight
+lesspipe
+
+# Image optimization software
+gifsicle
+jpegoptim
+optipng
+
+# Enable some useful scripting
+python
+python2
+ruby
+
+# Awesomest editor (Vim)
+cscope
+luajit
+vim --with-luajit --with-override-system-vim
+emacs-plus
+
+# Tools for development
+node
+yarn
+sassc
+recode
+fcrackzip
+dnsmasq
+nmap
+pngcheck
+xz
+sqlite
+
+# Commonly used binaries
+bat
+fd
+fzf
+ghostscript
+imagemagick
+p7zip
+par
+pigz
+pv
+rename
+ripgrep
+rustup-init
+ssh-copy-id
+stow
+tree
+webkit2png
+youtube-dl
+zopfli

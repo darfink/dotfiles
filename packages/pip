@@ -1,3 +1,4 @@
-patool
-youtube-dl
 flake8
+patool
+pygments
+youtube-dl

@@ -1,4 +1,5 @@
+dotenv
+github-auth
 iStats
 sass
 tmuxinator
-github-auth

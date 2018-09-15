@@ -1,8 +1,10 @@
-coffee-script
-http-server
+eslint
 grunt-cli
-bower
+http-server
 jshint
 jsonlint
 less
+prettier
+tern
+tldr
 uglify-js
