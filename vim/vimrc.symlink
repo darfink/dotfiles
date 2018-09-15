@@ -16,11 +16,6 @@ endif
 call plug#begin('~/.vim/plugged')
 
 " Additional bundles
-Plug 'Shougo/vimproc.vim', { 'do': function('BuildVimProc') }
-Plug 'Shougo/neocomplete.vim'
-Plug 'Shougo/neosnippet.vim'
-Plug 'Shougo/neosnippet-snippets'
-Plug 'OmniSharp/omnisharp-vim', { 'do': function('BuildOmniSharp') }
 Plug 'mattn/emmet-vim'
 Plug 'justinmk/vim-gtfo'
 Plug 'tpope/vim-surround'
@@ -210,7 +205,6 @@ autocmd FileType gitcommit setlocal spell
 autocmd FileType netrw setlocal winfixwidth
 
 " Enable omni completion.
-autocmd FileType cs setlocal omnifunc=OmniSharp#Complete
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=tern#Complete
@@ -273,9 +267,6 @@ let g:airline#extensions#tabline#enabled = 1
 
 " JSON
 let g:vim_json_syntax_conceal = 1
-
-" OmniSharp
-let g:OmniSharp_timeout = 1
 
 " Emmet
 imap <C-X><Space> <Plug>(emmet-expand-abbr)
