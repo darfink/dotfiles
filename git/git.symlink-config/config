@@ -87,6 +87,7 @@
 	# Make `git rebase` safer on OS X
 	# More info: <http://www.git-tower.com/blog/make-git-rebase-safe-on-osx/>
 	trustctime = false
+	autocrlf = false
 
 [color]
 
@@ -151,6 +152,12 @@
 
 	# Only push the currently active branch
 	default = simple
+
+[pager]
+
+  # Nicer diffs
+  diff = diff-so-fancy | less --tabs=1,5 -RFX
+  show = diff-so-fancy | less --tabs=1,5 -RFX
 
 # URL shorthands
 
