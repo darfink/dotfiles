@@ -24,18 +24,20 @@ setw -g mode-keys vi
 # Decrease command delay (increases vim responsiveness)
 set -sg escape-time 1
 
-# Use Ctrl-A to mimic the screen behavior
+# Use Ctrl-Q to mimic the screen behavior
 unbind C-b
-set -g prefix C-a
-bind C-a send-prefix
+set -g prefix C-q
+bind C-q send-prefix
 
 ###############################################################################
 # Bindings
 ###############################################################################
 
 # Natural Vim bindings
-bind-key -t vi-copy 'v' begin-selection
-bind-key -t vi-copy 'y' copy-selection
+unbind -T copy-mode-vi v
+bind -T copy-mode-vi v send-keys -X begin-selection
+bind -T copy-mode-vi C-v send-keys -X rectangle-toggle \; send -X begin-selection
+bind -T copy-mode-vi y send-keys -X copy-pipe-and-cancel pbcopy
 bind h select-pane -L
 bind j select-pane -D
 bind k select-pane -U
@@ -47,12 +49,3 @@ bind R source ~/.tmux.conf \; display "Conf Reloaded..."
 ###############################################################################
 # Miscellaneous
 ###############################################################################
-
-# Make the pasteboard work on OS X (pbcopy and pbpaste)
-set-option -g default-command "which reattach-to-user-namespace > /dev/null && reattach-to-user-namespace -l $SHELL || $SHELL"
-
-# Copy the clipboard by default
-bind -t vi-copy y copy-pipe "reattach-to-user-namespace pbcopy"
-
-# Paste into the buffer
-bind C-v run "reattach-to-user-namespace pbpaste | tmux load-buffer - && tmux paste-buffer"
