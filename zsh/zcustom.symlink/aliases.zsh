@@ -25,6 +25,10 @@ alias lS='ls -1FSsh'
 alias lart='ls -1Fcart'
 alias lrt='ls -1Fcrt'
 
+if is-command prettier; then
+  alias prettier='prettier --single-quote --trailing-comma all'
+fi
+
 # Safer GNU tools
 alias chown='chown --preserve-root'
 alias chmod='chmod --preserve-root'
@@ -107,3 +111,4 @@ esac
 # Easier copy-paste methods
 alias c='tr -d "\n" | pbcopy'
 alias p='pbpaste'
+alias preview="fzf --preview 'if isutf8 {}; then bat --color always {}; else file -b {}; fi'"

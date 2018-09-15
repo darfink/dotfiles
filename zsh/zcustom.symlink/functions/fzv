@@ -8,7 +8,7 @@ fi
 
 if is-command fzf; then
   fzv() {
-    file=$(fzf $@)
+    file=$(fzf --preview 'bat --color "always" {}' $@)
     if (( $? == 0)); then vim "$file"; fi
   }
 

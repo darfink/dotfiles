@@ -1,9 +1,7 @@
 # Execute commands for each file in current directory.
 each() {
-  for dir in *; do
-    echo "${dir}:"
-    cd $dir
-    $@
-    cd -
+  for file in $(find . -name "*.$1"); do
+    echo "File - $file"
+    ${@:2}
   done
 }
