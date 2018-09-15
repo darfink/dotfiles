@@ -8,6 +8,8 @@
     "editor.lineNumbers": "relative",
     "editor.folding": false,
     "editor.tabSize": 2,
+    "workbench.editor.showTabs": false,
+    "breadcrumbs.enabled": true,
     "editor.wordWrap": "off",
     "editor.minimap.enabled": false,
     "lldb.executable": "~/.dotbin/syslldb",
@@ -18,6 +20,7 @@
     "vim.autoindent": true,
     "vim.hlsearch": true,
     "vim.surround": true,
+    "vim.changeWordIncludesWhitespace": true,
     "vim.easymotion": true,
     "vim.easymotionKeys": "hklyuiopnm,qwertzxcvbasdgjf",
     "vim.substituteGlobalFlag": true,
@@ -60,7 +63,7 @@
     ],
     "vetur.validation.template": false,
     "workbench.colorTheme": "Braver's Solarized Light",
-    "workbench.iconTheme": "vscode-icons",
+    "workbench.iconTheme": "material-icon-theme",
     "terminal.integrated.macOptionIsMeta": true,
     "terminal.external.osxExec": "iTerm.app",
     "files.exclude": {
@@ -80,5 +83,6 @@
     "vsicons.dontShowNewVersionMessage": true,
     "extensions.ignoreRecommendations": false,
     "explorer.confirmDelete": false,
-    "explorer.confirmDragAndDrop": false
+    "explorer.confirmDragAndDrop": false,
+    "workbench.statusBar.feedback.visible": false
 }
