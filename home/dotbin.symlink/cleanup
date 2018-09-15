@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-# Remove all .DS_Store and .pyc files recursively
-find . -type f -name '*.DS_Store' -ls -delete
-find . -type f -name '*.pyc' -ls -delete

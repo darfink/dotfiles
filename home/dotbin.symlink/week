@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-# Display the current week
-
-date +%V
