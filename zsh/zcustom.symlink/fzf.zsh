@@ -104,7 +104,8 @@ fzf-jump-widget() {
     return 0
   fi
 
-  cd "$selected[2]"
+  shift selected
+  cd "$selected"
   local ret=$?
   zle fzf-redraw-prompt
   typeset -f zle-line-init >/dev/null && zle zle-line-init
