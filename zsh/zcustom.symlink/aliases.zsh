@@ -23,6 +23,7 @@ alias ldot='ls -ld .*'
 alias lS='ls -1FSsh'
 alias lart='ls -1Fcart'
 alias lrt='ls -1Fcrt'
+alias lc='colorls --sd'
 
 if is-command prettier; then
   alias prettier='prettier --single-quote --trailing-comma all'
@@ -77,11 +78,9 @@ case "$OS" in
   # Remove duplicates in "Open With" menu
   alias fixow='/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user'
 
-  # Disable Spotlight
-  alias spotoff='sudo mdutil -a -i off'
-
-  # Enable Spotlight
+  # Enable/disable Spotlight
   alias spoton='sudo mdutil -a -i on'
+  alias spotoff='sudo mdutil -a -i off'
 
   # List dynamic libraries
   alias ldd='otool -L'

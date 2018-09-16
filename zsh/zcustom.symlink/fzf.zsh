@@ -70,12 +70,18 @@ fzf-history-widget() {
   local selected num
   setopt localoptions noglobsubst noposixbuiltins pipefail 2> /dev/null
   selected=( $(fc -rl 1 |
-    FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} $FZF_DEFAULT_OPTS -n2..,.. --tiebreak=index --bind=ctrl-r:toggle-sort $FZF_CTRL_R_OPTS --query=${(qqq)LBUFFER} +m" $(__fzfcmd)) )
+    FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} $FZF_DEFAULT_OPTS -n2..,.. --tiebreak=index --bind=ctrl-r:toggle-sort --expect=ctrl-x $FZF_CTRL_R_OPTS --query=${(qqq)LBUFFER} +m" $(__fzfcmd)) )
   local ret=$?
   if [ -n "$selected" ]; then
+    local accept=0
+    if [[ $selected[1] = ctrl-x ]]; then
+      accept=1
+      shift selected
+    fi
     num=$selected[1]
     if [ -n "$num" ]; then
       zle vi-fetch-history -n $num
+      [[ $accept = 1 ]] && zle accept-line
     fi
   fi
   zle redisplay
@@ -83,14 +89,29 @@ fzf-history-widget() {
   return $ret
 }
 
-# Accept history selection instead of putting it on
-# the command line
-fzf-history-widget-accept() {
-  fzf-history-widget
-  zle accept-line
+zle     -N   fzf-history-widget
+bindkey '^R' fzf-history-widget
+
+# ALT-J - Change directory with autojump
+fzf-jump-widget() {
+  local selected dir
+  setopt localoptions noglobsubst noposixbuiltins pipefail 2> /dev/null
+  selected=( $(fasd -sR |
+    FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} $FZF_DEFAULT_OPTS -n2..,.. --tiebreak=index --reverse --query=${(qqq)LBUFFER} +m" $(__fzfcmd)) )
+  local ret=$?
+  if [[ -z "$selected" ]]; then
+    zle redisplay
+    return 0
+  fi
+
+  cd "$selected[2]"
+  local ret=$?
+  zle fzf-redraw-prompt
+  typeset -f zle-line-init >/dev/null && zle zle-line-init
+  return $ret
 }
 
-zle     -N   fzf-history-widget-accept
-bindkey '^R' fzf-history-widget-accept
+zle     -N    fzf-jump-widget
+bindkey '\ej' fzf-jump-widget
 
 fi
