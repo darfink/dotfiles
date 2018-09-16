@@ -80,11 +80,17 @@ pngcheck
 xz
 sqlite
 
+# GnuPG
+gnupg
+gpg-agent
+pinentry-mac
+
 # Commonly used binaries
 bat
 fd
 fzf
 ghostscript
+gopass
 imagemagick
 p7zip
 par

@@ -55,6 +55,10 @@ if is-command grunt; then
   alias grunt='grunt --stack'
 fi
 
+if is-command gopass; then
+  alias pass='gopass'
+fi
+
 if is-command tree; then
   alias treel='tree -C | less'
   alias tre='fd | tree'
