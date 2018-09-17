@@ -48,8 +48,20 @@ alias week='date +%V'
 
 # Additional git
 alias git='noglob git'
-alias gff='git pull --ff'
+alias gbl='git branch -vv'
+alias gff='git pull --ff-only'
+alias gmf='git merge --ff-only'
+alias gpr='git push origin HEAD:refs/for/master'
 alias gpR='git push-remotes'
+
+# Easier copy-paste methods
+alias c='tr -d "\n" | pbcopy'
+alias p='pbpaste'
+alias preview="fzf --preview 'if isutf8 {}; then bat --color always {}; else file -b {}; fi'"
+
+if is-command jq; then
+  alias jql='jq -C . | less'
+fi
 
 if is-command grunt; then
   alias grunt='grunt --stack'
@@ -92,14 +104,28 @@ case "$OS" in
   if is-command gawk; then
     alias awk='gawk'
   fi
+  
+  if is-command brew; then
+    alias pmi='brew install'
+    alias pmx='brew uninstall'
+    alias pmu='brew update'
+    alias pmc='brew cleanup'
+    alias pms='brew search'
+    alias pmS='brew edit'
+  fi
   ;;
 'linux')
+  alias open = 'xdg-open'
+  
+  if is-command apt-get; then
+    alias pmi='sudo apt-get install'
+    alias pmx='sudo apt-get remove'
+    alias pmu='sudo apt-get update'
+    alias pmc='sudo apt-get clean'
+    alias pms='apt-cache search'
+    alias pmS='apt-cache show'
+  fi
   ;;
 'cygwin')
   ;;
 esac
-
-# Easier copy-paste methods
-alias c='tr -d "\n" | pbcopy'
-alias p='pbpaste'
-alias preview="fzf --preview 'if isutf8 {}; then bat --color always {}; else file -b {}; fi'"
