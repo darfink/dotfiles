@@ -63,6 +63,10 @@ if is-command jq; then
   alias jql='jq -C . | less'
 fi
 
+if is-command bat; then
+  alias cat='bat'
+fi
+
 if is-command grunt; then
   alias grunt='grunt --stack'
 fi
@@ -104,7 +108,7 @@ case "$OS" in
   if is-command gawk; then
     alias awk='gawk'
   fi
-  
+
   if is-command brew; then
     alias pmi='brew install'
     alias pmx='brew uninstall'
@@ -116,7 +120,7 @@ case "$OS" in
   ;;
 'linux')
   alias open = 'xdg-open'
-  
+
   if is-command apt-get; then
     alias pmi='sudo apt-get install'
     alias pmx='sudo apt-get remove'
