@@ -175,7 +175,7 @@ fi
 
 # Mouse scrolling is disabled in favor of not using screen clearing if the
 # content that is being viewed fits in the current terminal screen.
-export LESS='-F -g -i -M -R -S -w -X -z-4'
+export LESS='-F -g -i -M -R -w -X -z-4'
 
 # Set the Less input preprocessor
 if is-command src-hilite-lesspipe.sh; then
