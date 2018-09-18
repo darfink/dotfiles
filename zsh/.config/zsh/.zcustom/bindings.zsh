@@ -1,4 +1,4 @@
-# Alt+s: execut 'git status'
+# Alt+s: execute 'git status'
 bindkey -s '\es' '^Ugws^M'
 
 # Alt+l: execute 'ls'
