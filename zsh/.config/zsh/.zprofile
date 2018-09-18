@@ -41,7 +41,7 @@ is-command() {
 typeset -gU cdpath fpath mailpath path
 
 # All of our executables
-add-path "$HOME/.dotbin"
+add-path "$HOME/.bin"
 
 # Cache the current OS
 export OS="$(os)"

@@ -12,7 +12,7 @@
     "breadcrumbs.enabled": true,
     "editor.wordWrap": "off",
     "editor.minimap.enabled": false,
-    "lldb.executable": "~/.dotbin/syslldb",
+    "lldb.executable": "~/.bin/syslldb",
     "prettier.singleQuote": true,
     "prettier.trailingComma": "all",
     "search.useRipgrep": true,
