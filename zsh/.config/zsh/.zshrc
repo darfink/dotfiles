@@ -11,7 +11,7 @@ done
 compdef _gnu_generic \
   df cat tr nl curl mv file head paste tail fzf \
   touch wc shred htop make whois recode compare tac \
-  emacsclient emacs rustc fd colorls
+  emacsclient emacs rustc fd colorls alacritty
 
 # Load the NodeJS version manager (NVM)
 [ -s "$HOME/.nvm/nvm.sh" ] && source "$HOME/.nvm/nvm.sh"
