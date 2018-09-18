@@ -106,3 +106,13 @@ trimaudio() {
   sox "$1" "temp.$ext" silence 1 0.1 0.1% reverse silence 1 0.1 0.1% reverse
   mv "temp.$ext" "$1"
 }
+
+# Macro for pager aliases
+aliasp() {
+  local name="$1"
+  shift
+  eval ""$name"() {
+    $@ \$@ | $PAGER -F
+  }"
+  compdef $name=$1
+}
