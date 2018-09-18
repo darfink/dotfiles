@@ -73,8 +73,10 @@ if is-command exa; then
   alias lr='ls -lR'            # Lists directory contents recursively.
   alias lt='ls -T'             # Lists directory contents in a tree view.
   alias la='ls -a'             # Lists all files (including hidden).
+  alias lal='ls -la'           # Lists all files in long format (including hidden).
   alias lx='ls -l -sextension' # Lists sorted by extension.
-  alias lc='colorls --sd'      # Lists using 'colorls'
+  alias lsdot='ls -ld .?*'     # Lists only hidden files.
+  alias lc='colorls --sd'      # Lists using 'colorls'.
 fi
 
 ###############################################################################
