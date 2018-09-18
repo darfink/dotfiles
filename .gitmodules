@@ -7,3 +7,6 @@
 [submodule "zprezto"]
 	path = zsh/.config/zsh/.zprezto
 	url = git://github.com/sorin-ionescu/prezto.git
+[submodule "gdashboard"]
+	path = gdb
+	url = git://github.com/cyrus-and/gdb-dashboard.git
