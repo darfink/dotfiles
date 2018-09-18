@@ -1,27 +1,30 @@
 # Darfink's dotfiles
 
-![Screenshot of my shell prompt](http://i.imgur.com/EkEtphC.png)
+These are my dotfiles; to get started run
 
-## Why these dotfiles?
-
-**They are my ultimate configuration for all desktops**
-
-  * They are awesome
-
-## Installation
-
-To awesomify your machine, run this:
-
-```bash
-bash -c "$(curl https://raw.githubusercontent.com/darfink/dotfiles/master/install.sh)"
+```sh
+git clone --recurse-submodules git://github.com/darfink/dotfiles.git ~/.dotfiles
 ```
 
-The script will guide you through the entire installation process. It was crafted with the intention of being entirely automatic. That means no other configuration or installation is required after the script is finished.
+Ensure that GNU [stow](https://www.gnu.org/software/stow/) is installed and
+change directory to `~/.dotfiles`.
 
-### Upgrading
+Once you are in the right place, run `stow <package>` to setup a configuration.
 
-Upgrading is easy as a slice of pie.
+## Packages
 
-```bash
-dotfiles update
-```
+These are the available package configurations:
+
+- `alacritty` - terminal settings.
+- `dotbin` - utilities and tools.
+- `emacs` - spacemacs setup.
+- `gdb` - [GDB dashboard](https://github.com/cyrus-and/gdb-dashboard).
+- `generic` - config for curl/dig/dircolors/readline.
+- `git` - config and aliases.
+- `python`
+- `ruby`
+- `ssh`
+- `tmux`
+- `vim`
+- `vscode`
+- `zsh`
