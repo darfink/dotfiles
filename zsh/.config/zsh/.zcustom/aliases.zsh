@@ -5,7 +5,6 @@ alias ....='cd ../../..'
 alias .....='cd ../../../..'
 alias ~='cd ~'
 alias -- -='cd -'
-alias www='cd /var/www'
 
 # Shortcuts
 alias dl='cd ~/Downloads'
