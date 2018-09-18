@@ -17,9 +17,9 @@ emacs/*/swank/
 emacs/*/elpa/
 emacs/*/emms/
 
-# Fish shell
-generated_completions/
-fish_history
+# Zsh shell
+.zhistory
+.zcompdump*
 
 # Python generated files
 pip/*/cache/

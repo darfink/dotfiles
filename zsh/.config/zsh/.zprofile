@@ -2,6 +2,21 @@
 # Vital functions
 ###############################################################################
 
+# Returns the operating system
+function os() {
+  uname="$(uname -s)"
+
+  if [[ "$uname" == "Darwin" ]]; then
+    echo "osx"
+  elif [[ "$(expr substr "$uname" 1 5)" == "Linux" ]]; then
+    echo "linux"
+  elif [[ "$(expr substr "$uname" 1 10)" == "MINGW32_NT" ]]; then
+    echo "cygwin"
+  else
+    exit 1
+  fi
+}
+
 # Adds a path if it exists and is valid
 add-path() {
   if [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then

@@ -87,6 +87,7 @@ pinentry-mac
 
 # Commonly used binaries
 bat
+exa
 fd
 fzf
 ghostscript

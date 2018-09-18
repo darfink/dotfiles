@@ -5,7 +5,7 @@ compute() {
 
 if is-command rg; then
   rgl() {
-    rg -n --color=always $1 | less
+    rg -n --color=always $@ | less
   }
 fi
 

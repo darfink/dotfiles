@@ -13,22 +13,6 @@ alias dt='cd ~/Desktop'
 alias pj='cd ~/Projects'
 alias h='history'
 
-# Different “ls” aliases
-alias l='ls -lF'
-alias la='ls -lAF'
-alias lr='ls -tRF'
-alias lt='ls -ltF'
-alias lsd='ls -lF | grep --color=never "^d"'
-alias ldot='ls -ld .*'
-alias lS='ls -1FSsh'
-alias lart='ls -1Fcart'
-alias lrt='ls -1Fcrt'
-alias lc='colorls --sd'
-
-if is-command prettier; then
-  alias prettier='prettier --single-quote --trailing-comma all'
-fi
-
 # Safer GNU tools
 alias chown='chown --preserve-root'
 alias chmod='chmod --preserve-root'
@@ -59,20 +43,13 @@ alias c='tr -d "\n" | pbcopy'
 alias p='pbpaste'
 alias preview="fzf --preview 'if isutf8 {}; then bat --color always {}; else file -b {}; fi'"
 
-if is-command jq; then
-  alias jql='jq -C . | less'
-fi
+if is-command bat; then; alias cat='bat'; fi
+if is-command grunt; then; alias grunt='grunt --stack'; fi
+if is-command gopass; then; alias pass='gopass'; fi
+if is-command jq; then; alias jql='jq -C . | less'; fi
 
-if is-command bat; then
-  alias cat='bat'
-fi
-
-if is-command grunt; then
-  alias grunt='grunt --stack'
-fi
-
-if is-command gopass; then
-  alias pass='gopass'
+if is-command prettier; then
+  alias prettier='prettier --single-quote --trailing-comma all'
 fi
 
 if is-command tree; then
@@ -84,6 +61,20 @@ if is-command patool; then
   alias pac='patool --verbose create'
   alias pae='patool extract'
   alias pal='patool list'
+fi
+
+if is-command exa; then
+  unalias ll lm lk lc lu
+
+  # Different “exa” aliases
+  alias ls='exa --group-directories-first --git'
+  alias l='ls -a1'             # Lists in one column, hidden files.
+  alias ll='ls -l'             # Lists in long format.
+  alias lr='ls -lR'            # Lists directory contents recursively.
+  alias lt='ls -T'             # Lists directory contents in a tree view.
+  alias la='ls -a'             # Lists all files (including hidden).
+  alias lx='ls -l -sextension' # Lists sorted by extension.
+  alias lc='colorls --sd'      # Lists using 'colorls'
 fi
 
 ###############################################################################

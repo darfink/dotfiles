@@ -32,6 +32,12 @@ zstyle ':prezto:load' pmodule \
   'prompt'
 
 ###############################################################################
+# Autosuggestions
+###############################################################################
+
+zstyle ':prezto:module:autosuggestions:color' found 'fg=10'
+
+###############################################################################
 # Editor
 ###############################################################################
 
@@ -89,7 +95,6 @@ zstyle ':prezto:module:syntax-highlighting' highlighters \
   'main' \
   'brackets' \
   'pattern' \
-  'cursor' \
   'root'
 
 # Set syntax highlighting styles.
