@@ -112,7 +112,7 @@ case "$OS" in
   fi
   ;;
 'linux')
-  alias open = 'xdg-open'
+  alias open='xdg-open'
 
   if is-command apt-get; then
     alias pmi='sudo apt-get install'
