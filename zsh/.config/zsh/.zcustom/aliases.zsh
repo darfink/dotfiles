@@ -102,6 +102,7 @@ case "$OS" in
   fi
 
   if is-command brew; then
+    alias pma='brew tap'
     alias pmi='brew install'
     alias pmx='brew uninstall'
     alias pmu='brew update'
@@ -115,6 +116,7 @@ case "$OS" in
   alias open='xdg-open'
 
   if is-command apt-get; then
+    alias pma='sudo add-apt-repository'
     alias pmi='sudo apt-get install'
     alias pmx='sudo apt-get remove'
     alias pmu='sudo apt-get update'
