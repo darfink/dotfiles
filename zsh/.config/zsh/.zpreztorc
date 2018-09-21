@@ -76,7 +76,7 @@ zstyle ':prezto:module:git:status:ignore' submodules 'all'
 ###############################################################################
 
 # Use the 'sorin' theme by default
-zstyle ':prezto:module:prompt' theme 'sorin'
+zstyle ':prezto:module:prompt' theme 'powerline-darfink'
 
 ###############################################################################
 # Ruby
