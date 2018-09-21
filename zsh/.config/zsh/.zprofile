@@ -115,6 +115,9 @@ export EDITOR='vim'
 export GIT_EDITOR="$EDITOR -f"
 export VISUAL="$EDITOR"
 
+# Disable virtualenv prefix
+export VIRTUAL_ENV_DISABLE_PROMPT=1
+
 # Use human friendly size format (e.g 1024MB)
 export BLOCK_SIZE='human-readable'
 
