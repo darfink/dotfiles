@@ -65,6 +65,7 @@
     "workbench.colorTheme": "Braver's Solarized Light",
     "workbench.iconTheme": "material-icon-theme",
     "terminal.integrated.macOptionIsMeta": true,
+    "terminal.integrated.fontFamily": "Hack Nerd Font",
     "terminal.external.osxExec": "iTerm.app",
     "files.exclude": {
         "**/.git": true,
