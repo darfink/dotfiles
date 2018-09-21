@@ -53,6 +53,8 @@
   added = yellow
   changed = green
   untracked = cyan
+  branch = magenta
+  nobranch = red
 
 [diff]
 
