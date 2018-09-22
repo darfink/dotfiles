@@ -3,7 +3,7 @@
 ###############################################################################
 
 # Returns the operating system
-function os() {
+os() {
   uname="$(uname -s)"
 
   if [[ "$uname" == "Darwin" ]]; then

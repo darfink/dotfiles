@@ -7,5 +7,9 @@ bindkey -s '\el' '^Uls^M'
 # Alt+.: insert last argument of previous command
 bindkey '\e.' insert-last-word
 
-# Mimic the bash behavior
+# Ctrl+r: search history
 bindkey '^R' history-incremental-search-backward
+
+# Ctrl+Alt+e: expand aliases
+zle -N expand-aliases
+bindkey '\e^E' expand-aliases

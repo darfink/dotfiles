@@ -116,3 +116,12 @@ aliasp() {
   }"
   compdef $name=$1
 }
+
+# Expands an alias recursively
+expand-aliases() {
+  unset 'functions[_expand-aliases]'
+  functions[_expand-aliases]=$BUFFER
+  (($+functions[_expand-aliases])) &&
+    BUFFER=${functions[_expand-aliases]#$'\t'} &&
+    CURSOR=$#BUFFER
+}
