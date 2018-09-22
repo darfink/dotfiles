@@ -72,6 +72,7 @@ function prompt_pd_async_callback {
     prompt_pd_async_git)
       # We can safely split on ':' because it isn't allowed in ref names.
       IFS=':' read _git_target _git_post_target <<<"$3"
+      IFS='~' read _git_action _git_meta <<<"$_git_post_target"
 
       # The target actually contains 3 space separated possibilities, so we need to
       # make sure we grab the first one.
@@ -81,11 +82,13 @@ function prompt_pd_async_callback {
         # No git target detected, flush the git fragment and redisplay the prompt.
         if [[ -n "$_prompt_pd_git" ]]; then
           _prompt_pd_git=''
+          _prompt_pd_git_meta=''
           zle && zle reset-prompt
         fi
       else
         # Git target detected, update the git fragment and redisplay the prompt.
-        _prompt_pd_git="${_git_target}${_git_post_target}"
+        _prompt_pd_git="${_git_target}${_git_action}"
+        _prompt_pd_git_meta="${_git_meta}"
         zle && zle reset-prompt
       fi
       ;;
@@ -129,6 +132,7 @@ function prompt_pd_precmd {
     local new_git_root="$(git-dir 2> /dev/null)"
     if [[ $new_git_root != $_pd_cur_git_root ]]; then
       _prompt_pd_git=''
+      _prompt_pd_git_meta=''
       _pd_cur_git_root=$new_git_root
     fi
   fi
@@ -158,21 +162,21 @@ function prompt_pd_setup {
 
   # Set git-info parameters.
   zstyle ':prezto:module:git:info' verbose 'yes'
-  zstyle ':prezto:module:git:info:action' format '%F{7}:%f%%B%F{9}%s%f%%b'
-  zstyle ':prezto:module:git:info:added' format ' %%B%F{2}✚%f%%b'
-  zstyle ':prezto:module:git:info:ahead' format ' %%B%F{13}%f%%b'
-  zstyle ':prezto:module:git:info:behind' format ' %%B%F{13}%f%%b'
-  zstyle ':prezto:module:git:info:branch' format ' %%B%F{254}%b%f%%b'
+  zstyle ':prezto:module:git:info:action' format '%F{7}:%f%%B%F{208}%s%f%%b'
+  zstyle ':prezto:module:git:info:added' format ' %%B%F{208}%f%%b'
+  zstyle ':prezto:module:git:info:ahead' format ' %%B%F{123}%f%%b'
+  zstyle ':prezto:module:git:info:behind' format ' %%B%F{123}%f%%b'
+  zstyle ':prezto:module:git:info:branch' format ' %%B%F{white}%b%f%%b'
   zstyle ':prezto:module:git:info:commit' format ' %%B%F{3}%.7c%f%%b'
-  zstyle ':prezto:module:git:info:deleted' format ' %%B%F{1}%f%%b'
-  zstyle ':prezto:module:git:info:modified' format ' %%B%F{118}%f%%b'
-  zstyle ':prezto:module:git:info:position' format ' %%B%F{13}%p%f%%b'
-  zstyle ':prezto:module:git:info:renamed' format ' %%B%F{5}%f%%b'
-  zstyle ':prezto:module:git:info:stashed' format ' %%B%F{6}%f%%b'
+  zstyle ':prezto:module:git:info:deleted' format ' %%B%F{196}%f%%b'
+  zstyle ':prezto:module:git:info:modified' format ' %%B%F{118}%f%%b'
+  zstyle ':prezto:module:git:info:position' format ' %%B%F{122}%p%f%%b'
+  zstyle ':prezto:module:git:info:renamed' format ' %%B%F{203}%f%%b'
+  zstyle ':prezto:module:git:info:stashed' format ' %%B%F{194}%f%%b'
   zstyle ':prezto:module:git:info:unmerged' format ' %%B%F{3}%f%%b'
   zstyle ':prezto:module:git:info:untracked' format ' %%B%F{81}%f%%b'
   zstyle ':prezto:module:git:info:keys' format \
-    'status' '%b %p %c:%s%A%B%S%a%d%m%r%U%u'
+    'status' '%b %p %c:%s~%A%B%a%d%m%r%U%u%S'
 
   # Set up non-zero return value display
   local show_return="✘ "
@@ -185,6 +189,7 @@ function prompt_pd_setup {
   _pd_cur_git_root=''
 
   _prompt_pd_git=''
+  _prompt_pd_git_meta=''
   _prompt_pd_pwd=''
 
   # Left-side prompt
@@ -194,8 +199,9 @@ function prompt_pd_setup {
   RPROMPT+="%(?:: %F{1}${show_return}%f)"                    # Error code
   RPROMPT+='${${TERM_PROGRAM:#^vscode}:+" %B%F{blue}﬏%f%b"}' # Inside VS Code
   RPROMPT+='${VIM:+" %B%F{28}%f%b"}'                        # Inside Vim
-  RPROMPT+='%(1j: %F{cyan}:)'                               # Background job
+  RPROMPT+='%(1j: %F{cyan}:)'                               # Background job
   RPROMPT+='${editor_info[keymap]}'                          # Editor mode
+  RPROMPT+='${(e)_prompt_pd_git_meta}'
 
   # Correction prompt
   SPROMPT='zsh: correct %F{1}%R%f to %F{2}%r%f [nyae]? '
