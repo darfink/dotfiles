@@ -122,6 +122,12 @@ export VIRTUAL_ENV_DISABLE_PROMPT=1
 export BLOCK_SIZE='human-readable'
 
 if [ $OS = 'osx' ]; then
+  if is-command gpg-agent; then
+    # Use terminal prompt for GPG in TTY
+    export PINENTRY_USER_DATA="USE_CURSES=1"
+    export GPG_TTY=$(tty)
+  fi
+
   if is-command brew; then
     # We want to use the GNU man & info pages
     export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
