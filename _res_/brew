@@ -82,7 +82,6 @@ sqlite
 
 # GnuPG
 gnupg
-gpg-agent
 pinentry-mac
 
 # Commonly used binaries
