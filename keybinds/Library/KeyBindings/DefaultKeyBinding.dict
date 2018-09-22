@@ -1,0 +1,31 @@
+{
+    "~ "      = ("insertText:", " ");            /* M-space */
+    "~f"      = "moveWordForward:";              /* M-f */
+    "~b"      = "moveWordBackward:";             /* M-b */
+    "~<"      = "moveToBeginningOfDocument:";    /* M-< */
+    "~>"      = "moveToEndOfDocument:";          /* M-> */
+    "~v"      = "pageUp:";                       /* M-v */
+    "^v"      = "pageDown:";                     /* C-v */
+    "^u"      = "deleteToBeginningOfLine:";      /* C-u */
+    "^k"      = "deleteToEndOfLine:";            /* C-k */
+    "~d"      = "deleteWordForward:";            /* M-d */
+    "^w"      = "deleteWordBackward:";           /* C-w */
+    "~\010"   = "deleteWordBackward:";           /* M-backspace */
+    "\UF729"  = "moveToBeginningOfDocument:";    /* home */
+    "\UF72B"  = "moveToEndOfDocument:";          /* end */
+    "@\UF729" = "moveToBeginningOfParagraph:";   /* A-home */
+    "@\UF72B" = "moveToEndOfParagraph:";         /* A-end */
+    "@\UF700" = "moveToBeginningOfDocument:";    /* A-up */
+    "@\UF701" = "moveToEndOfDocument:";          /* A-down */
+    "^\UF700" = "pageUp:";                       /* C-up */
+    "^\UF701" = "pageDown:";                     /* C-down */
+    "^/"      = "undo:";                         /* C-/ */
+    "~c"      = "capitalizeWord:";               /* M-c */
+    "~u"      = "uppercaseWord:";                /* M-u */
+    "~l"      = "lowercaseWord:";                /* M-l */
+    "^t"      = "transpose:";                    /* C-t */
+    "~t"      = "transposeWords:";               /* M-t */
+    "^g"      = "_cancelKey:";                   /* C-g */
+    "^a"      = "moveToBeginningOfLine:";        /* C-a */
+    "^e"      = "moveToEndOfLine:";              /* C-e */
+}
