@@ -1,6 +1,5 @@
 eslint
 gitjk
-grunt-cli
 http-server
 jshint
 jsonlint
@@ -8,4 +7,3 @@ less
 prettier
 tern
 tldr
-uglify-js
