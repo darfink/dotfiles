@@ -3,7 +3,7 @@
 	url = git://github.com/syl20bnr/spacemacs.git
 [submodule "tpm"]
 	path = tmux/.tmux/plugins/tpm
-	url = git@github.com:tmux-plugins/tpm.git
+	url = git://github.com/tmux-plugins/tpm.git
 [submodule "zprezto"]
 	path = zsh/.config/zsh/.zprezto
 	url = git://github.com/sorin-ionescu/prezto.git
