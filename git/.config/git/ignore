@@ -27,7 +27,6 @@ Thumbs.db
 !*.swf
 .netrwhist
 .agignore
-.vimrc
 .#*
 
 # Visual Studio Code - https://code.visualstudio.com/
