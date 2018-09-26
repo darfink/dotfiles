@@ -28,3 +28,19 @@ These are the available package configurations:
 - `vim`
 - `vscode`
 - `zsh`
+
+## Operating system
+
+### macOS
+
+Ensure you add `zsh` as the default shell, by adding it to `/etc/shells` and
+executing `chsh -s /usr/local/bin/zsh`.
+
+The `path_helper` utility is also troublesome, change `/etc/zprofile` to:
+
+```sh
+# system-wide environment settings for zsh(1)
+if [[ -x /usr/libexec/path_helper && $SHLVL -eq 1 ]]; then
+	eval `/usr/libexec/path_helper -s`
+fi
+```
