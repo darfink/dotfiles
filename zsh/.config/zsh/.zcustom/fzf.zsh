@@ -107,7 +107,7 @@ bindkey '^R' fzf-history-widget
 fzf-jump-widget() {
   local selected dir
   setopt localoptions noglobsubst noposixbuiltins pipefail 2> /dev/null
-  selected=( $(fasd -sR |
+  selected=( $(fasd -sdR |
     FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} $FZF_DEFAULT_OPTS -n2..,.. --tiebreak=index --reverse --query=${(qqq)LBUFFER} +m" $(__fzfcmd)) )
   local ret=$?
   if [[ -z "$selected" ]]; then
