@@ -17,9 +17,16 @@ emacs/*/swank/
 emacs/*/elpa/
 emacs/*/emms/
 
+# GnuPG generated files
+gpg/*/trustdb.gpg
+
 # Zsh shell
 .zhistory
 .zcompdump*
+
+# Tmux files
+tmux/*/plugins
+!tmux/*/plugins/tpm
 
 # Python generated files
 pip/*/cache/
