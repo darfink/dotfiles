@@ -92,7 +92,7 @@ ram() {
 
 # Converts a text to an image
 text2img() {
-  echo -n "$@" | convert -size 400x -background black -gravity center -border 30 -bordercolor "#000" -pointsize 50 -font GillSansB -fill red caption:@- png:- | impbcopy -
+  echo -n "$@" | convert -size 400x -background black -gravity center -border 30 -bordercolor "#000" -pointsize 50 -font Arial -fill red caption:@- png:- | impbcopy -
 }
 
 # Creates a new tmux session
