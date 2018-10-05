@@ -1,3 +1,4 @@
 flake8
 patool
 pygments
+https://github.com/hay/xml2json/zipball/master
