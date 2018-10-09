@@ -125,8 +125,10 @@ zstyle ':prezto:module:terminal:window-title' format '%n @ %s'
 # Tmux
 ###############################################################################
 
-# Auto start a session when Zsh is launched in a local terminal.
-zstyle ':prezto:module:tmux:auto-start' local 'yes'
+if [[ $TERM_PROGRAM != "vscode" ]]; then
+  # Auto start a session when Zsh is launched in a local terminal.
+  zstyle ':prezto:module:tmux:auto-start' local 'yes'
+fi
 
 # Auto start a session when Zsh is launched in a SSH connection.
 # zstyle ':prezto:module:tmux:auto-start' remote 'yes'
