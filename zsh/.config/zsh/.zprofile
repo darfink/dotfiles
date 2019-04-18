@@ -78,6 +78,10 @@ if is-command python3; then
   add-path "$(python3 -m site --user-base)/bin"
 fi
 
+if is-command go; then
+  add-path "$HOME/go/bin"
+fi
+
 if [ -n "$CARGO_HOME" ]; then
   add-path "$CARGO_HOME/bin"
 else
