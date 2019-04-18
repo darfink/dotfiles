@@ -82,6 +82,10 @@ if is-command go; then
   add-path "$HOME/go/bin"
 fi
 
+if is-command dotnet; then
+  add-path "$HOME/.dotnet/tools"
+fi
+
 if [ -n "$CARGO_HOME" ]; then
   add-path "$CARGO_HOME/bin"
 else
