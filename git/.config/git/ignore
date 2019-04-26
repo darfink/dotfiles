@@ -34,6 +34,7 @@ Thumbs.db
 .vscode/
 
 npm-debug.log
+node_modules/
 
 # Common name for ctags
 .tags
