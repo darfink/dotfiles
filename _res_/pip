@@ -1,4 +1,5 @@
 flake8
+https://github.com/hay/xml2json/zipball/master
 patool
 pygments
-https://github.com/hay/xml2json/zipball/master
+speedtest-cli
