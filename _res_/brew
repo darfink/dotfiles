@@ -1,56 +1,57 @@
 # Install GNU core utilities (those that come with OS X are outdated)
+binutils
 coreutils
 diffutils
-binutils
 
 # Install some other useful utilities
-moreutils --without-parallel
-uchardet
-dockutil
-gifify
-fasd
-htop
-tmux
-icdiff
-diff-so-fancy
-dos2unix
-httpie
-sox --with-lame
-duti
-zsh
-bash
-gzip
-cmatrix
-shellcheck
-editorconfig
 ascii
+bash
+cmatrix
+diff-so-fancy
+dockutil
+dos2unix
+duti
+editorconfig
+fasd
+gifify
+gzip
+htop
+httpie
+icdiff
 jq
+moreutils --without-parallel
+shellcheck
+sox --with-lame
+telnet
+tmux
+uchardet
+zsh
 
 # Install GNU `find`, `locate`, `updatedb`, `xargs` etc
+ed --with-default-names
 findutils --with-default-names
+gawk
 gnu-indent --with-default-names
-gnu-which --with-default-names
-gnu-tar --with-default-names
 gnu-sed --with-default-names
+gnu-tar --with-default-names
+gnu-which --with-default-names
 gnutls
 grep --with-default-names
-ed --with-default-names
-wdiff --with-gettext
-wget
 parallel
 watch
-gawk
+wdiff --with-gettext
+wget
 
 # OS X outdated tools
-git
 file-formula
+git
+gpatch
+less
+lesspipe
+nano
 openssh
 rsync
-gpatch
-nano
-less
 source-highlight
-lesspipe
 
 # Image optimization software
 gifsicle
@@ -64,21 +65,21 @@ ruby
 
 # Awesomest editor (Vim)
 cscope
+emacs-plus
 luajit
 vim --with-luajit --with-override-system-vim
-emacs-plus
 
 # Tools for development
-node
-yarn
-sassc
-recode
-fcrackzip
 dnsmasq
+fcrackzip
 nmap
+node
 pngcheck
-xz
+recode
+sassc
 sqlite
+xz
+yarn
 
 # GnuPG
 gnupg
@@ -86,6 +87,7 @@ pinentry-mac
 
 # Commonly used binaries
 bat
+lsusb
 exa
 fd
 fzf
@@ -105,3 +107,4 @@ tree
 webkit2png
 youtube-dl
 zopfli
+dhex
