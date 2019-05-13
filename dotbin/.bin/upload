@@ -2,20 +2,29 @@
 
 # Upload a local file
 
-if [ $# -ne 1 ]; then
-  echo 'Usage: `upload <file>`'
-  exit 1
+URL="https://file.io"
+DEFAULT_EXPIRE="14d" # Default to 14 days
+
+if [ $# -eq 0 ]; then
+    echo "Usage: upload <file> [DURATION]\n"
+    exit 1
 fi
 
-# Use temporary file because of progress bar
-tmpfile="$(mktemp -t transferXXX)"
+FILE=$1
+EXPIRE=${2:-$DEFAULT_EXPIRE}
 
-if tty -s; then
-  basefile="$(basename "$1" | sed -e 's/[^a-zA-Z0-9._-]/-/g')"
-  curl --progress-bar --upload-file "$1" "https://transfer.sh/$basefile" >> $tmpfile
-else
-  curl --progress-bar --upload-file "-" "https://transfer.sh/$1"
+if [ ! -f "$FILE" ]; then
+    echo "File ${FILE} not found"
+    exit 1
 fi
 
-cat $tmpfile
-rm -f $tmpfile
+RESPONSE=$(curl -# -F "file=@${FILE}" "${URL}/?expires=${EXPIRE}")
+RETURN=$(echo "$RESPONSE" | php -r 'echo json_decode(fgets(STDIN))->success;')
+
+if [ "1" != "$RETURN" ]; then
+    echo "An error occured!\nResponse: ${RESPONSE}"
+    exit 1
+fi
+
+KEY=$(echo "$RESPONSE" | php -r 'echo json_decode(fgets(STDIN))->key;')
+echo "${URL}/${KEY}"  # to terminal
