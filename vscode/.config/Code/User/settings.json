@@ -5,7 +5,7 @@
     "code-runner.ignoreSelection": true,
     "debug.internalConsoleOptions": "neverOpen",
     "debug.openDebug": "openOnDebugBreak",
-    "editor.codeLens": true,
+    "editor.codeLens": false,
     "editor.cursorBlinking": "solid",
     "editor.folding": false,
     "editor.fontFamily": "Operator Mono, Menlo, Monaco, 'Courier New', monospace",
