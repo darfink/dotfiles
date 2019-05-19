@@ -33,6 +33,8 @@
         "**/.vscode": true,
         "**/CVS": true,
         "**/obj/": true,
+        "**/bin/": true,
+        "**/*.xsd": true,
         "StyleCop.Cache": true,
         "dist/": true,
         "node_modules/": true
