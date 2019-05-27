@@ -87,13 +87,14 @@ pinentry-mac
 
 # Commonly used binaries
 bat
-lsusb
-exa
+dhex
 fd
 fzf
 ghostscript
 gopass
 imagemagick
+lsd
+lsusb
 p7zip
 par
 pigz
@@ -107,4 +108,3 @@ tree
 webkit2png
 youtube-dl
 zopfli
-dhex
