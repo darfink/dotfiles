@@ -450,14 +450,13 @@ key_bindings:
   - { key: Key2,      mods: Alt,       chars: "\x40"                        }
   - { key: Key3,      mods: Alt,       chars: "\xa3"                        }
   - { key: Key4,      mods: Alt,       chars: "\x24"                        }
-  - { key: Key5,      mods: Alt,       chars: "\x1b5"                       }
-  - { key: Key6,      mods: Alt,       chars: "\x1b6"                       }
+  - { key: Key5,      mods: Alt,       chars: "∞"                           }
+  - { key: Key6,      mods: Alt,       chars: "§"                           }
   - { key: Key7,      mods: Alt,       chars: "\x1b7"                       }
   - { key: Key8,      mods: Alt,       chars: "\x1b8"                       }
   - { key: Key9,      mods: Alt,       chars: "\x1b9"                       }
   - { key: Key0,      mods: Alt,       chars: "\x1b0"                       }
   - { key: Space,     mods: Control,   chars: "\x00"                        } # Ctrl + Space
-  - { key: Grave,     mods: Alt,       chars: "\x1b`"                       } # Alt + `
   - { key: Grave,     mods: Alt|Shift, chars: "\x1b~"                       } # Alt + ~
   - { key: Period,    mods: Alt,       chars: "\x1b."                       } # Alt + .
   - { key: Key3,      mods: Alt|Shift, chars: "\x1b#"                       } # Alt + #
@@ -467,5 +466,10 @@ key_bindings:
   - { key: Minus,     mods: Alt|Shift, chars: "\x1b_"                       } # Alt + _
   - { key: Key5,      mods: Alt|Shift, chars: "\x1b%"                       } # Alt + %
   - { key: Key6,      mods: Alt|Shift, chars: "\x1b^"                       } # Alt + ^
-  - { key: Backslash, mods: Alt,       chars: "\x1b\\"                      } # Alt + \
-  - { key: Backslash, mods: Alt|Shift, chars: "\x1b|"                       } # Alt + |
+  - { key: Backslash, mods: Alt,       chars: "|"                           }
+  - { key: Backslash, mods: Alt|Shift, chars: "\\"                          }
+  - { key: LBracket,  mods: Alt,       chars: "["                           }
+  - { key: 25,        mods: Alt,       chars: "]"                           }
+  - { key: LBracket,  mods: Alt|Shift, chars: "{"                           }
+  - { key: RBracket,  mods: Alt|Shift, chars: "}"                           }
+  - { key: Grave,     mods: Alt,       chars: "~"                           }
