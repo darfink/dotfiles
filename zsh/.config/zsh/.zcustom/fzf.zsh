@@ -122,7 +122,7 @@ fzf-history-widget() {
 zle     -N   fzf-history-widget
 bindkey '^R' fzf-history-widget
 
-# ALT-J - Change directory with autojump
+# ALT-j - Change directory with autojump
 fzf-jump-widget() {
   local selected dir
   setopt localoptions noglobsubst noposixbuiltins pipefail 2> /dev/null
@@ -144,5 +144,17 @@ fzf-jump-widget() {
 
 zle     -N    fzf-jump-widget
 bindkey '\ej' fzf-jump-widget
+
+# ALT-J - Select a file using fasd
+fzf-jump-file-widget() {
+  local cmd="fasd -lfR"
+  LBUFFER="${LBUFFER}$(__fsel)"
+  local ret=$?
+  zle redisplay
+  typeset -f zle-line-init >/dev/null && zle zle-line-init
+  return $ret
+}
+zle     -N    fzf-jump-file-widget
+bindkey '\eJ' fzf-jump-file-widget
 
 fi
