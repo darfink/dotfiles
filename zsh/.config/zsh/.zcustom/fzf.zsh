@@ -2,7 +2,7 @@
 # ------------
 if [[ $- == *i* ]]; then
 
-# CTRL-T - Paste the selected file path(s) into the command line
+# ALT-t - Paste the selected file path(s) into the command line
 __fsel() {
   setopt localoptions pipefail 2> /dev/null
   eval "$cmd" | FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} --reverse $FZF_DEFAULT_OPTS $FZF_CTRL_T_OPTS" $(__fzfcmd) -m "$@" | while read item; do
@@ -34,9 +34,9 @@ fzf-file-widget() {
   return $ret
 }
 zle     -N   fzf-file-widget
-bindkey '^T' fzf-file-widget
+bindkey '\et' fzf-file-widget
 
-# CTRL-ALT-T - Paste the selected file path(s) into the command line (including hidden)
+# ALT-T - Paste the selected file path(s) into the command line (including hidden)
 fzf-file-all-widget() {
   local cmd="$FZF_CTRL_T_COMMAND -H"
   LBUFFER="${LBUFFER}$(__fsel)"
@@ -45,8 +45,8 @@ fzf-file-all-widget() {
   typeset -f zle-line-init >/dev/null && zle zle-line-init
   return $ret
 }
-zle     -N     fzf-file-all-widget
-bindkey '\e^T' fzf-file-all-widget
+zle     -N    fzf-file-all-widget
+bindkey '\eT' fzf-file-all-widget
 
 # Ensure precmds are run after cd
 fzf-redraw-prompt() {
