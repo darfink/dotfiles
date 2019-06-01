@@ -75,7 +75,7 @@ zstyle ':prezto:module:git:status:ignore' submodules 'all'
 # Prompt
 ###############################################################################
 
-# Use the 'sorin' theme by default
+# Use the 'darfink' theme by default
 zstyle ':prezto:module:prompt' theme 'powerline-darfink'
 
 ###############################################################################
@@ -95,6 +95,7 @@ zstyle ':prezto:module:syntax-highlighting' highlighters \
   'main' \
   'brackets' \
   'pattern' \
+  'line' \
   'root'
 
 # Set syntax highlighting styles.
