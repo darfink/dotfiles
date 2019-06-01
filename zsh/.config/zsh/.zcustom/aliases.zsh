@@ -66,7 +66,7 @@ if is-command lsd; then
   unalias ll lm lk lc lu
 
   # Different “lsd” aliases
-  alias ls='lsd --group-dirs first'
+  alias ls='lsd --group-dirs=first'
   alias l='ls -a1'             # Lists in one column, hidden files.
   alias ll='ls -l'             # Lists in long format.
   alias lr='ls -lR'            # Lists directory contents recursively.
