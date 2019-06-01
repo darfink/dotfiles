@@ -104,7 +104,7 @@ if is-command fzf; then
     export FZF_DEFAULT_COMMAND="fd --type f"
   fi
 
-  export FZF_DEFAULT_OPTS="--bind ctrl-k:kill-line --bind alt-enter:select-all+accept"
+  export FZF_DEFAULT_OPTS="--bind 'ctrl-k:kill-line,alt-enter:select-all+accept,ctrl-y:execute-silent(echo -n \$(pwd)/{} | pbcopy)'"
   export FZF_CTRL_R_OPTS="--reverse"
 fi
 

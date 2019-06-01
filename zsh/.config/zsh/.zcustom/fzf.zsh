@@ -58,7 +58,7 @@ fzf-redraw-prompt() {
 }
 zle -N fzf-redraw-prompt
 
-# ALT-C - cd into the selected directory
+# ALT-c - cd into the selected directory
 fzf-cd-widget() {
   local cmd="${FZF_ALT_C_COMMAND:-"command find -L . -mindepth 1 \\( -path '*/\\.*' -o -fstype 'sysfs' -o -fstype 'devfs' -o -fstype 'devtmpfs' -o -fstype 'proc' \\) -prune \
     -o -type d -print 2> /dev/null | cut -b3-"}"
@@ -77,7 +77,7 @@ fzf-cd-widget() {
 zle     -N    fzf-cd-widget
 bindkey '\ec' fzf-cd-widget
 
-# CTRL-ALT-C - cd into the selected directory (including hidden)
+# ALT-C - cd into the selected directory (including hidden)
 fzf-cd-all-widget() {
   local cmd="$FZF_ALT_C_COMMAND -H"
   setopt localoptions pipefail 2> /dev/null
