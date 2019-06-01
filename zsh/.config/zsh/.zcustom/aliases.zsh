@@ -71,6 +71,7 @@ if is-command lsd; then
   alias ll='ls -l'             # Lists in long format.
   alias lr='ls -lR'            # Lists directory contents recursively.
   alias lt='ls --tree'         # Lists directory contents in a tree view.
+  alias lta='lt -a'            # Lists directory contents in a tree view (including hidden).
   alias la='ls -a'             # Lists all files (including hidden).
   alias lal='ls -la'           # Lists all files in long format (including hidden).
 fi
