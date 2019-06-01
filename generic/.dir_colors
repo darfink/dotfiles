@@ -205,6 +205,9 @@ EXEC 01;31  # Unix
 .org 32
 .md 32
 .mkd 32
+.json 32
+.ini 32
+.toml 32
 
 # Source text
 .h 32
@@ -214,6 +217,7 @@ EXEC 01;31  # Unix
 .cpp 32
 .cxx 32
 .objc 32
+.cs 32
 .sh 32
 .csh 32
 .zsh 32
@@ -224,20 +228,25 @@ EXEC 01;31  # Unix
 .pm 32
 .py 32
 .rb 32
+.go 32
 .hs 32
 .php 32
 .htm 32
 .html 32
 .shtml 32
 .erb 32
+.rs 32
 .haml 32
 .xml 32
+.csproj 32
+.sln 32
 .rdf 32
 .css 32
 .sass 32
 .scss 32
 .less 32
 .js 32
+.ts 32
 .coffee 32
 .man 32
 .0 32
@@ -251,10 +260,12 @@ EXEC 01;31  # Unix
 .8 32
 .9 32
 .l 32
+.m 32
 .n 32
 .p 32
 .pod 32
 .tex 32
+.proto 32
 
 ### Multimedia formats
 
@@ -336,6 +347,15 @@ EXEC 01;31  # Unix
 .webm 33
 .wmv 33
 
+# Fonts
+.eot 33
+.fnt 33
+.fon 33
+.otf 33
+.ttf 33
+.woff 33
+.woff2 33
+
 ### Misc
 
 # Binary document formats and multimedia source
@@ -350,6 +370,9 @@ EXEC 01;31  # Unix
 .pptx 31
 .fla 31
 .psd 31
+.idb 31
+.dll 31
+.db 31
 
 # Archives, compressed
 .7z   1;35
