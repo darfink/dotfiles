@@ -6,7 +6,7 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
-for file in ${ZDOTDIR:-$HOME}/.zcustom/{bindings,functions,aliases,fzf}.zsh; do
+for file in ${ZDOTDIR:-$HOME}/.zcustom/{bindings,functions,aliases,fzf,fzf_completion}.zsh; do
   [ -s "$file" ] && source "$file"
 done
 
