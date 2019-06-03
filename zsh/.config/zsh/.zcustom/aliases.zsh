@@ -43,17 +43,18 @@ alias p='pbpaste'
 alias preview="fzf --preview 'if isutf8 {}; then bat --color always {}; else file -b {}; fi'"
 
 if is-command bat; then; alias cat='bat'; fi
-if is-command grunt; then; alias grunt='grunt --stack'; fi
 if is-command gopass; then; alias pass='gopass'; fi
-if is-command jq; then; alias jql='jq -C . | less'; fi
+if is-command grunt; then; alias grunt='grunt --stack'; fi
+if is-command rg; then; aliasp rgl rg -n --color=always; fi
+if is-command jq; then; aliasp jql jq -C .; fi
 
 if is-command prettier; then
   alias prettier='prettier --single-quote --trailing-comma all'
 fi
 
 if is-command tree; then
-  alias treel='tree -C | less'
-  alias tre='fd | tree'
+  aliasp treel tree -C
+  alias tre='fd | treel'
 fi
 
 if is-command patool; then
