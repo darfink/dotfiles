@@ -40,7 +40,7 @@ alias gpR='git push-remotes'
 # Easier copy-paste methods
 alias c='tr -d "\n" | pbcopy'
 alias p='pbpaste'
-alias preview="fzf --preview 'if isutf8 {}; then bat --color always {}; else file -b {}; fi'"
+alias preview="fd --color=always | fzf --ansi --preview 'if isutf8 {}; then bat --color always {}; else file -b {}; fi'"
 
 if is-command bat; then; alias cat='bat'; fi
 if is-command gopass; then; alias pass='gopass'; fi
