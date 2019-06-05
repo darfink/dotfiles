@@ -7,6 +7,9 @@ bindkey -s '\el' '^Uls^M'
 # Alt+.: insert last argument of previous command
 bindkey '\e.' insert-last-word
 
+# Ctrl+v: execute 'vim'
+bindkey -s '^v' '^Avim ^M'
+
 # Ctrl+r: search history
 bindkey '^R' history-incremental-search-backward
 
