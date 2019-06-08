@@ -79,7 +79,8 @@ if is-command python3; then
 fi
 
 if is-command go; then
-  add-path "$HOME/go/bin"
+  export GOPATH="$HOME/.go"
+  add-path "$GOPATH/bin"
 fi
 
 if is-command dotnet; then
