@@ -4,3 +4,4 @@ cargo-outdated
 cargo-release
 cargo-tree
 cargo-update
+lscolors

@@ -99,14 +99,11 @@ if is-command rustup && is-command racer; then
 fi
 
 if is-command fzf; then
+  export FZF_DEFAULT_OPTS="--bind 'ctrl-k:kill-line,alt-enter:select-all+accept,ctrl-y:execute-silent(echo -n \$(pwd)/{} | pbcopy),ctrl-v:page-down,alt-v:page-up'"
+
   if is-command fd; then
-    export FZF_ALT_C_COMMAND="fd --type d"
-    export FZF_CTRL_T_COMMAND="fd"
     export FZF_DEFAULT_COMMAND="fd --type f"
   fi
-
-  export FZF_DEFAULT_OPTS="--bind 'ctrl-k:kill-line,alt-enter:select-all+accept,ctrl-y:execute-silent(echo -n \$(pwd)/{} | pbcopy)'"
-  export FZF_CTRL_R_OPTS="--reverse"
 fi
 
 ###############################################################################
