@@ -103,6 +103,7 @@ case "$OS" in
   if is-command brew; then
     alias pma='brew tap'
     alias pmi='brew install'
+    alias pml='brew list'
     alias pmx='brew uninstall'
     alias pmu='brew update'
     alias pmU='brew upgrade'
@@ -117,6 +118,7 @@ case "$OS" in
   if is-command apt-get; then
     alias pma='sudo add-apt-repository'
     alias pmi='sudo apt-get install'
+    alias pml='sudo apt-get list --installed'
     alias pmx='sudo apt-get remove'
     alias pmu='sudo apt-get update'
     alias pmU='sudo apt-get install --only-upgrade'
