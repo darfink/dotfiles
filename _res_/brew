@@ -67,7 +67,7 @@ ruby
 cscope
 emacs-plus
 luajit
-vim --with-luajit --with-override-system-vim
+vim
 
 # Tools for development
 dnsmasq
