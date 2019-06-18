@@ -10,12 +10,6 @@ if is-command fzf; then
   }
 fi
 
-if is-command prettier; then
-  prettdiff() {
-    prettier --single-quote --trailing-comma all $1 | diff --color $1 - | less
-  }
-fi
-
 if is-command cargo; then
   cargo-dockertest() {
     if [ "$#" -lt 1 ]; then
