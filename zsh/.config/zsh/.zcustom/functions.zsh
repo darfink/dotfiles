@@ -10,17 +10,6 @@ if is-command fzf; then
   }
 fi
 
-if is-command cargo; then
-  cargo-dockertest() {
-    if [ "$#" -lt 1 ]; then
-      echo "Usage: cargo-dockertest <docker image> <test flags>"
-      return 1
-    fi
-
-    docker run --dns-opt=single-request -v $PWD:/build_dir -w /build_dir -t $1 cargo test ${@:2}
-  }
-fi
-
 # Count code lines in some directory.
 # $ loc py js css
 # # => Lines of code for .py: 3781
