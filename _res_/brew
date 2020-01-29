@@ -26,6 +26,7 @@ telnet
 tmux
 uchardet
 zsh
+media-info
 
 # Install GNU `find`, `locate`, `updatedb`, `xargs` etc
 ed --with-default-names
