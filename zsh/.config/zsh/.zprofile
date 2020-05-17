@@ -98,6 +98,10 @@ if is-command rustup && is-command racer; then
   export RUST_SRC_PATH="$HOME/.rustup/toolchains/$toolchain/lib/rustlib/src/rust/src"
 fi
 
+if is-command rg; then
+  export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
+fi
+
 if is-command fzf; then
   export FZF_DEFAULT_OPTS="--bind 'ctrl-k:kill-line,alt-enter:select-all+accept,ctrl-y:execute-silent(echo -n \$(pwd)/{} | pbcopy),ctrl-v:page-down,alt-v:page-up'"
 
