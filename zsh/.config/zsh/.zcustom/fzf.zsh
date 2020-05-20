@@ -46,7 +46,7 @@ zle     -N   fzf-file-widget
 bindkey '\et' fzf-file-widget
 
 # ALT-T - Paste the selected file path(s) into the command line (including hidden)
-fzf-file-all-widget() { __fsel "fd --color=always -H" }
+fzf-file-all-widget() { __fsel "fd --color=always -HI" }
 zle     -N    fzf-file-all-widget
 bindkey '\eT' fzf-file-all-widget
 
@@ -61,7 +61,7 @@ zle     -N    fzf-cd-widget
 bindkey '\ec' fzf-cd-widget
 
 # ALT-C - cd into the selected directory (including hidden)
-fzf-cd-all-widget() { __dsel "fd --color=always --type=d -H" }
+fzf-cd-all-widget() { __dsel "fd --color=always --type=d -HI" }
 zle     -N    fzf-cd-all-widget
 bindkey '\eC' fzf-cd-all-widget
 
