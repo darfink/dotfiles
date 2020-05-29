@@ -28,6 +28,8 @@ alias dateutc='date -u +"%Y-%m-%dT%H:%M:%SZ"'
 alias stats='sort | uniq -c | sort -r'
 alias map='xargs -n1'
 alias week='date +%V'
+alias publicip='echo $(curl -s "https://api6.ipify.org")'
+alias privateip='ipconfig getifaddr en0'
 
 # Additional git
 alias git='noglob git'
