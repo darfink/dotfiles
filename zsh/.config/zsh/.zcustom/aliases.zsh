@@ -44,6 +44,9 @@ alias c='tr -d "\n" | pbcopy'
 alias p='pbpaste'
 alias preview="fd --color=always | fzf --ansi --preview 'if isutf8 {}; then bat --color always {}; else file -b {}; fi'"
 
+# Open code with vim
+alias -s {c,cpp,cs,css,java,js,ts,html,py,zsh,rs,xml,md,zprofile,zshrc,yml,lua}=vim
+
 if is-command bat; then; alias cat='bat'; fi
 if is-command gopass; then; alias pass='gopass'; fi
 if is-command grunt; then; alias grunt='grunt --stack'; fi
