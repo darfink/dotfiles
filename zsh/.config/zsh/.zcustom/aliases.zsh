@@ -62,6 +62,10 @@ if is-command tree; then
   alias tre='fd | treel'
 fi
 
+if is-command uni; then
+  alias ucs='uni search'
+fi
+
 if is-command patool; then
   alias pac='patool --verbose create'
   alias pae='patool extract'
