@@ -67,7 +67,7 @@ fi
 
 if is-command ruby && is-command gem; then
   # Add local gem installations to path
-  add-path "$(ruby -rubygems -e 'puts Gem.user_dir')/bin"
+  add-path "$(ruby -e 'puts Gem.user_dir')/bin"
 fi
 
 if is-command python; then
