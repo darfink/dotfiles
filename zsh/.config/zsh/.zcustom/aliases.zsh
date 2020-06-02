@@ -7,6 +7,7 @@ alias ~='cd ~'
 alias -- -='cd -'
 
 # Shortcuts
+alias mkt='cd $(mktemp -d)'
 alias dl='cd ~/Downloads'
 alias dt='cd ~/Desktop'
 alias pj='cd ~/Projects'
