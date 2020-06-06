@@ -102,6 +102,14 @@ if is-command rg; then
   export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
 fi
 
+if is-command sk; then
+  export SKIM_DEFAULT_OPTIONS="--bind 'ctrl-k:kill-line,alt-enter:select-all+accept,ctrl-y:execute-silent[echo -n \$(pwd)/{} | pbcopy],ctrl-v:page-down,alt-v:page-up'"
+
+  if is-command fd; then
+    export SKIM_DEFAULT_COMMAND="fd --type f"
+  fi
+fi
+
 if is-command fzf; then
   export FZF_DEFAULT_OPTS="--bind 'ctrl-k:kill-line,alt-enter:select-all+accept,ctrl-y:execute-silent(echo -n \$(pwd)/{} | pbcopy),ctrl-v:page-down,alt-v:page-up'"
 
