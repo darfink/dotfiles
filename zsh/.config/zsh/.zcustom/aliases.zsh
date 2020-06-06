@@ -41,9 +41,17 @@ alias gpr='git push origin HEAD:refs/for/master'
 alias gpR='git push-remotes'
 
 # Easier copy-paste methods
-alias c='tr -d "\n" | pbcopy'
+alias c='pbcopy'
+alias ci='pngcopy'
+alias copy='pbcopy'
+alias copy-img='pngcopy'
+alias copy-trim='tr -d "\n" | pbcopy'
+
 alias p='pbpaste'
-alias preview="fd --color=always | fzf --ansi --preview 'if isutf8 {}; then bat --color always {}; else file -b {}; fi'"
+alias pi='pngpaste'
+alias paste='pbpaste'
+alias paste-img='pngpaste'
+alias paste-trim='pbpaste | tr -d "\n"'
 
 # Open code with vim
 alias -s {c,cpp,cs,css,java,js,ts,html,py,zsh,rs,xml,md,zprofile,zshrc,yml,lua}=vim
