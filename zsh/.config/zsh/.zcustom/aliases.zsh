@@ -59,8 +59,10 @@ alias -s {c,cpp,cs,css,java,js,ts,html,py,zsh,rs,xml,md,zprofile,zshrc,yml,lua}=
 if is-command bat; then; alias cat='bat'; fi
 if is-command gopass; then; alias pass='gopass'; fi
 if is-command grunt; then; alias grunt='grunt --stack'; fi
-if is-command rg; then; aliasp rgl rg -n --color=always; fi
 if is-command jq; then; aliasp jql jq -C .; fi
+if is-command rg; then; aliasp rgl rg -n --color=always; fi
+if is-command tokei; then; alias loc='tokei'; fi
+if is-command uni; then; alias ucs='uni search'; fi
 
 if is-command prettier; then
   alias prettier='prettier --single-quote --trailing-comma all'
@@ -69,10 +71,6 @@ fi
 if is-command tree; then
   aliasp treel tree -C
   alias tre='fd | treel'
-fi
-
-if is-command uni; then
-  alias ucs='uni search'
 fi
 
 if is-command patool; then

@@ -10,33 +10,6 @@ if is-command fzf; then
   }
 fi
 
-# Count code lines in some directory.
-# $ loc py js css
-# # => Lines of code for .py: 3781
-# # => Lines of code for .js: 3354
-# # => Lines of code for .css: 2970
-# # => Total lines of code: 10105
-loc() {
-  local total=0
-  local lines
-
-  for ext in $@; do
-    local firstletter=$(echo $ext | cut -c1-1)
-
-    if [[ firstletter != "." ]]; then
-      ext=".$ext"
-    fi
-
-    lines=$(find-exec "*$ext" cat | wc -l)
-    lines=${lines// /}
-
-    total=$(($total + $lines))
-    echo "Lines of code for $FG[blue]$ext$FG[none]: $FG[green]$lines$FG[none]"
-  done
-
-  echo "$FG[blue]Total$FG[none] lines of code: $FG[green]$total$FG[none]"
-}
-
 # Create a directory and change into it
 mkd() {
   mkdir -p "$@" && cd "$_"
