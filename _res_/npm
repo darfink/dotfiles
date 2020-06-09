@@ -7,3 +7,5 @@ less
 prettier
 tern
 tldr
+ts-node
+typescript
