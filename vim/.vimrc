@@ -172,6 +172,8 @@ endtry
 highlight ColorColumn ctermbg=Black guibg=#EDE7D5
 let &colorcolumn=join(range(81,999),",")
 
+highlight Normal ctermbg=NONE guibg=NONE
+
 " Extend % operator to HTML tags
 runtime macros/matchit.vim
 
