@@ -16,39 +16,32 @@ endif
 call plug#begin('~/.vim/plugged')
 
 " Additional bundles
-Plug 'mattn/emmet-vim'
-Plug 'justinmk/vim-gtfo'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-vinegar'
-Plug 'tpope/vim-characterize'
-Plug 'bling/vim-airline'
-Plug 'othree/html5.vim'
-Plug 'maxbrunsfeld/vim-emacs-bindings'
-Plug 'junegunn/vim-easy-align'
-Plug 'altercation/vim-colors-solarized'
-Plug 'wellle/targets.vim'
-Plug 'editorconfig/editorconfig-vim'
-Plug 'valloric/MatchTagAlways'
 Plug 'Raimondi/delimitMate'
+Plug 'altercation/vim-colors-solarized'
 Plug 'ap/vim-you-keep-using-that-word'
-Plug 'ntpeters/vim-better-whitespace'
-Plug 'hail2u/vim-css3-syntax', { 'for': 'css' }
-Plug 'groenewege/vim-less', { 'for': 'less' }
-Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
-Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
-Plug 'elzr/vim-json', { 'for': 'json' }
-Plug 'marijnh/tern_for_vim', { 'do': 'npm install' }
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'tacahiroy/ctrlp-funky'
-Plug 'FelikZ/ctrlp-py-matcher'
-Plug 'tommcdo/vim-exchange'
-Plug 'mattn/webapi-vim'
-Plug 'mattn/gist-vim', { 'on': 'Gist' }
-Plug 'scrooloose/syntastic'
-Plug 'darfink/vim-plist'
-Plug 'darfink/starsearch.vim'
+Plug 'bling/vim-airline'
 Plug 'danro/rename.vim'
+Plug 'darfink/starsearch.vim'
+Plug 'darfink/vim-plist'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'elzr/vim-json', { 'for': 'json' }
+Plug 'groenewege/vim-less', { 'for': 'less' }
+Plug 'hail2u/vim-css3-syntax', { 'for': 'css' }
+Plug 'junegunn/vim-easy-align'
+Plug 'justinmk/vim-gtfo'
+Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
+Plug 'maxbrunsfeld/vim-emacs-bindings'
+Plug 'ntpeters/vim-better-whitespace'
+Plug 'othree/html5.vim'
+Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+Plug 'terryma/vim-multiple-cursors'
+Plug 'tommcdo/vim-exchange'
+Plug 'tpope/vim-characterize'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-vinegar'
+Plug 'valloric/MatchTagAlways'
+Plug 'wellle/targets.vim'
 
 call plug#end()
 
@@ -223,9 +216,6 @@ let g:html_indent_inctags = "html,body,head,tbody"
 " http://stackoverflow.com/questions/95072/what-are-your-favorite-vim-tricks/96492#96492
 cmap w!! %!sudo tee > /dev/null %
 
-" AutoComplete (we use neocomplete)
-let g:acp_enableAtStartup = 0
-
 " Syntastic
 let g:syntastic_error_symbol = '✗'
 let g:syntastic_warning_symbol = '⚠'
@@ -255,23 +245,9 @@ let g:plist_json_filetype = 'json'
 let g:plist_display_format = 'xml'
 let g:plist_save_format = ''
 
-" CtrlP
-let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
-let g:ctrlp_clear_cache_on_exit = 0
-let g:ctrlp_use_caching = 0
-let g:ctrlp_working_path_mode = ''
-let g:ctrlp_cmd = 'CtrlPBuffer'
-
 " Airline
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
-
-" JSON
-let g:vim_json_syntax_conceal = 1
-
-" Emmet
-imap <C-X><Space> <Plug>(emmet-expand-abbr)
-imap <C-X><CR> <Plug>(emmet-expand-abbr)<CR><Esc>O
 
 " Netrw
 let g:netrw_altv = 1
@@ -305,15 +281,6 @@ nmap Q :b#<CR>
 " Faster save (and like other editors)
 nnoremap <leader>wa :wa<cr>
 nnoremap <leader>w :w<cr>
-
-" The Silver Searcher
-if executable('ag')
-  " Use ag over grep
-  set grepprg=ag\ --nogroup\ --nocolor
-
-  " Use ag in our file navigation plugins for faster browsing
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-endif
 
 " Walk through wrapped lines
 nnoremap <expr> k (v:count == 0 ? 'gk' : 'k')
