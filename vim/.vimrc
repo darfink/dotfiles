@@ -208,6 +208,10 @@ autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 " Enable syntax for Vue files
 autocmd BufNewFile,BufRead *.vue set ft=html
 
+" Change cursor in insert mode
+let &t_SI = "\e[6 q"
+let &t_EI = "\e[2 q"
+
 " Indent all tags in HTML files
 let g:html_indent_inctags = "html,body,head,tbody"
 
