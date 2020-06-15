@@ -1,12 +1,11 @@
 # Expose custom prompts for prezto
-fpath=("${ZDOTDIR:-$HOME}/.zcustom/contrib" "${fpath[@]}")
+fpath=("$ZDOTDIR/.zcustom/contrib" "${fpath[@]}")
 
 # Source Prezto
-if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
-  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
-fi
+[[ -s "$ZDOTDIR/.zprezto/init.zsh" ]] && source "$ZDOTDIR/.zprezto/init.zsh"
 
-for file in ${ZDOTDIR:-$HOME}/.zcustom/{bindings,functions,aliases,fzf,fzf_completion}.zsh; do
+# Source all custom configurations
+for file in $ZDOTDIR/.zcustom/{functions,aliases,widgets,bindings}.zsh; do
   [ -s "$file" ] && source "$file"
 done
 
@@ -15,9 +14,6 @@ compdef _gnu_generic \
   df cat tr nl curl mv file head paste tail fzf \
   touch wc shred htop make whois recode compare tac \
   emacsclient emacs rustc fd lsd alacritty
-
-# Load the NodeJS version manager (NVM)
-[ -s "$HOME/.nvm/nvm.sh" ] && source "$HOME/.nvm/nvm.sh"
 
 # Load the local zshrc if provided
 [ -s "$HOME/Cloud/Configs/zshrc" ] && source "$HOME/Cloud/Configs/zshrc"

@@ -98,7 +98,7 @@ fi
 ###############################################################################
 
 case "$OS" in
-'osx')
+'macos')
   # PlistBuddy alias, because sometimes `defaults` just doesn’t cut it
   alias plbuddy='/usr/libexec/PlistBuddy'
 

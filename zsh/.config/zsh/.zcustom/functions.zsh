@@ -3,13 +3,6 @@ compute() {
   while true; do head -n 100 /dev/urandom; sleep 0.1; done | hexdump -C | grep "ca fe"
 }
 
-if is-command fzf; then
-  fzv() {
-    file=$(fzf --preview 'bat --color "always" {}' $@)
-    if (( $? == 0)); then vim "$file"; fi
-  }
-fi
-
 # Create a directory and change into it
 mkd() {
   mkdir -p "$@" && cd "$_"
@@ -65,13 +58,4 @@ aliasp() {
     $@ \$@ | $PAGER -F
   }"
   compdef $name=$1
-}
-
-# Expands an alias recursively
-expand-aliases() {
-  unset 'functions[_expand-aliases]'
-  functions[_expand-aliases]=$BUFFER
-  (($+functions[_expand-aliases])) &&
-    BUFFER=${functions[_expand-aliases]#$'\t'} &&
-    CURSOR=$#BUFFER
 }
