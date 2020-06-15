@@ -23,6 +23,7 @@ gpg/*/trustdb.gpg
 # Zsh shell
 .zhistory
 .zcompdump*
+.zcompcache
 
 # Tmux files
 tmux/*/plugins

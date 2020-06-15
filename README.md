@@ -33,13 +33,20 @@ These are the available package configurations:
 
 ### macOS
 
-Ensure you add `zsh` as the default shell, by adding it to `/etc/shells` and
+Ensure you set `zsh` as the default shell, by adding it to `/etc/shells` and
 executing `chsh -s /usr/local/bin/zsh`.
 
-The `path_helper` utility is also troublesome, change `/etc/zprofile` to:
+The `path_helper` utility is also troublesome; it uses `/etc/zprofile`
+to set the shell's `$PATH` (therefore being invocated after
+`~/.zshenv`), and it prepends to the `$PATH` instead of appending. To
+circumvent this, remove `/etc/zprofile` and replace it with
+`/etc/zshenv` consisting of the following content:
 
 ```sh
-# system-wide environment settings for zsh(1)
+# Avoid clobbering home
+export ZDOTDIR="$HOME/.config/zsh"
+
+# Prevent prepending to $PATH when invoking subshells
 if [[ -x /usr/libexec/path_helper && $SHLVL -eq 1 ]]; then
 	eval `/usr/libexec/path_helper -s`
 fi
