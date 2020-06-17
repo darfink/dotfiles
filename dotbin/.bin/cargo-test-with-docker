@@ -1,6 +1,6 @@
 if [ "$#" -lt 1 ]; then
-  echo "Usage: cargo-dockertest <docker image> <test flags>"
-  return 1
+  echo "Usage: cargo-dockertest <docker image> [test flags]"
+  exit 1
 fi
 
 docker run --dns-opt=single-request -v $PWD:/build_dir -w /build_dir -t $1 cargo test ${@:2}
