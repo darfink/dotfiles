@@ -234,6 +234,12 @@ let g:syntastic_sh_checkers = ['shellcheck']
 let g:syntastic_cs_checkers = ['syntax', 'semantic', 'issues']
 let g:syntastic_php_checkers = ['php']
 
+" Multiple cursors
+let g:multi_cursor_use_default_mapping = 0
+let g:multi_cursor_start_word_key = 'gb'
+let g:multi_cursor_next_key = 'gb'
+let g:multi_cursor_quit_key = '<Esc>'
+
 " Better Whitespace
 let g:better_whitespace_filetypes_blacklist = ['unite', 'vim-plug']
 
