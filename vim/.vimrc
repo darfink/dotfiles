@@ -245,7 +245,6 @@ noremap <silent> <leader>vr :source $MYVIMRC<cr>
 vmap <enter> <plug>(EasyAlign)
 
 " Plist
-let g:plist_json_filetype = 'json'
 let g:plist_display_format = 'xml'
 let g:plist_save_format = ''
 
