@@ -17,6 +17,10 @@ __fsel() {
   files=("$(eval "$@" | SKIM_DEFAULT_OPTIONS="--height ${SKIM_HEIGHT:-40%} --reverse $SKIM_DEFAULT_OPTIONS" sk --tiebreak=score,index -m --ansi --query ${cword:-""})")
   local ret=$?
   if [[ -n $files ]]; then
+    if [[ -n $cword ]]; then
+      LBUFFER=$(echo -n "${LBUFFER:0:-${#cword}}")
+    fi
+
     LBUFFER+=$(echo -n "${(fq)files}")
   fi
   zle redisplay
@@ -33,6 +37,10 @@ __dsel() {
   if [[ -z "$directory" ]]; then
     zle redisplay
     return 0
+  fi
+
+  if [[ -n $cword ]]; then
+    LBUFFER=$(echo -n "${LBUFFER:0:-${#cword}}")
   fi
 
   cd "$directory"
