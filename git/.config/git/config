@@ -19,6 +19,9 @@
   excludesfile = ~/.config/git/ignore
   attributesfile = ~/.config/git/attributes
 
+  # Better diffs
+  pager = delta --theme='Solarized (dark)' | less --tabs=1,5 -RFX
+
   # Treat spaces before tabs and all kinds of trailing whitespace as an error
   # [default] trailing-space: looks for spaces at the end of a line
   # [default] space-before-tab: looks for spaces before tabs at the beginning of a line
@@ -71,6 +74,10 @@
   # Local git configuration
   path = ~/Cloud/Configs/git
 
+[interactive]
+
+  diffFilter = delta --color-only
+
 [log]
 
   # Use short commit hashes
@@ -91,12 +98,6 @@
 
   # Only push the currently active branch
   default = simple
-
-[pager]
-
-  # Nicer diffs
-  diff = diff-so-fancy | less --tabs=1,5 -RFX
-  show = diff-so-fancy | less --tabs=1,5 -RFX
 
 # URL shorthands
 
