@@ -29,8 +29,8 @@ alias dateutc='date -u +"%Y-%m-%dT%H:%M:%SZ"'
 alias stats='sort | uniq -c | sort -r'
 alias map='xargs -n1'
 alias week='date +%V'
-alias publicip='echo $(curl -s "https://api6.ipify.org")'
-alias privateip='ipconfig getifaddr en0'
+alias ip='dig -4 +short myip.opendns.com @resolver1.opendns.com'
+alias ips="ifconfig -a | perl -nle'/(\d+\.\d+\.\d+\.\d+)/ && print \$1'"
 
 # Additional git
 alias git='noglob git'
@@ -54,7 +54,7 @@ alias paste-img='pngpaste'
 alias paste-trim='pbpaste | tr -d "\n"'
 
 # Open code with vim
-alias -s {c,cpp,cs,css,java,js,ts,html,py,zsh,rs,xml,md,zprofile,zshrc,yml,lua}=vim
+alias -s {c,cpp,cs,css,java,js,ts,html,py,zsh,sql,txt,rs,xml,md,zprofile,zshrc,yml,lua}=vim
 
 if is-command bat; then; alias cat='bat'; fi
 if is-command gopass; then; alias pass='gopass'; fi
@@ -91,6 +91,7 @@ if is-command lsd; then
   alias lta='lt -a'            # Lists directory contents in a tree view (including hidden).
   alias la='ls -a'             # Lists all files (including hidden).
   alias lal='ls -la'           # Lists all files in long format (including hidden).
+  alias ltl='lt --color=always --icon=always | less'
 fi
 
 ###############################################################################

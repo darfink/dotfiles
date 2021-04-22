@@ -12,11 +12,7 @@ add-path() {
 
 # Returns successfully if a command exists
 is-command() {
-  if (( $+commands[$1] )); then
-    return 0
-  else
-    return 1
-  fi
+  (( $+commands[$1] ))
 }
 
 ###############################################################################
@@ -163,6 +159,9 @@ fi
 # Cargo executables
 add-path "${CARGO_HOME:-"$HOME/.cargo"}/bin"
 
+# .NET executables
+add-path "$HOME/.dotnet/tools"
+
 # Ruby executables
 if is-command ruby; then
   add-path "$(ruby -e 'puts Gem.user_dir')/bin"
@@ -176,5 +175,12 @@ fi
 # Go executables
 (is-command go) && add-path "$GOPATH/bin"
 
+# Node version manager executables
+export NVM_DIR="$HOME/.config/nvm"
+#[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
 # Custom executables
 add-path "$HOME/.bin"
+
+# GCP SDK
+add-path "$HOME/Tools/google-cloud-sdk/bin"
