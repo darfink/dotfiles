@@ -64,6 +64,11 @@ if is-command rg; then; aliasp rgl rg -n --color=always; fi
 if is-command tokei; then; alias loc='tokei'; fi
 if is-command uni; then; alias ucs='uni search'; fi
 
+if is-command clip.exe; then
+  alias pbcopy='cat | clip.exe'
+  alias pbpaste="powershell.exe -command 'Get-Clipboard' | tr -d '\r' | head -n -1"
+fi
+
 if is-command prettier; then
   alias prettier='prettier --single-quote --trailing-comma all'
 fi
