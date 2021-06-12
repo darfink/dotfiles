@@ -75,3 +75,24 @@ function ch() {
   awk -F $sep '{printf "%-'$cols's  \x1b[36m%s\x1b[m\n", $1, $2}' |
   sk --ansi --multi | sed 's#.*\(https*://\)#\1#' | xargs open
 }
+
+if is-command powershell.exe; then
+  pfd() {
+    local windir="$(pwsh.exe -NoProfile -NonInteractive -NoLogo -ExecutionPolicy Bypass -Command - <<"EOF"
+$Win32API = Add-Type -Name Funcs -Namespace Win32 -PassThru -MemberDefinition @'
+  [DllImport("user32.dll", SetLastError = true)]
+  public static extern IntPtr FindWindow(string lpClassName, IntPtr lpWindowName);
+'@
+
+$topmostHwnd = $Win32API::FindWindow('CabinetWClass', [IntPtr]::Zero)
+$topmostWindow = (New-Object -COM 'Shell.Application').Windows() | Where-Object {$_.HWND -eq $topmostHwnd}
+$topmostWindow.Document.Folder.Self.IsFileSystem ? $topmostWindow.Document.Folder.Self.Path : $null 
+EOF
+    )"
+    wslpath "$windir" | tr -d '\r'
+  }
+
+  cdf() {
+    cd "$(pfd)"
+  }
+fi
