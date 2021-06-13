@@ -9,6 +9,9 @@ for file in $ZDOTDIR/.zcustom/{functions,aliases,widgets,bindings}.zsh; do
   [ -s "$file" ] && source "$file"
 done
 
+# Source asdf
+[ -s "$HOME/.asdf/asdf.sh" ] && source "$HOME/.asdf/asdf.sh"
+
 # Setup auto completions
 compdef _gnu_generic \
   df cat tr nl curl mv file head paste tail fzf \
