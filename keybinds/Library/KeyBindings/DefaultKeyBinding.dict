@@ -10,7 +10,6 @@
     "^k"      = "deleteToEndOfLine:";            /* C-k */
     "~d"      = "deleteWordForward:";            /* M-d */
     "^w"      = "deleteWordBackward:";           /* C-w */
-    "~w"      = "selectWord:";                   /* M-w */
     "~\010"   = "deleteWordBackward:";           /* M-backspace */
     "\UF729"  = "moveToBeginningOfDocument:";    /* home */
     "\UF72B"  = "moveToEndOfDocument:";          /* end */
