@@ -1,7 +1,5 @@
-; Fix evil-search repeat with 'n'
 ; Fix parens highlight overlap visual mode (majs)
 ; Fix all jumps relative to cursor
-; Fix evil-commentary
 ; Add avy for swapping words?
 ; Truncate modeline file paths (modeline-buffer-path-function)
 ; Use web-mode for '%'?
@@ -10,7 +8,6 @@
 ; Organize custom functions
 ; Config multiple cursors
 ; Config indentation
-; Config surround keybindings
 ; Add narrowing keybinds
 ; Implement window swap keybind?
 ; Implement tree view (treemacs, lsp-treemacs, lookup all-the-icons)
@@ -18,75 +15,6 @@
 ; <company> previous wrap around
 ; <company> fix ctrl-f (company--show-inline-p)
 ; lsp-ui
-; Investigate helm or ivy
-
-; (setq debug-on-error t)
-(setq delete-old-versions -1)
-(setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)))
-(setq vc-follow-symlinks t) ; Follow symlinks without prompt
-(setq inhibit-startup-screen t)
-(setq coding-system-for-write 'utf-8)
-(setq sentence-end-double-space nil)
-(setq vc-make-backup-files t)
-(setq backup-directory-alist `(("." . "~/.emacs.d/backups")))
-(setq gc-cons-threshold 100000000)
-(setq read-process-output-max (* 1024 1024))
-(setq xref-prompt-for-identifier nil)
-(setq undo-tree-auto-save-history t) ; Preserve undo history between sessions
-(setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo")))
-(setq use-dialog-box nil) ; Disable GUI dialogs
-(setq-default show-trailing-whitespace t)
-(setq-default tab-width 2)
-
-;; Do not use the system clipboard when yanking by default
-(setq select-enable-clipboard nil)
-
-;; Prevent custom variables from polluting config
-(setq custom-file (concat user-emacs-directory "custom.el"))
-(load custom-file 'noerror)
-
-;; Option as meta modifier on macOS
-(when (eq system-type 'darwin)
-  (setq mac-option-modifier 'nil)
-  (setq mac-right-option-modifier 'meta)
-  (setq mac-command-modifier 'super))
-
-;; Prefer y/n keypress instead of typing yes/no
-(defalias 'yes-or-no-p 'y-or-n-p)
-
-(global-hl-line-mode) ; Highlight the active line
-(blink-cursor-mode 0) ; Disabling blinking cursor
-(tool-bar-mode -1) ; Remove the tool bar
-(save-place-mode 1) ; Continue from before
-(scroll-bar-mode -1) ; Disable native scroll bars
-(recentf-mode) ; Record recent files
-
-;; ----------------------------------------------------------------------------------
-;; Terminal
-;; ----------------------------------------------------------------------------------
-
-;; On windows, use eshell otherwise ansi-term
-(if (eq system-type 'windows-nt)
-  (defalias 'os-term 'eshell)
-  (defalias 'os-term 'ansi-term))
-
-;; Don't ask which shell, use the default
-(defvar my-term-shell (getenv "SHELL"))
-(defadvice ansi-term (before force-bash)
-  (interactive (list my-term-shell)))
-(ad-activate 'ansi-term)
-
-;; Delete the terminal buffer upon exit
-(defadvice term-sentinel (around my-advice-term-sentinel (proc msg))
-  (if (memq (process-status proc) '(signal exit))
-      (let ((buffer (process-buffer proc)))
-        ad-do-it
-        (kill-buffer buffer))
-    ad-do-it))
-(ad-activate 'term-sentinel)
-
-;; Disable whitespace highlighting
-(add-hook 'term-mode-hook (lambda() (setq show-trailing-whitespace nil)))
 
 ;; ----------------------------------------------------------------------------------
 ;; Package manager
@@ -116,12 +44,162 @@
 	(quelpa-use-package-activate-advice))
 
 ;; ----------------------------------------------------------------------------------
+;; Emacs
+;; ----------------------------------------------------------------------------------
+
+(use-package emacs
+	:ensure nil
+	:init
+	;; Prefer y/n keypress instead of typing yes/no
+	(defalias 'yes-or-no-p 'y-or-n-p)
+	(setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t))
+        backup-directory-alist `(("." . "~/.emacs.d/backups"))
+				completion-ignore-case t
+				completion-styles '(basic flex)
+	      custom-file (concat user-emacs-directory "custom.el")
+				custom-safe-themes t
+				debug-on-error nil
+				delete-old-versions -1
+				frame-resize-pixelwise t
+        gc-cons-threshold 100000000
+        inhibit-startup-screen t
+	      read-process-output-max (* 1024 1024)
+        select-enable-clipboard nil ; Do not use the system clipboard when yanking by default
+        sentence-end-double-space nil
+				truncate-partial-width-windows nil
+        use-dialog-box nil) ; Disable GUI dialogs
+	(setq-default buffer-file-coding-system 'utf-8
+	              line-spacing 4
+								tab-width 2
+								truncate-lines t
+								require-final-newline nil
+								show-trailing-whitespace t)
+	;; Right option as meta modifier on macOS
+	(when (eq system-type 'darwin)
+		(define-key key-translation-map (kbd "M-1") (kbd "©"))
+		(define-key key-translation-map (kbd "M-2") (kbd "@"))
+		(define-key key-translation-map (kbd "M-3") (kbd "£"))
+		(define-key key-translation-map (kbd "M-4") (kbd "$"))
+		(define-key key-translation-map (kbd "M-5") (kbd "∞"))
+		(define-key key-translation-map (kbd "M-6") (kbd "§"))
+		(define-key key-translation-map (kbd "M-7") (kbd "|"))
+		(define-key key-translation-map (kbd "M-8") (kbd "["))
+		(define-key key-translation-map (kbd "M-9") (kbd "]"))
+		(define-key key-translation-map (kbd "M-0") (kbd "≈"))
+		(define-key key-translation-map (kbd "M-(") (kbd "{"))
+		(define-key key-translation-map (kbd "M-)") (kbd "}"))
+		(define-key key-translation-map (kbd "M-/") (kbd "\\")))
+	:config
+  (prefer-coding-system 'utf-8)
+  (set-default-coding-systems 'utf-8)
+  (set-keyboard-coding-system 'utf-8)
+	(set-selection-coding-system 'utf-8)
+  (set-terminal-coding-system 'utf-8)
+	(add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+  (scroll-bar-mode -1) ; Disable native scroll bars
+  (blink-cursor-mode 0) ; Disable blinking cursor
+  (tool-bar-mode -1) ; Remove the tool bar
+	(load custom-file 'noerror))
+
+;; ----------------------------------------------------------------------------------
+;; Built-in packages
+;; ----------------------------------------------------------------------------------
+
+(use-package display-line-numbers
+	:ensure nil
+	:init
+	(setq display-line-numbers-type 'relative)
+	:hook ((prog-mode conf-mode) . display-line-numbers-mode))
+
+(use-package elec-pair
+	:ensure nil
+	:config
+  (electric-pair-mode 1))
+
+(use-package hl-line
+	:ensure nil
+	:config
+	(global-hl-line-mode))
+
+(use-package recentf
+	:ensure nil
+	:config
+	(recentf-mode)
+	(setq recentf-max-menu-items 150
+	      recentf-max-saved-items 150
+	      recentf-exclude '("^/var/folders\\.*"
+													"[/\\]\\.emacs.d/elpa"
+													"COMMIT_EDITMSG\\'")))
+
+(use-package saveplace
+	:ensure nil
+	:config
+  (save-place-mode 1))
+
+(use-package term
+	:ensure nil
+	:init
+  ;; On windows, use eshell otherwise ansi-term
+  (if (eq system-type 'windows-nt)
+			(defalias 'os-term 'eshell)
+		(defalias 'os-term 'ansi-term))
+	;; Don't ask which shell, use the default
+	(defadvice ansi-term (before force-bash)
+		(interactive (list (getenv "SHELL"))))
+	(ad-activate 'ansi-term)
+	;; Delete the terminal buffer upon exit
+	(defadvice term-sentinel (around my-advice-term-sentinel (proc msg))
+		(if (memq (process-status proc) '(signal exit))
+				(let ((buffer (process-buffer proc)))
+					ad-do-it
+					(kill-buffer buffer))
+			ad-do-it))
+	(ad-activate 'term-sentinel)
+	:hook
+	(term-mode . (lambda() (setq show-trailing-whitespace nil))))
+
+(use-package undo-tree
+	:ensure nil
+	:init
+  ;; Preserve undo history between sessions
+  (setq undo-tree-auto-save-history t
+        undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo"))))
+
+(use-package vc
+	:ensure nil
+	:init
+	;; Follow symlinks without prompt
+  (setq vc-follow-symlinks t
+        vc-make-backup-files t))
+
+(use-package winner
+	:ensure nil
+	:config
+	(winner-mode 1))
+
+(use-package xref
+	:ensure nil
+	:config
+	;; Follow symlinks without prompt
+  (setq xref-prompt-for-identifier nil))
+
+;; ----------------------------------------------------------------------------------
 ;; Editor theming
 ;; ----------------------------------------------------------------------------------
 
-; Highlight delimiters
+;; Highlight delimiters
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
+
+;; Highlight numbers
+(use-package highlight-numbers
+  :hook (prog-mode . highlight-numbers-mode))
+
+(use-package treemacs
+	:config
+  (define-key treemacs-mode-map [mouse-1] #'treemacs-single-click-expand-action)
+	(treemacs-follow-mode -1))
+(use-package treemacs-evil :after (treemacs evil))
 
 ;; Fancy modeline
 (use-package doom-modeline
@@ -131,31 +209,25 @@
 (use-package doom-themes
   :config
   ;; Global settings (defaults)
-  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
-        doom-themes-enable-italic t) ; if nil, italics is universally disabled
-  (load-theme 'doom-one t)
-
-  ;; Enable flashing mode-line on errors
-  (doom-themes-visual-bell-config)
-
-  ;; Corrects (and improves) org-mode's native fontification.
-  (doom-themes-org-config))
+  (setq doom-themes-enable-bold t ; if nil, bold is universally disabled
+        doom-themes-enable-italic t ; if nil, italics is universally disabled
+				doom-themes-treemacs-theme "doom-colors")
+  (load-theme 'doom-solarized-light t)
+  (doom-themes-visual-bell-config) ; Enable flashing mode-line on errors
+	(doom-themes-treemacs-config) ; Stylize treemacs
+  (doom-themes-org-config)) ; Correct org-mode fontification.
 
 ;; ----------------------------------------------------------------------------------
 ;; Text completion
 ;; ----------------------------------------------------------------------------------
 
-;; Use case-insensitive fuzzy completion
-(setq completion-ignore-case t)
-(setq completion-styles '(basic flex))
-
 (use-package company
   :init
-  (setq company-minimum-prefix-length 1)
-  (setq company-idle-delay 0.0)
-  (setq company-selection-wrap-around t)
-	(setq company-backends '(company-capf company-files company-dabbrev))
-	(setq company-frontends '(company-box-frontend company-echo-metadata-frontend company-preview-frontend))
+  (setq company-minimum-prefix-length 1
+        company-idle-delay 0.3
+        company-selection-wrap-around t
+	      company-backends '(company-capf company-files company-dabbrev)
+	      company-frontends '(company-box-frontend company-echo-metadata-frontend company-preview-frontend))
   :config
   (define-key company-active-map (kbd "C-w") nil)
   (define-key company-active-map (kbd "C-n") 'company-complete-common-or-cycle)
@@ -166,11 +238,12 @@
   (define-key company-active-map (kbd "<tab>") 'company-complete-common-or-cycle)
   (define-key company-active-map (kbd "S-TAB") 'company-select-previous)
   (define-key company-active-map (kbd "<backtab>") 'company-select-previous)
-  (global-company-mode))
+  (global-company-mode)
+	:hook
+	(coompany-mode . (lambda() (setq show-trailing-whitespace nil))))
 
 (use-package company-box
   :after company
-  :init
   :hook (company-mode . company-box-mode))
 
 ;; ----------------------------------------------------------------------------------
@@ -180,12 +253,13 @@
 ;; Evil mode
 (use-package evil
   :init
-	(setq evil-magic nil)
-	(setq evil-want-minibuffer t)
-  (setq evil-want-C-u-delete t)
-  (setq evil-want-C-u-scroll t)
-  (setq evil-want-Y-yank-to-eol t)
-  (setq evil-want-change-word-to-end nil)
+	(setq evil-magic nil
+	      evil-want-keybinding nil
+	      evil-want-minibuffer t
+        evil-want-C-u-delete t
+        evil-want-C-u-scroll t
+        evil-want-Y-yank-to-eol t
+        evil-want-change-word-to-end nil)
   ;(setq evil-normal-state-cursor '(box "DarkGoldenrod2")
   ;      evil-insert-state-cursor '((bar . 2) "SkyBlue2")
   ;      evil-emacs-state-cursor '(box "chartreuse3")
@@ -203,23 +277,32 @@
 				 (define-key evil-inner-text-objects-map ,key (quote ,inner-name))
 				 (define-key evil-outer-text-objects-map ,key (quote ,outer-name)))))
   :config
-  (evil-set-initial-state 'term-mode 'emacs)
   (evil-select-search-module 'evil-search-module 'evil-search)
 	;; Custom keybinds
-	(evil-global-set-key 'normal "g," 'goto-last-change)
-	(evil-global-set-key 'normal "g;" 'goto-last-change-reverse)
-  (evil-global-set-key 'normal (kbd "+") 'evil-first-non-blank)
-  (evil-global-set-key 'normal (kbd "g+") 'evil-last-non-blank)
-  (evil-global-set-key 'normal (kbd "-") 'evil-ex-search-forward)
-  (evil-global-set-key 'normal (kbd "_") 'evil-ex-search-backward)
-  (evil-global-set-key 'normal (kbd "C-ª") 'evil-mc-make-cursor-move-prev-line)
-  (evil-global-set-key 'normal (kbd "C-√") 'evil-mc-make-cursor-move-next-line)
-  (evil-global-set-key 'normal (kbd "RET") 'evil-ex-nohighlight)
-  (evil-global-set-key 'insert (kbd "C-a") 'evil-beginning-of-line)
-  (evil-global-set-key 'insert (kbd "C-e") 'end-of-line)
-  (evil-global-set-key 'insert (kbd "C-k") 'kill-line)
-  (evil-global-set-key 'insert (kbd "C-SPC") 'company-complete)
-	(evil-define-key 'insert minibuffer-local-map (kbd "<escape>") 'abort-recursive-edit)
+  (evil-define-key '(normal visual) 'global
+		(kbd "+") 'evil-first-non-blank
+		(kbd "?") 'evil-last-non-blank
+    (kbd "-") 'evil-ex-search-forward
+    (kbd "_") 'evil-ex-search-backward
+    (kbd "RET") 'evil-ex-nohighlight)
+  (evil-define-key 'normal 'global
+	  (kbd "g,") 'goto-last-change
+	  (kbd "g;") 'goto-last-change-reverse
+    (kbd "C-M-j") 'evil-mc-make-cursor-move-next-line
+    (kbd "C-M-k") 'evil-mc-make-cursor-move-prev-line)
+  (evil-define-key 'insert 'global
+    (kbd "C-a") 'evil-beginning-of-line
+    (kbd "C-e") 'end-of-line
+    (kbd "C-k") 'kill-line
+    (kbd "C-SPC") 'company-complete)
+	;; Minibuffer
+	(evil-define-key 'insert minibuffer-local-map
+		(kbd "C-v") 'scroll-up-command
+    (kbd "C-p") 'previous-line
+    (kbd "C-n") 'next-line
+		(kbd "<escape>") 'abort-recursive-edit)
+	;; Terminal
+  (evil-set-initial-state 'term-mode 'emacs)
 	;; Package menu
   (evil-set-initial-state 'package-menu-mode 'normal)
 	(evil-define-key 'normal package-menu-mode-map
@@ -230,15 +313,23 @@
     "u" 'package-menu-mark-unmark
     "x" 'package-menu-execute
     "q" 'quit-window)
-	;; Ivy minibuffer
-  (evil-define-key 'insert ivy-minibuffer-map
-  	[escape] 'abort-recursive-edit
-  	[backspace] 'ivy-backward-delete-char
-  	(kbd "C-r") 'ivy-reverse-i-search
-  	(kbd "C-n") 'ivy-next-line
-  	(kbd "C-p") 'ivy-previous-line)
+	(evil-define-key 'normal profiler-report-mode-map
+		"h" 'profiler-report-collapse-entry
+		"l" 'profiler-report-expand-entry)
 	;; Text objects
-	(evil-define-and-bind-text-object "-" "-" "-"))
+	(evil-define-and-bind-text-object "-" "-" "-")
+	:hook
+	(evil-list-view-mode . (lambda() (setq show-trailing-whitespace nil))))
+
+;; Mode integration
+(use-package evil-collection
+	:after evil
+	:init
+	(setq evil-collection-company-use-tng nil
+	      evil-collection-term-sync-state-and-mode-p nil
+	      evil-collection-setup-debugger-keys nil)
+	:config
+	(evil-collection-init '(flycheck dired profiler xref)))
 
 ;; Multiple cursors
 (use-package evil-mc
@@ -332,10 +423,10 @@
 (use-package evil-goggles
   :after evil
   :init
-  (setq evil-goggles-duration 0.2)
-  (setq evil-goggles-enable-change nil)
-  (setq evil-goggles-enable-delete nil)
-  (setq evil-goggles-enable-record-macro nil)
+  (setq evil-goggles-duration 0.2
+        evil-goggles-enable-change nil
+        evil-goggles-enable-delete nil
+        evil-goggles-enable-record-macro nil)
   :config
   (evil-goggles-mode))
 
@@ -343,8 +434,8 @@
 (use-package evil-snipe
   :after evil
   :init
-  (setq evil-snipe-scope 'line)
-  (setq evil-snipe-spillover-scope 'buffer)
+  (setq evil-snipe-scope 'line
+        evil-snipe-spillover-scope 'buffer)
   :config
   (evil-snipe-override-mode 1)
   :custom-face
@@ -353,43 +444,8 @@
 ;; Jump navigation
 (use-package avy
   :after evil
-  :config
-  (add-to-list 'avy-orders-alist '(avy-goto-char-timer . avy-order-closest)))
-
-(defun atom/evil-avy-make-cursor-timer (&optional arg)
-  "Read one or many consecutive chars and add a cursor at the first one.
-The window scope is determined by `avy-all-windows' (ARG negates it)."
-  (interactive "P")
-  (let ((avy-all-windows (if arg
-                             (not avy-all-windows)
-                           avy-all-windows)))
-    (avy-with avy-goto-char-timer
-      (setq avy--old-cands (avy--read-candidates))
-      (setq avy-action '(lambda (pos)
-			  (evil-mc-run-cursors-before)
-			  (evil-mc-make-cursor-at-pos pos)))
-      (avy-process avy--old-cands))))
-
-(defun atom/open-init ()
-  (interactive)
-  (find-file "~/.emacs.d/init.el"))
-
-(defun atom/switch-to-recent-buffer ()
-  (interactive)
-  (switch-to-buffer (other-buffer)))
-
-(defun atom/delete-this-file-and-buffer ()
-  "Kill the current buffer and deletes the file it is visiting."
-  (interactive)
-  (if (yes-or-no-p "Delete the current file? ")
-      (let ((filename (buffer-file-name)))
-	(when filename
-	  (if (vc-backend filename)
-	      (vc-delete-file filename)
-	    (progn
-	      (delete-file filename)
-	      (message "Deleted file %s" filename)
-	      (kill-buffer)))))))
+	:init
+  (setq avy-orders-alist '((avy-goto-char-timer . avy-order-closest))))
 
 ;; Leader prefix
 (use-package evil-leader
@@ -398,9 +454,9 @@ The window scope is determined by `avy-all-windows' (ARG negates it)."
   (global-evil-leader-mode t)
   (evil-leader/set-leader "<SPC>")
   (evil-leader/set-key
-    "TAB" 'atom/switch-to-recent-buffer
+    "TAB" 'mode-line-other-buffer
 		":" 'execute-extended-command
-    "0" 'winum-select-window-0
+    "0" 'treemacs-select-window
     "1" 'winum-select-window-1
     "2" 'winum-select-window-2
     "3" 'winum-select-window-3
@@ -410,20 +466,57 @@ The window scope is determined by `avy-all-windows' (ARG negates it)."
     "7" 'winum-select-window-7
     "8" 'winum-select-window-8
     "9" 'winum-select-window-9
-		"b b" 'ivy-switch-buffer
+		"b b" 'switch-to-buffer
     "b d" 'kill-this-buffer
+    "b k" 'kill-buffer
+		"b E" 'set-buffer-file-coding-system
+		"e c" 'flycheck-clear-errors
+		"e e" 'flycheck-explain-error-at-point
+		"e h" 'flycheck-describe-checker
+		"e l" 'flycheck-list-errors
+		"e s" 'flycheck-select-checker
+		"e S" 'flycheck-set-checker-executable
     "e n" 'next-error
     "e p" 'previous-error
-    "f \S-d" 'atom/delete-this-file-and-buffer
+    "f D" 'atom/delete-this-file-and-buffer
     "f e c" 'atom/open-init
     "f e l" 'find-library
+		"f f" 'find-file
+		"f M-f" 'hexl-find-file
+		"f r" 'atom/recentf-open-files
+		"f M-r" 'treemacs-find-file
+		"f R" 'revert-buffer
     "f s" 'save-buffer
     "f S" 'save-some-buffers
+		"f y" (lambda () (interactive) (gui-set-selection 'CLIPBOARD (message (buffer-file-name))))
+		"h d b" 'describe-bindings
+		"h d c" 'describe-char
+		"h d f" 'describe-function
+		"h d F" 'describe-face
+		"h d k" 'describe-key
+		"h d K" 'describe-keymap
+		"h d m" 'describe-mode
+		"h d M" 'describe-minor-mode
+		"h d p" 'describe-package
+		"h d s" 'describe-symbol
+		"h d S" 'describe-syntax
+		"h d t" 'describe-theme
+		"h d v" 'describe-variable
+		"h p k" 'profiler-stop
+		"h p r" 'profiler-report
+		"h p s" 'profiler-start
     "SPC" 'evil-avy-goto-char-timer
     "j c" 'evil-avy-goto-char
     "j j" 'evil-avy-goto-char-2
     "j l" 'evil-avy-goto-line
     "j w" 'evil-avy-goto-word-or-subword-1
+		"p b" 'projectile-switch-to-buffer
+		"p d" 'projectile-find-dir
+		"p f" 'projectile-find-file
+		"p k" 'projectile-kill-buffers
+		"p o" 'projectile-multi-occur
+		"p r" 'projectile-recentf
+		"p t" 'treemacs-display-current-project-exclusively
 		"P d" 'package-delete
 		"P l" 'package-list-packages
 		"P r" 'package-refresh-contents
@@ -431,11 +524,15 @@ The window scope is determined by `avy-all-windows' (ARG negates it)."
     "s c" 'evil-ex-nohighlight
 		"t h l" 'global-hl-line-mode
 		"t h s" 'font-lock-mode
+		"t s" 'flycheck-mode
     "t l" 'toggle-truncate-lines
+    "t n" 'display-line-numbers-mode
     "t w" 'whitespace-mode
+		"T l" 'load-theme
     "w TAB" 'ace-select-window
     "w u" 'winner-undo
     "w U" 'winner-redo
+		"w b" 'atom/switch-to-minibuffer
     "w r" 'rotate-frame-clockwise
     "w R" 'rotate-frame-anticlockwise
     "w d" 'delete-window
@@ -453,8 +550,10 @@ The window scope is determined by `avy-all-windows' (ARG negates it)."
     "w K" 'evil-window-move-very-top
     "w l" 'evil-window-right
     "w L" 'evil-window-move-far-right
-    "w s" 'split-window-below
-    "w v" 'split-window-right
+    "w s" (lambda () (interactive) (split-window-below) (windmove-down))
+    "w S" 'split-window-below
+    "w v" (lambda () (interactive) (split-window-right) (windmove-right))
+    "w V" 'split-window-right
 		"w <" 'evil-window-decrease-width
 		"w >" 'evil-window-increase-width
     "w +" 'evil-window-increase-height
@@ -481,40 +580,103 @@ The window scope is determined by `avy-all-windows' (ARG negates it)."
 ;; Discrete window popups
 (use-package shackle
   :custom
-  (shackle-rules '((help-mode :align below :size 0.2 :select t)))
+  (shackle-rules
+	 '((help-mode :align below :size 0.2 :select t)
+	   (flycheck-error-list-mode :align below :size 0.2)
+		 (evil-list-view-mode :align below :size 0.4)))
   :config
   (shackle-mode 1))
 
 ;; ----------------------------------------------------------------------------------
-;; Generic completion
+;; Minibuffer completion
 ;; ----------------------------------------------------------------------------------
 
-(use-package ivy
+(use-package fuz
+	:quelpa (fuz :fetcher github :repo "rustify-emacs/fuz.el")
 	:config
-	(ivy-mode 1))
+	(unless (require 'fuz-core nil t)
+		(fuz-build-and-load-dymod)))
 
-(use-package all-the-icons-ivy
-	:after ivy
-  :init (add-hook 'after-init-hook 'all-the-icons-ivy-setup))
-
-(use-package ivy-prescient
-	:after ivy
+(use-package projectile
 	:init
-	(setq prescient-filter-method '(literal fuzzy))
+	(setq projectile-completion-system 'default)
 	:config
-	(ivy-prescient-mode)
-	(prescient-persist-mode +1))
+	(projectile-mode +1))
 
-(defun spacemacs/eval-region ()
+(use-package selectrum
+	:config
+	(selectrum-mode +1))
+
+;; (use-package selectrum-prescient
+;; 	:after selectrum
+;; 	:init
+;; 	(setq prescient-filter-method '(literal fuzzy))
+;; 	:config
+;; 	(selectrum-prescient-mode)
+;; 	(prescient-persist-mode +1))
+
+(defun atom/recentf-open-files ()
+  "Use `completing-read' to open a recent file."
+  (interactive)
+  (let ((files (mapcar 'abbreviate-file-name recentf-list)))
+    (find-file (completing-read "Find recent file: " files nil t))))
+
+(defun atom/eval-region ()
   (interactive)
   (eval-region (region-beginning) (region-end))
   (evil-normal-state))
+
+(defun atom/evil-avy-make-cursor-timer (&optional arg)
+  "Read one or many consecutive chars and add a cursor at the first on
+The window scope is determined by `avy-all-windows' (ARG negates it)."
+  (interactive "P")
+  (let ((avy-all-windows (if arg (not avy-all-windows) avy-all-windows)))
+    (avy-with avy-goto-char-timer
+      (setq avy--old-cands (avy--read-candidates))
+      (setq avy-action '(lambda (pos)
+			  (evil-mc-run-cursors-before)
+			  (evil-mc-make-cursor-at-pos pos)))
+      (avy-process avy--old-cands))))
+
+(defun atom/open-init ()
+  (interactive)
+  (find-file "~/.emacs.d/init.el"))
+
+(defun atom/delete-this-file-and-buffer ()
+  "Kill the current buffer and deletes the file it is visiting."
+  (interactive)
+  (if (yes-or-no-p "Delete the current file? ")
+			(let ((filename (buffer-file-name)))
+	(when filename
+	  (if (vc-backend filename)
+				(vc-delete-file filename)
+			(progn
+	      (delete-file filename)
+	      (message "Deleted file %s" filename)
+	      (kill-buffer)))))))
+
+(defun atom/switch-to-minibuffer ()
+  "Switch to minibuffer window."
+  (interactive)
+	(if (active-minibuffer-window)
+			(select-window (active-minibuffer-window))
+		(error "Minibuffer is not active")))
 
 ;; ----------------------------------------------------------------------------------
 ;; Major modes
 ;; ----------------------------------------------------------------------------------
 
 (use-package rust-mode)
+
+(use-package csharp-mode)
+
+(use-package web-mode
+	:mode (("\\.hbs\\'" . web-mode))
+	:init
+  (setq web-mode-auto-close-style 2
+	      web-mode-markup-indent-offset 2
+        web-mode-code-indent-offset 2
+        web-mode-css-indent-offset 2))
 
 ;; ----------------------------------------------------------------------------------
 ;; Miscellaneous
@@ -529,11 +691,20 @@ The window scope is determined by `avy-all-windows' (ARG negates it)."
   :config
   (exec-path-from-shell-initialize))
 
+(use-package editorconfig
+  :config
+  (editorconfig-mode 1))
+
 ;; Language server
 (use-package lsp-mode
 	:init
+  (setq lsp-auto-guess-root t)
+  (setq lsp-enable-folding nil)
+  (setq lsp-enable-semantic-highlighting t)
+  (setq lsp-enable-snippet nil)
   (setq lsp-prefer-capf t)
   :config
+	(setq lsp-rust-server 'rust-analyzer)
   (add-hook 'prog-mode-hook #'lsp-deferred)
 	(advice-add #'lsp--auto-configure :override
 							#'(lambda () (lsp-flycheck-enable))))
@@ -545,18 +716,6 @@ The window scope is determined by `avy-all-windows' (ARG negates it)."
   :config
   (global-flycheck-mode))
 
-;; Relative line numbers
-(use-package linum-relative
-  :hook ((prog-mode conf-mode) . linum-relative-mode))
-
-;; Pair completion
-(use-package smartparens
-  :config
-  (require 'smartparens-config)
-  (show-smartparens-global-mode t)
-  :diminish smartparens-mode
-  :hook (prog-mode . smartparens-mode))
-
 ;; Shortcut guide
 (use-package which-key
   :config
@@ -564,3 +723,30 @@ The window scope is determined by `avy-all-windows' (ARG negates it)."
 
 ;; Trial packages
 (use-package try)
+
+(defun selectrum-fuz--refine (pattern candidates)
+  "Filter and sort CANDIDATES according to PATTERN."
+	(let* ((candidates-by-score (make-hash-table :test #'equal))
+				 (candidates-filtered (cl-delete-if-not
+															 (lambda (candidate)
+																 (puthash candidate (fuz-calc-score-skim pattern candidate) candidates-by-score))
+															 (copy-sequence candidates))))
+		(cl-stable-sort candidates-filtered #'> :key (lambda (candidate) (gethash candidate candidates-by-score)))))
+
+(defun selectrum-fuz--highlight (pattern candidates)
+	"Highlight characters in CANDIDATES matching the PATTERN."
+	(mapcar
+	 (lambda (candidate)
+		 (progn
+			 (dolist (pos (fuz-find-indices-skim pattern candidate))
+				 (setq candidate (copy-sequence candidate))
+				 (put-text-property pos (1+ pos) 'face 'selectrum-primary-highlight candidate))
+			 candidate))
+	 candidates))
+
+(setq selectrum-refine-candidates-function #'selectrum-fuz--refine)
+(setq selectrum-highlight-candidates-function #'selectrum-fuz--highlight)
+
+;; Local Variables:
+;; byte-compile-warnings: (not free-vars)
+;; End:
