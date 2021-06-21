@@ -77,7 +77,7 @@ function ch() {
 }
 
 if is-command powershell.exe; then
-  pfd() {
+  function pfd() {
     local windir="$(pwsh.exe -NoProfile -NonInteractive -NoLogo -ExecutionPolicy Bypass -Command - <<"EOF"
 $Win32API = Add-Type -Name Funcs -Namespace Win32 -PassThru -MemberDefinition @'
   [DllImport("user32.dll", SetLastError = true)]
@@ -92,7 +92,7 @@ EOF
     wslpath "$windir" | tr -d '\r'
   }
 
-  cdf() {
+  function cdf() {
     cd "$(pfd)"
   }
 fi
