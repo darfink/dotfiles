@@ -188,3 +188,6 @@ add-path "$HOME/.bin"
 
 # GCP SDK
 add-path "$HOME/Tools/google-cloud-sdk/bin"
+
+# Pulumi
+add-path "$HOME/.pulumi/bin"
