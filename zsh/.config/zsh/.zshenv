@@ -156,6 +156,10 @@ if [[ $OS = 'macos' ]] && [[ $- == *i* ]]; then
   add-path "/usr/local/opt/coreutils/libexec/gnubin"
 fi
 
+if [[ $OS = "linux" ]]; then
+  add-path "/home/linuxbrew/.linuxbrew/bin"
+fi
+
 # Cargo executables
 add-path "${CARGO_HOME:-"$HOME/.cargo"}/bin"
 
