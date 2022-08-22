@@ -21,6 +21,7 @@ emacs/*/emms/
 gpg/*/trustdb.gpg
 
 # Zsh shell
+.zsh_history
 .zhistory
 .zcompdump*
 .zcompcache

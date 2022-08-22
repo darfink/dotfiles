@@ -63,6 +63,8 @@ fi
 if [[ $OS = "macos" ]]; then
   export BROWSER='open'
 
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+
   if is-command gpg-agent; then
     # Use terminal prompt for GPG in TTY
     export PINENTRY_USER_DATA="USE_CURSES=1"
@@ -70,7 +72,7 @@ if [[ $OS = "macos" ]]; then
   fi
 
   if is-command brew; then
-    infopath+="/usr/local/share/info"
+    infopath+="/opt/homebrew/share/info"
 
     # Install to system-wide locations when using brew cask
     export HOMEBREW_CASK_OPTS='--appdir=/Applications --qlplugindir=/Library/QuickLook'
