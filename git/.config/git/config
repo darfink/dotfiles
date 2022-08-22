@@ -20,7 +20,7 @@
   attributesfile = ~/.config/git/attributes
 
   # Better diffs
-  pager = delta --theme='Solarized (dark)' | less --tabs=1,5 -RFX
+  pager = delta --syntax-theme='Solarized (dark)' | less --tabs=1,5 -RFX
 
   # Treat spaces before tabs and all kinds of trailing whitespace as an error
   # [default] trailing-space: looks for spaces at the end of a line
