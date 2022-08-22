@@ -1,9 +1,9 @@
 [submodule "zprezto"]
 	path = zsh/.config/zsh/.zprezto
-	url = git://github.com/sorin-ionescu/prezto.git
+	url = https://github.com/sorin-ionescu/prezto.git
 [submodule "gdashboard"]
 	path = gdb
-	url = git://github.com/cyrus-and/gdb-dashboard.git
+	url = https://github.com/cyrus-and/gdb-dashboard.git
 [submodule "tmux-themepack"]
 	path = tmux/.tmux/tmux-themepack
 	url = https://github.com/jimeh/tmux-themepack.git
